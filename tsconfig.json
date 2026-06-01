@@ -1,0 +1,32 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "emitDeclarationOnly": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "jsx": "react-jsx",
+        "lib": ["ESNext", "DOM"],
+        "types": ["bun", "node", "react", "react-dom"],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "rootDir": ".",
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ESNext",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "exclude": ["node_modules"]
+}
