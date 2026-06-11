@@ -1,0 +1,17 @@
+@mixin full-viewport-slide {
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+@mixin focus-ring {
+    outline: 0.1875rem solid var(--color-focus);
+    outline-offset: 0.1875rem;
+}
+
+@mixin below-tablet {
+    @media (max-width: 48rem) {
+        @content;
+    }
+}
