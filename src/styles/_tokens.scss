@@ -1,0 +1,84 @@
+@use "sass:map";
+
+$themes: (
+    "green-studio": (
+        "page": #f4f7ee,
+        "surface": #ffffff,
+        "surface-soft": #dfe8d7,
+        "text": #08070b,
+        "muted": #56694e,
+        "accent": #97ad8d,
+        "accent-strong": #334b2b,
+        "accent-soft": #dce7d5,
+        "on-accent": #ffffff,
+        "timeline": #bdcdb5,
+        "timeline-active": #334b2b,
+        "focus": #78916c,
+        "glass": rgb(255 255 255 / 0.74),
+        "glass-strong": rgb(255 255 255 / 0.96),
+        "glass-border": rgb(255 255 255 / 0.74),
+        "shadow": rgb(8 7 11 / 0.12),
+    ),
+    "green-sage": (
+        "page": #f8fbf4,
+        "surface": #ffffff,
+        "surface-soft": #e7f0db,
+        "text": #25342d,
+        "muted": #647468,
+        "accent": #b9d89a,
+        "accent-strong": #638b4f,
+        "accent-soft": #e5f2d6,
+        "on-accent": #ffffff,
+        "timeline": #d1e4bd,
+        "timeline-active": #638b4f,
+        "focus": #82a965,
+        "glass": rgb(255 255 255 / 0.78),
+        "glass-strong": rgb(255 255 255 / 0.96),
+        "glass-border": rgb(255 255 255 / 0.7),
+        "shadow": rgb(37 52 45 / 0.1),
+    ),
+    "green-sea": (
+        "page": #f4fbf8,
+        "surface": #ffffff,
+        "surface-soft": #dff3e9,
+        "text": #203532,
+        "muted": #60756f,
+        "accent": #8dd7b9,
+        "accent-strong": #3d8a70,
+        "accent-soft": #d8f4e8,
+        "on-accent": #ffffff,
+        "timeline": #bbe8d6,
+        "timeline-active": #3d8a70,
+        "focus": #58aa8d,
+        "glass": rgb(255 255 255 / 0.78),
+        "glass-strong": rgb(255 255 255 / 0.96),
+        "glass-border": rgb(255 255 255 / 0.7),
+        "shadow": rgb(32 53 50 / 0.1),
+    ),
+    "green-dark": (
+        "page": #080b08,
+        "surface": #121a12,
+        "surface-soft": #1d2b1a,
+        "text": #f4f7ee,
+        "muted": #b9c8b0,
+        "accent": #7d956f,
+        "accent-strong": #e8f1e3,
+        "accent-soft": #21351f,
+        "on-accent": #080b08,
+        "timeline": #2d4328,
+        "timeline-active": #e8f1e3,
+        "focus": #a9bf9d,
+        "glass": rgb(18 26 18 / 0.8),
+        "glass-strong": rgb(29 43 26 / 0.94),
+        "glass-border": rgb(244 247 238 / 0.16),
+        "shadow": rgb(0 0 0 / 0.42),
+    ),
+);
+
+@mixin emit-theme($theme-name) {
+    $theme: map.get($themes, $theme-name);
+
+    @each $name, $value in $theme {
+        --color-#{$name}: #{$value};
+    }
+}

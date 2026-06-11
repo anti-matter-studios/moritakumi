@@ -1,0 +1,105 @@
+@use "../../styles/mixins" as *;
+
+.slide {
+    @include full-viewport-slide;
+
+    display: grid;
+    align-content: center;
+    padding: var(--slide-padding-block) var(--slide-padding-inline);
+
+    &[data-tone="blue"] {
+        background: linear-gradient(135deg, var(--color-page), var(--color-accent-soft));
+    }
+
+    &[data-tone="lilac"] {
+        background: linear-gradient(135deg, var(--color-surface), var(--color-surface-soft));
+    }
+
+    &[data-tone="mint"] {
+        background: linear-gradient(
+            135deg,
+            var(--color-page),
+            color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-surface))
+        );
+    }
+
+    &[data-tone="rose"] {
+        background: linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--color-page) 86%, var(--color-surface)),
+            color-mix(in srgb, var(--color-accent-soft) 48%, var(--color-surface))
+        );
+    }
+}
+
+.content {
+    width: min(100%, var(--content-max-width));
+}
+
+.header {
+    max-width: 48rem;
+}
+
+.eyebrow {
+    margin: 0 0 var(--space-4);
+    color: var(--color-accent-strong);
+    font-size: var(--font-size-kicker);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.title {
+    max-width: 13ch;
+    margin: 0;
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
+}
+
+.summary {
+    max-width: 42rem;
+    margin: var(--space-5) 0 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-relaxed);
+
+    p {
+        margin: 0;
+    }
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+}
+
+.card {
+    min-height: 10rem;
+    padding: var(--space-5);
+    border: 0.0625rem solid var(--color-glass-border);
+    border-radius: var(--radius-md);
+    background: var(--color-glass);
+    box-shadow: 0 1rem 2.5rem var(--color-shadow);
+    backdrop-filter: blur(1rem);
+
+    h2 {
+        margin: 0 0 var(--space-3);
+        font-size: 1rem;
+        line-height: var(--line-height-tight);
+    }
+
+    p {
+        margin: 0;
+        color: var(--color-muted);
+        line-height: var(--line-height-relaxed);
+    }
+}
+
+@media (max-width: 56rem) {
+    .cardGrid {
+        grid-template-columns: 1fr;
+        margin-top: var(--space-5);
+    }
+}
