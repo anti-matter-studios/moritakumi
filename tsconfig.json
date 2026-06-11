@@ -14,7 +14,7 @@
         "importHelpers": true,
         "jsx": "react-jsx",
         "lib": ["ESNext", "DOM"],
-        "types": ["bun", "node", "react", "react-dom"],
+        "types": ["bun", "node", "react", "react-dom", "vite/client"],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "rootDir": ".",
@@ -27,6 +27,6 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
     "exclude": ["node_modules"]
 }
