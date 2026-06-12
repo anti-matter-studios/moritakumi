@@ -5,10 +5,23 @@ import {
     SlideCardGrid,
     SlideHeader,
 } from "../components/Slide/Slide";
+import { Timeline } from "../components/Timeline";
 
 export function PresentationPage() {
     return (
-        <PresentationLayout>
+        <PresentationLayout
+            timeline={
+                <Timeline>
+                    <Timeline.Item id="landing">Home</Timeline.Item>
+                    <Timeline.Item id="hobbies">Hobbies</Timeline.Item>
+                    <Timeline.Item id="travels">Travels</Timeline.Item>
+                    <Timeline.Item id="personality">Persona</Timeline.Item>
+                    <Timeline.Item id="cv">CV</Timeline.Item>
+                    <Timeline.Item id="future-projects">Projects</Timeline.Item>
+                    <Timeline.Item id="thanks">Thanks</Timeline.Item>
+                </Timeline>
+            }
+        >
             <Slide id="landing" navLabel="Home" tone="blue">
                 <SlideHeader eyebrow="Presentation support site" title="Moritakumi">
                     <p>
