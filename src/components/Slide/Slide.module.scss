@@ -5,7 +5,11 @@
 
     display: grid;
     align-content: center;
-    padding: var(--slide-padding-block) var(--slide-padding-inline);
+    padding-block: var(--slide-padding-block);
+    padding-inline: max(
+        var(--slide-padding-inline),
+        calc(var(--timeline-width) + var(--space-6))
+    ) var(--slide-padding-inline);
 
     &[data-tone="blue"] {
         background: linear-gradient(135deg, var(--color-page), var(--color-accent-soft));

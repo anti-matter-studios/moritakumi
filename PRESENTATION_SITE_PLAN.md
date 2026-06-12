@@ -55,11 +55,11 @@ A reusable full-screen section wrapper. It should accept an ID, label or title, 
 
 ### Navbar
 
-Displays links for every section and highlights the active section. The navbar should animate out while scrolling down and reappear when scrolling up; persistent slide progress belongs to the timeline.
+Displays fixed top-level site controls. Slide section navigation belongs to the timeline, not the navbar.
 
 ### Timeline
 
-Renders a left-side timeline with one marker per section. It should visually track progress, highlight the current slide, and let users jump directly to any section.
+Renders a left-side timeline with one marker per section. Timeline entries are composed as React children, visually track bounded progress, highlight the current slide, reveal the active or hovered section label, and let users jump directly to any section.
 
 ### SectionLink
 
@@ -154,8 +154,8 @@ Suggested placeholders:
 - [x] Add placeholder slide components.
 - [x] Implement active-section detection.
 - [x] Implement smooth direct navigation from navbar links.
-- [x] Make navbar hide on downward scroll and reappear on upward scroll.
 - [x] Add an initial theme variant toggle in the navbar.
+- [x] Add a persistent left-side timeline with child-composed section markers and active progress.
 - [ ] Add keyboard navigation.
 - [ ] Add responsive timeline and navbar behavior.
 - [ ] Add GitHub Actions deployment to GitHub Pages.

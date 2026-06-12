@@ -1,8 +1,9 @@
-@use "tokens" as *;
-@use "mixins" as *;
+@use "sass:map";
+@use "tokens";
+@use "mixins";
 
 :root {
-    @include emit-theme("green-studio");
+    @include tokens.emit-theme("light");
 
     color-scheme: light;
     font-family:
@@ -37,24 +38,16 @@
 
     --nav-height: 4.5rem;
     --nav-offset: 1.25rem;
-    --timeline-width: 5rem;
+    --timeline-width: 11rem;
     --content-max-width: 76rem;
     --slide-padding-block: clamp(5rem, 10vw, 8rem);
     --slide-padding-inline: clamp(2rem, 8vw, 7rem);
 }
 
-[data-theme="green-sage"] {
-    @include emit-theme("green-sage");
-}
-
-[data-theme="green-sea"] {
-    @include emit-theme("green-sea");
-}
-
-[data-theme="green-dark"] {
-    @include emit-theme("green-dark");
-
-    color-scheme: dark;
+@each $name in map.keys(tokens.$themes) {
+    [data-theme="#{$name}"] {
+        @include tokens.emit-theme($name);
+    }
 }
 
 * {
@@ -98,7 +91,7 @@ button {
 }
 
 :focus-visible {
-    @include focus-ring;
+    @include mixins.focus-ring;
 }
 
 ::selection {
@@ -117,11 +110,11 @@ button {
     }
 }
 
-@include below-tablet {
+@include mixins.below-tablet {
     :root {
         --nav-height: 4rem;
         --nav-offset: 0.75rem;
-        --timeline-width: 3.25rem;
+        --timeline-width: 2.75rem;
         --slide-padding-block: clamp(4.5rem, 14vw, 6rem);
         --slide-padding-inline: clamp(1.25rem, 7vw, 2.5rem);
     }

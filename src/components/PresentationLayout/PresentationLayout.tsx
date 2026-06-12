@@ -1,5 +1,6 @@
 import {
     Children,
+    cloneElement,
     isValidElement,
     type ReactElement,
     type ReactNode,
@@ -8,16 +9,16 @@ import {
     useEffect,
     useMemo,
     useRef,
-    useState,
+    useState
 } from "react";
-import { useActiveSection } from "../../hooks/useActiveSection";
-import { Navbar } from "../Navbar/Navbar";
-import type { NavigationSection } from "../SectionLink/SectionLink";
+import { Navbar } from "../Navbar";
+import { getTimelineSectionIds, type TimelineProps } from "../Timeline";
 import type { SlideProps } from "../Slide/Slide";
-import type { ThemeVariant } from "../ThemeToggle/ThemeToggle";
 import styles from "./PresentationLayout.module.scss";
 
+
 type PresentationLayoutProps = {
+    timeline: ReactElement<TimelineProps>;
     children: ReactNode;
 };
 
@@ -25,33 +26,60 @@ function isSlideElement(child: ReactNode): child is ReactElement<SlideProps> {
     return isValidElement<SlideProps>(child) && "navLabel" in child.props;
 }
 
-export function PresentationLayout({ children }: PresentationLayoutProps) {
-    const [theme, setTheme] = useState<ThemeVariant>("green-studio");
+export function PresentationLayout({ children, timeline }: PresentationLayoutProps) {
+    const [activeSectionId, setActiveSectionId] = useState<string>();
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+    const deckRef = useRef<HTMLElement | null>(null);
     const lastScrollTop = useRef(0);
     const scrollFrame = useRef<number | null>(null);
     const slides = useMemo(
         () => Children.toArray(children).filter(isSlideElement),
-        [children],
-    );
-    const sections = useMemo<NavigationSection[]>(
-        () =>
-            slides.map((slide) => ({
-                id: slide.props.id,
-                label: slide.props.navLabel,
-                shortLabel: slide.props.shortNavLabel,
-            })),
-        [slides],
+        [children]
     );
     const sectionIds = useMemo(
-        () => sections.map((section) => section.id),
-        [sections],
+        () => getTimelineSectionIds(timeline.props.children),
+        [timeline]
     );
-    const activeSectionId = useActiveSection(sectionIds);
 
     useEffect(() => {
-        document.documentElement.dataset.theme = theme;
-    }, [theme]);
+        if (activeSectionId === undefined && sectionIds[0] !== undefined) {
+            setActiveSectionId(sectionIds[0]);
+        }
+    }, [activeSectionId, sectionIds]);
+
+    useEffect(() => {
+        const deck = deckRef.current;
+
+        if (deck === null || sectionIds.length === 0) {
+            return undefined;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleEntry = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+                if (visibleEntry) {
+                    setActiveSectionId(visibleEntry.target.id);
+                }
+            },
+            {
+                root: deck,
+                threshold: [0.45, 0.6, 0.75]
+            }
+        );
+
+        for (const sectionId of sectionIds) {
+            const section = document.getElementById(sectionId);
+
+            if (section !== null) {
+                observer.observe(section);
+            }
+        }
+
+        return () => observer.disconnect();
+    }, [sectionIds]);
 
     useEffect(() => {
         return () => {
@@ -85,17 +113,16 @@ export function PresentationLayout({ children }: PresentationLayoutProps) {
     }, []);
 
     return (
-        <div className={styles.app} data-theme={theme}>
-            <Navbar
-                sections={sections}
-                activeSectionId={activeSectionId}
-                theme={theme}
-                isVisible={isNavbarVisible}
-                onThemeChange={setTheme}
-            />
-            <main className={styles.deck} onScroll={handleDeckScroll}>
+        <>
+            <Navbar isVisible={isNavbarVisible} />
+            {cloneElement(timeline, { activeSectionId })}
+            <main
+                className={styles.deck}
+                onScroll={handleDeckScroll}
+                ref={deckRef}
+            >
                 {slides}
             </main>
-        </div>
+        </>
     );
 }
