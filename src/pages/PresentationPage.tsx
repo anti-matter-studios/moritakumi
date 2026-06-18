@@ -4,7 +4,7 @@ import {
     SlideCard,
     SlideCardGrid,
     SlideHeader,
-} from "../components/Slide/Slide";
+} from "../components/Slide";
 import { Timeline } from "../components/Timeline";
 
 export function PresentationPage() {
@@ -23,21 +23,19 @@ export function PresentationPage() {
             }
         >
             <Slide id="landing" navLabel="Home" tone="blue">
-                <SlideHeader eyebrow="Presentation support site" title="Moritakumi">
-                    <p>
-                        A bright slide-based website foundation for a personal
-                        presentation.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Presentation support site">Moritakumi</SlideHeader>
+                <p>
+                    A bright slide-based website foundation for a personal
+                    presentation.
+                </p>
             </Slide>
 
             <Slide id="hobbies" navLabel="Hobbies" tone="lilac">
-                <SlideHeader eyebrow="Interests" title="Hobbies">
-                    <p>
-                        A future section for interests, habits, and creative routines
-                        that shape the story.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Interests">Hobbie</SlideHeader>
+                <p>
+                    A future section for interests, habits, and creative routines
+                    that shape the story.
+                </p>
                 <SlideCardGrid>
                     <SlideCard title="Creative">
                         <p>Placeholder space for making, learning, and tinkering.</p>
@@ -52,12 +50,11 @@ export function PresentationPage() {
             </Slide>
 
             <Slide id="travels" navLabel="Travels" tone="mint">
-                <SlideHeader eyebrow="Places" title="Travels">
-                    <p>
-                        A future section for journeys, maps, photos, and memorable
-                        locations.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Places">Travels</SlideHeader>
+                <p>
+                    A future section for journeys, maps, photos, and memorable
+                    locations.
+                </p>
             </Slide>
 
             <Slide
@@ -66,21 +63,19 @@ export function PresentationPage() {
                 shortNavLabel="Persona"
                 tone="rose"
             >
-                <SlideHeader eyebrow="Questionnaire" title="Personality">
-                    <p>
-                        A future section for personality questions, answers, and
-                        presentation-friendly results.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Questionnaire">Personality</SlideHeader>
+                <p>
+                    A future section for personality questions, answers, and
+                    presentation-friendly results.
+                </p>
             </Slide>
 
             <Slide id="cv" navLabel="CV" tone="blue">
-                <SlideHeader eyebrow="Background" title="Curriculum Vitae">
-                    <p>
-                        A future section for education, work history, skills, and
-                        milestones.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Background">Curriculum Vitae</SlideHeader>
+                <p>
+                    A future section for education, work history, skills, and
+                    milestones.
+                </p>
             </Slide>
 
             <Slide
@@ -89,18 +84,16 @@ export function PresentationPage() {
                 shortNavLabel="Projects"
                 tone="lilac"
             >
-                <SlideHeader eyebrow="Roadmap" title="Future Projects">
-                    <p>
-                        A future section for upcoming ideas, ambitions, and planned
-                        work.
-                    </p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Roadmap">Future Projects</SlideHeader>
+                <p>
+                    A future section for upcoming ideas, ambitions, and planned
+                    work.
+                </p>
             </Slide>
 
             <Slide id="thanks" navLabel="Thanks" tone="mint">
-                <SlideHeader eyebrow="Closing" title="Special Thanks">
-                    <p>A final slide for acknowledgements and the presentation ending.</p>
-                </SlideHeader>
+                <SlideHeader eyebrow="Closing">Special Thanks</SlideHeader>
+                <p>A final slide for acknowledgements and the presentation ending.</p>
             </Slide>
         </PresentationLayout>
     );

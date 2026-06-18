@@ -1,0 +1,30 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+@use "../../styles/mixins" as *;
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: var(--slide-content-alignment);
+}
+
+.eyebrow {
+    margin: 0 0 var(--space-4);
+    color: var(--color-accent-strong);
+    font-size: var(--font-size-kicker);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.title {
+    display: inline-block;
+    max-width: 13ch;
+    margin: 0;
+    font-size: var(--font-size-title);
+    line-height: var(--line-height-display);
+}

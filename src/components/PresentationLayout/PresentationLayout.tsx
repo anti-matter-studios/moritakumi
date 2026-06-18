@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
 import {
     Children,
     cloneElement,
@@ -13,7 +18,7 @@ import {
 } from "react";
 import { Navbar } from "../Navbar";
 import { getTimelineSectionIds, type TimelineProps } from "../Timeline";
-import type { SlideProps } from "../Slide/Slide";
+import type { SlideProps } from "../Slide";
 import styles from "./PresentationLayout.module.scss";
 
 

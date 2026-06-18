@@ -25,15 +25,25 @@
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
 
+    --font-size-tiny: 0.5rem;
     --font-size-kicker: 0.875rem;
     --font-size-body: 1rem;
     --font-size-lead: clamp(1.125rem, 2vw, 1.5rem);
     --font-size-title: clamp(2rem, 6vw, 4.75rem);
     --font-size-display: clamp(3rem, 12vw, 8rem);
 
+    @media (min-width: 1024px) {
+        --font-size-tiny: 1rem;
+        --font-size-kicker: 1.75rem;
+        --font-size-body: 1.75rem;
+        --font-size-lead: clamp(2.25rem, 2vw, 3rem);
+        --font-size-title: clamp(4rem, 6vw, 9.5rem);
+        --font-size-display: clamp(6rem, 12vw, 16rem);
+    }
+
     --line-height-display: 0.95;
     --line-height-tight: 1.1;
-    --line-height-base: 1.5;
+    --line-height-base: 1.2;
     --line-height-relaxed: 1.65;
 
     --nav-height: 4.5rem;
@@ -69,7 +79,6 @@ body {
     line-height: var(--line-height-base);
 }
 
-body,
 button,
 input,
 textarea,

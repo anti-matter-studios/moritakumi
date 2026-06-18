@@ -1,0 +1,148 @@
+@keyframes background-parallax {
+    0% {
+        opacity: 0;
+        transform: translateY(calc(-50% - var(--background-parallax-distance)))
+            rotate(var(--background-rotation));
+    }
+
+    24%,
+    76% {
+        opacity: var(--background-opacity);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(calc(-50% + var(--background-parallax-distance)))
+            rotate(var(--background-rotation));
+    }
+}
+
+@keyframes background-parallax-center {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% - var(--background-parallax-distance)))
+            rotate(var(--background-rotation));
+    }
+
+    24%,
+    76% {
+        opacity: var(--background-opacity);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + var(--background-parallax-distance)))
+            rotate(var(--background-rotation));
+    }
+}
+
+.background {
+    --background-opacity: 0.48;
+    --background-parallax-distance: clamp(16rem, 20vh, 32rem);
+    --background-rotation: -3deg;
+
+    position: absolute;
+    z-index: 0;
+    top: 30%;
+    right: var(--space-3);
+    width: min(38rem, 42vw);
+    aspect-ratio: 4 / 5;
+    margin: 0;
+    opacity: var(--background-opacity);
+    pointer-events: none;
+    transform: translateY(-50%) rotate(var(--background-rotation));
+    transition: opacity 240ms ease;
+    will-change: opacity, transform;
+
+    @supports (animation-timeline: view()) {
+        animation-duration: 1ms;
+        animation-fill-mode: both;
+        animation-name: background-parallax;
+        animation-timing-function: linear;
+        animation-timeline: --slide-view;
+        animation-range: entry 0% exit 100%;
+    }
+
+    &::before {
+        position: absolute;
+        inset: -0.75rem;
+        border: 0.0625rem solid var(--color-glass-border);
+        border-radius: inherit;
+        background:
+            linear-gradient(135deg, rgb(255 255 255 / 0.18), transparent 48%),
+            color-mix(in srgb, var(--color-accent-soft) 26%, transparent);
+        content: "";
+        filter: blur(0.125rem);
+    }
+
+    &[data-placement="left"] {
+        left: max(var(--space-6), calc(var(--timeline-width) + var(--space-7)));
+    }
+
+    &[data-placement="right"] {
+        right: var(--space-8);
+    }
+
+    &[data-placement="center"] {
+        left: 50%;
+        --background-rotation: -2deg;
+
+        transform: translate(-50%, -50%) rotate(var(--background-rotation));
+
+        @supports (animation-timeline: view()) {
+            animation-name: background-parallax-center;
+        }
+    }
+
+    &[data-shape="rounded"] {
+        border-radius: clamp(1.5rem, 4vw, 3.5rem);
+    }
+
+    &[data-shape="soft"] {
+        border-radius: 38% 62% 48% 52% / 52% 40% 60% 48%;
+    }
+
+    &[data-shape="circle"] {
+        aspect-ratio: 1;
+        border-radius: 50%;
+    }
+}
+
+.background img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0.0625rem solid var(--color-glass-border);
+    border-radius: inherit;
+    box-shadow:
+        0 2rem 5rem var(--color-shadow),
+        inset 0 0.0625rem 0 var(--color-glass-border);
+    filter: saturate(0.92) contrast(0.92);
+    object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .background {
+        animation: none;
+        transform: translateY(-50%);
+
+        &[data-placement="center"] {
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+@media (max-width: 56rem) {
+    .background {
+        top: 25%;
+        width: min(24rem, 72vw);
+        opacity: 0.34;
+
+        &[data-placement="left"],
+        &[data-placement="right"] {
+            left: auto;
+            right: var(--space-3);
+        }
+    }
+}

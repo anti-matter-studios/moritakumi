@@ -1,0 +1,42 @@
+@use "../../styles/mixins" as *;
+
+.card {
+    padding: var(--space-3);
+    margin: var(--space-5) var(--space-8);
+    border: 0.0625rem solid var(--color-glass-border);
+    border-radius: var(--radius-md);
+    background: var(--color-glass);
+    box-shadow: 0 1rem 2.5rem var(--color-shadow);
+    backdrop-filter: blur(1rem);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    @include below-tablet {
+        margin: var(--space-3) var(--space-3);
+    }
+
+    h2 {
+        margin: 0 0 var(--space-3);
+        font-size: 1rem;
+        line-height: var(--line-height-tight);
+    }
+
+    p {
+        margin: 0;
+        color: var(--color-muted);
+        line-height: var(--line-height-relaxed);
+    }
+
+    footer {
+        position: absolute;
+        bottom: var(--space-2);
+        right: var(--space-3);
+        margin: 0;
+        font-size: var(--font-size-tiny);
+        color: var(--color-muted);
+        font-style: italic;
+    }
+}

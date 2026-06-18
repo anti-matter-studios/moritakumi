@@ -1,6 +1,5 @@
 @mixin full-viewport-slide {
-    min-height: 100vh;
-    min-height: 100svh;
+    height: 100vh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
 }

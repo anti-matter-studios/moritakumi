@@ -52,6 +52,7 @@ Wraps the entire slide experience. It owns the overall layout and renders the na
 ### Slide
 
 A reusable full-screen section wrapper. It should accept an ID, label or title, optional visual variant, and children.
+Slides can render floating `BackgroundImage` children behind their content. Slide content should remain unframed unless a dedicated content component provides a readable treatment.
 
 ### Navbar
 
@@ -156,6 +157,7 @@ Suggested placeholders:
 - [x] Implement smooth direct navigation from navbar links.
 - [x] Add an initial theme variant toggle in the navbar.
 - [x] Add a persistent left-side timeline with child-composed section markers and active progress.
+- [x] Add reusable floating parallax background image support for slides.
 - [ ] Add keyboard navigation.
 - [ ] Add responsive timeline and navbar behavior.
 - [ ] Add GitHub Actions deployment to GitHub Pages.
