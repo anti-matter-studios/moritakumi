@@ -1,14 +1,25 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the links. */
 .link {
+    // Fill the parent.
+    flex: 1 0 max-content;
     display: inline-flex;
     min-height: 3.25rem;
-    align-items: center;
-    justify-content: center;
+    justify-content: center; align-items: center;
     padding: 0 var(--space-5);
     border-radius: 999rem;
+
+    // Set the style of the text.
     color: var(--color-text);
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0;
+    text-align: center;
     text-decoration: none;
     white-space: nowrap;
     transition:
@@ -22,6 +33,7 @@
         transform: translateY(-0.0625rem);
     }
 
+    // Change the style when active.
     &[data-active="true"] {
         min-width: clamp(8.5rem, 19vw, 17rem);
         background:
@@ -34,10 +46,6 @@
     }
 }
 
-.shortLabel {
-    display: none;
-}
-
 @media (max-width: 68rem) {
     .link {
         min-height: 2.875rem;
@@ -48,21 +56,12 @@
             min-width: 7.5rem;
         }
     }
-
-    .fullLabel {
-        display: none;
-    }
-
-    .shortLabel {
-        display: inline;
-    }
 }
 
 @media (max-width: 42rem) {
     .link {
         min-width: max-content;
         min-height: 2.75rem;
-        padding: 0 var(--space-4);
 
         &[data-active="true"] {
             min-width: max-content;

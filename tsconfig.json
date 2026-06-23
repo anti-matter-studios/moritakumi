@@ -15,18 +15,19 @@
         "jsx": "react-jsx",
         "lib": ["ESNext", "DOM"],
         "types": ["bun", "node", "react", "react-dom", "vite/client"],
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
         "rootDir": ".",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "sourceMap": true,
+        "resolveJsonModule": true,
         "strict": true,
         "target": "ESNext",
         "paths": {
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "config/**/*.ts", "vite.config.ts"],
     "exclude": ["node_modules"]
 }

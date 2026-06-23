@@ -1,0 +1,16 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the slide deck region. */
+.deck {
+    position: relative;
+    height: 100vh;
+    overflow-y: auto;
+    isolation: isolate;
+    scroll-behavior: smooth;
+    scroll-padding-top: 0;
+    scroll-snap-type: y mandatory;
+}

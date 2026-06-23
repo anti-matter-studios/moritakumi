@@ -1,21 +1,27 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the nav container. */
 .header {
-    position: fixed;
+    // Fix to the top of the screen.
+    position: fixed; inset: var(--space-5); bottom: unset;
     z-index: 20;
-    top: var(--space-5);
-    left: var(--space-5);
-    right: var(--space-5);
+
+    // Keep the logo and links aligned on a single row.
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: var(--space-3);
     align-items: center;
-    opacity: 1;
+
+    // Prepare the animation.
     transform: translateY(0);
-    transition:
-        opacity 220ms ease,
-        transform 260ms ease,
-        visibility 260ms ease;
+    transition: transform 260ms ease, opacity 220ms ease, visibility 260ms ease;
     visibility: visible;
 
+    // Start the animation when the user hides the navbar.
     &[data-visible="false"] {
         opacity: 0;
         pointer-events: none;
@@ -24,8 +30,12 @@
     }
 }
 
-.brand,
+/* Set the style of the glass navigation track. */
 .nav {
+    // Fill the parent container.
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 999rem;
     background:
         linear-gradient(135deg, var(--color-glass-strong), var(--color-glass)),
         var(--color-surface);
@@ -35,91 +45,37 @@
     backdrop-filter: blur(1rem);
 }
 
-.brand {
-    display: grid;
-    width: 4.25rem;
-    aspect-ratio: 1;
-    place-items: center;
-    border-radius: 50%;
-    color: var(--color-accent-strong);
-    text-decoration: none;
-}
-
-.brandMark {
-    display: grid;
-    width: 2.25rem;
-    aspect-ratio: 1;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.25rem;
-    transform: rotate(45deg);
-
-    span {
-        border: 0.25rem solid currentColor;
-        border-radius: 0.45rem;
-        background: rgb(255 255 255 / 0.44);
-    }
-}
-
-.nav {
-    min-width: 0;
-    border-radius: 999rem;
-    overflow: hidden;
-}
-
+/* Set the style of the link track. */
 .linkTrack {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-    padding: var(--space-2);
-    overflow-x: auto;
-    scrollbar-width: none;
+    // Display the contents in a row.
+    display: flex; flex-direction: row;
+    justify-content: space-between; align-items: stretch;
+    padding: var(--space-2); gap: var(--space-2);
+    overflow: auto hidden;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    // Hide the scrollbar.
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
 }
 
 @media (max-width: 68rem) {
     .header {
-        top: var(--space-4);
-        left: var(--space-4);
-        right: var(--space-4);
-    }
-
-    .brand {
-        width: 3.75rem;
-    }
-
-    .brandMark {
-        width: 1.875rem;
-
-        span {
-            border-width: 0.21875rem;
-        }
+        inset: var(--space-4);
+        bottom: unset;
+        gap: var(--space-2);
     }
 }
 
 @media (max-width: 42rem) {
     .header {
-        grid-template-columns: auto minmax(0, 1fr) auto;
+        inset: var(--space-3);
+        bottom: unset;
         gap: var(--space-2);
-        top: var(--space-3);
-        left: var(--space-3);
-        right: var(--space-3);
+        grid-template-columns: auto minmax(0, 1fr);
     }
 
-    .brand {
-        width: 3.25rem;
-    }
-
-    .brandMark {
-        width: 1.625rem;
-
-        span {
-            border-width: 0.1875rem;
-            border-radius: 0.375rem;
-        }
+    .header > :last-child {
+        grid-column: 2;
+        justify-self: flex-end;
     }
 }

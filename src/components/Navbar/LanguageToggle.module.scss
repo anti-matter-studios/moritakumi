@@ -1,0 +1,45 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the language selector button. */
+.toggle {
+    display: inline-grid;
+    width: 4.25rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 50%;
+    background:
+        linear-gradient(135deg, var(--color-glass-strong), var(--color-glass)),
+        var(--color-surface);
+    box-shadow:
+        inset 0 0.0625rem 0 var(--color-glass-border),
+        0 1rem 2.5rem var(--color-shadow);
+    backdrop-filter: blur(1rem);
+    cursor: pointer;
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: 0;
+    transition:
+        transform 180ms ease;
+
+    &:hover {
+        transform: translateY(-0.0625rem);
+    }
+}
+
+@media (max-width: 68rem) {
+    .toggle {
+        width: 3.75rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 42rem) {
+    .toggle {
+        width: 3.25rem;
+        font-size: 1.375rem;
+    }
+}

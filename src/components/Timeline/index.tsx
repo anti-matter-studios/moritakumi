@@ -8,55 +8,103 @@ import {
     cloneElement,
     isValidElement,
     type CSSProperties,
+    type PropsWithChildren,
     type ReactElement,
     type ReactNode,
+    useEffect,
+    useMemo,
+    useState,
 } from "react";
 
 import styles from "./index.module.scss";
 
-export function Timeline(props: TimelineProps) {
-    const items = getTimelineItems(props.children);
+
+type TimelineStyle = CSSProperties & {
+    "--timeline-progress": number;
+};
+
+type TimelineComponent = {
+    (props: TimelineProps): ReactElement;
+    Item: typeof TimelineItem;
+};
+
+/** Navigation track used to jump between presentation slides. */
+const Timeline = ((props: TimelineProps) => {
+    const items = useMemo(() => getTimelineItems(props.children), [props.children]);
+    const sectionIds = useMemo(() => getTimelineSectionIds(props.children), [props.children]);
+    const observedSectionId = useActiveSectionId(sectionIds);
+    const activeSectionId = observedSectionId ?? sectionIds[0];
     const activeIndex = Math.max(
         0,
-        items.findIndex((item) => item.props.id === props.activeSectionId)
+        items.findIndex((item) => item.props.id === activeSectionId),
     );
     const progress = items.length > 1
         ? activeIndex / (items.length - 1)
         : 0;
-    const style = { "--timeline-progress": progress } as CSSProperties;
+    const style: TimelineStyle = { "--timeline-progress": progress };
 
-    return (
-        <aside className={styles.timeline} aria-label="Presentation timeline">
-            <nav className={styles.track} style={style}>
-                {Children.map(props.children, (child, index) => {
-                    if (!isTimelineItem(child)) {
-                        return child;
-                    }
+    return <nav className={styles.track} style={style} aria-label="Slide navigation">
+        {Children.map(props.children, (child, index) => {
+            if (!isTimelineItem(child)) {
+                return child;
+            }
 
-                    return cloneElement(child, {
-                        index,
-                        isActive: child.props.id === props.activeSectionId,
-                    });
-                })}
-            </nav>
-        </aside>
-    );
+            return cloneElement(child, {
+                index,
+                isActive: child.props.id === activeSectionId,
+            });
+        })}
+    </nav>;
+}) as TimelineComponent;
+
+Timeline.Item = TimelineItem;
+
+export default Timeline;
+
+function useActiveSectionId(sectionIds: string[]) {
+    const [activeSectionId, setActiveSectionId] = useState<string>();
+
+    useEffect(() => {
+        if (sectionIds.length === 0) {
+            return;
+        }
+
+        const deck = document.getElementById("presentation");
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleEntry = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((first, second) => second.intersectionRatio - first.intersectionRatio)
+                    .at(0);
+
+                if (visibleEntry !== undefined) {
+                    setActiveSectionId(visibleEntry.target.id);
+                }
+            },
+            {
+                root: deck,
+                threshold: [0.42, 0.6, 0.78],
+            },
+        );
+
+        for (const sectionId of sectionIds) {
+            const section = document.getElementById(sectionId);
+
+            if (section !== null) {
+                observer.observe(section);
+            }
+        }
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [sectionIds]);
+
+    return activeSectionId;
 }
 
 function isTimelineItem(child: ReactNode): child is ReactElement<TimelineItemProps> {
-    return isValidElement<TimelineItemProps>(child) && "id" in child.props;
-}
-
-export function getTimelineSectionIds(children: ReactNode) {
-    const ids: string[] = [];
-
-    Children.forEach(children, (child) => {
-        if (isTimelineItem(child)) {
-            ids.push(child.props.id);
-        }
-    });
-
-    return ids;
+    return isValidElement<TimelineItemProps>(child) && typeof child.props.id === "string";
 }
 
 function getTimelineItems(children: ReactNode) {
@@ -71,36 +119,38 @@ function getTimelineItems(children: ReactNode) {
     return items;
 }
 
-export function TimelineItem(props: TimelineItemProps) {
-    return (
-        <a
-            className={styles.link}
-            data-active={props.isActive}
-            href={`#${props.id}`}
-            aria-current={props.isActive ? "step" : undefined}
-        >
-            <span className={styles.marker}>
-                <span>{(props.index ?? 0) + 1}</span>
-            </span>
-            <span className={styles.label}>{props.children}</span>
-        </a>
-    );
+function getTimelineSectionIds(children: ReactNode) {
+    const sectionIds: string[] = [];
+
+    Children.forEach(children, (child) => {
+        if (isTimelineItem(child)) {
+            sectionIds.push(child.props.id);
+        }
+    });
+
+    return sectionIds;
 }
 
-export interface TimelineProps {
-    /** Identifier of the section currently in view. */
-    activeSectionId?: string;
-
-    /** Timeline entries. */
-    children: ReactNode;
+/** Entry in the presentation timeline. */
+function TimelineItem(props: TimelineItemProps) {
+    return <a
+        className={styles.link}
+        data-active={props.isActive}
+        href={`#${props.id}`}
+        aria-current={props.isActive ? "step" : undefined}
+    >
+        <span className={styles.marker}>
+            <span>{(props.index ?? 0) + 1}</span>
+        </span>
+        <span className={styles.label}>{props.children}</span>
+    </a>;
 }
 
-export interface TimelineItemProps {
-    /** Unique identifier of the target slide section. */
+export type TimelineProps = PropsWithChildren;
+
+export interface TimelineItemProps extends PropsWithChildren {
+    /** Unique identifier of the target slide. */
     id: string;
-
-    /** Label rendered by the timeline. */
-    children: ReactNode;
 
     /** Index injected by the timeline parent. */
     index?: number;
@@ -108,5 +158,3 @@ export interface TimelineItemProps {
     /** Flag injected by the timeline parent when this item is current. */
     isActive?: boolean;
 }
-
-Timeline.Item = TimelineItem;

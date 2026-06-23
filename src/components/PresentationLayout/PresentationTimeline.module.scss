@@ -1,0 +1,22 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the fixed timeline region. */
+.timeline {
+    position: fixed;
+    z-index: 16;
+    top: 50%;
+    left: var(--space-5);
+    width: var(--timeline-width);
+    transform: translateY(-50%);
+}
+
+@media (max-width: 56rem) {
+    .timeline {
+        left: var(--space-3);
+        width: 2.25rem;
+    }
+}

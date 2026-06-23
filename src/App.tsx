@@ -3,15 +3,18 @@
  * Licensed under the MIT License.
  */
 
-import { PresentationPage } from "./pages/PresentationPage";
-import WhoAmIPage from "./pages/WhoAmIPage";
+import DynamicPage from "./components/DynamicPage";
 
 export function App() {
-    switch (document.location.pathname) {
-    case "/who-am-i":
-    case "/who-am-i.html":
-        return <WhoAmIPage />;
-    default:
-        return <PresentationPage />;
-    }
+    return <DynamicPage pageKey={getRouteName(document.location.pathname)} />;
+}
+
+function getRouteName(pathname: string) {
+    const routeName = pathname
+        .replace(/\/index\.html$/, "")
+        .replace(/\/$/, "")
+        .split("/")
+        .pop() ?? "";
+
+    return routeName.replace(/\.html$/, "");
 }

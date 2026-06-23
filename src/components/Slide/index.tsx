@@ -3,85 +3,56 @@
  * Licensed under the MIT License.
  */
 
-import {
-    Children,
-    isValidElement,
-    type ReactElement,
-    type ReactNode,
-} from "react";
-import BackgroundImage, {
-    type BackgroundImageProps,
-} from "../BackgroundImage";
-import SlideHeader, { type SlideHeaderProps } from "./SlideHeader";
-import SlideCard, { type SlideCardProps } from "./SlideCard";
+import type { PropsWithChildren } from "react";
 
+import BackgroundImage, {
+    type BackgroundImageProps
+} from "@/components/BackgroundImage";
+import SlideCard, { type SlideCardProps } from "./SlideCard";
+import SlideHeader, { type SlideHeaderProps } from "./SlideHeader";
 import styles from "./index.module.scss";
 
-export { SlideHeader, SlideCard };
-export type { SlideHeaderProps, SlideCardProps };
 
-export type SlideProps = {
+export { SlideCard, SlideHeader };
+export type { SlideCardProps, SlideHeaderProps };
+
+/** Full-screen presentation slide. */
+export default function Slide(props: SlideProps) {
+    return <section
+        className={styles.slide}
+        data-tone={props.tone ?? "default"}
+        id={props.id}
+        aria-label={props.navLabel}
+        data-nav-label={props.navLabel}
+        data-short-nav-label={props.shortNavLabel}
+    >
+        {props.backgroundImage && <BackgroundImage {...props.backgroundImage} />}
+        <div className={styles.content}>
+            {props.children}
+        </div>
+    </section>;
+}
+
+/** Grid used to group reusable slide cards. */
+export function SlideCardList({ children }: SlideCardGridProps) {
+    return <div className={styles.cardList}>{children}</div>;
+}
+
+export interface SlideProps extends PropsWithChildren {
+    /** Unique identifier used for anchors, timelines, and active-section tracking. */
     id: string;
+
+    /** Human-readable label for navigation and accessibility. */
     navLabel: string;
+
+    /** Shorter label for compact timeline or navigation surfaces. */
     shortNavLabel?: string;
-    tone?: "blue" | "lilac" | "mint" | "rose";
-    children: ReactNode;
-};
 
-type SlideCardGridProps = {
-    children: ReactNode;
-};
+    /** Visual tone applied to the slide background. */
+    tone?: "default" | "soft" | "strong" | "plain";
 
-type SlideChildren = {
-    backgrounds: ReactElement<BackgroundImageProps>[];
-    content: ReactNode[];
-};
-
-function isBackgroundImageElement(
-    child: ReactNode,
-): child is ReactElement<BackgroundImageProps> {
-    return isValidElement(child) && child.type === BackgroundImage;
+    /** Image to render in the background. */
+    backgroundImage?: BackgroundImageProps;
 }
 
-function getSlideChildren(children: ReactNode): SlideChildren {
-    const backgrounds: ReactElement<BackgroundImageProps>[] = [];
-    const content: ReactNode[] = [];
-
-    Children.forEach(children, (child) => {
-        if (isBackgroundImageElement(child)) {
-            backgrounds.push(child);
-            return;
-        }
-
-        content.push(child);
-    });
-
-    return { backgrounds, content };
-}
-
-
-export function Slide({
-    id,
-    navLabel,
-    tone = "blue",
-    children,
-}: SlideProps) {
-    const slideChildren = getSlideChildren(children);
-
-    return (
-        <section
-            className={styles.slide}
-            data-tone={tone}
-            id={id}
-            aria-label={navLabel}
-            data-nav-label={navLabel}
-        >
-            {slideChildren.backgrounds}
-            <div className={styles.content}>{slideChildren.content}</div>
-        </section>
-    );
-}
-
-export function SlideCardGrid({ children }: SlideCardGridProps) {
-    return <div className={styles.cardGrid}>{children}</div>;
-}
+type SlideCardGridProps = PropsWithChildren;

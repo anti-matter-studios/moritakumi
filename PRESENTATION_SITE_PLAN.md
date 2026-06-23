@@ -14,7 +14,7 @@ Build a React website, backed by Bun, that behaves like a full-screen slide deck
 - Use Sass for global styles, CSS modules, design tokens, and reusable mixins.
 - Keep global CSS limited to resets, root layout, typography, and theme variables.
 - Prepare for deployment to GitHub Pages through GitHub Actions.
-- Treat root-level HTML files as Vite page entries for multi-page builds.
+- Treat root `index.html` as the single Vite HTML source, then generate presentation route HTML files from it at build time.
 - Use green-led theme variants, including a light Anti-Matter Studio moss palette and one dark theme.
 - Treat the current existing source code as test code until implementation begins.
 
@@ -47,7 +47,7 @@ Sections should be composed in JSX pages so final content stays close to its pag
 
 ### PresentationLayout
 
-Wraps the entire slide experience. It owns the overall layout and renders the navbar, timeline, and slide container.
+Wraps the entire slide experience. It owns the overall page shell and renders the navbar, while explicit child layout components such as `PresentationTimeline` and `PresentationDeck` handle the timeline and slide regions.
 
 ### Slide
 
@@ -60,7 +60,7 @@ Displays fixed top-level site controls. Slide section navigation belongs to the 
 
 ### Timeline
 
-Renders a left-side timeline with one marker per section. Timeline entries are composed as React children, visually track bounded progress, highlight the current slide, reveal the active or hovered section label, and let users jump directly to any section.
+Renders a left-side timeline with one marker per section. Timeline entries are composed as React children, visually track bounded progress, highlight the current slide, reveal the active or hovered section label, and let users jump directly to any section. The timeline is passed as a sibling of the slide deck in page JSX, not as a prop to `PresentationLayout`.
 
 ### SectionLink
 
@@ -148,7 +148,7 @@ Suggested placeholders:
 - [x] Replace or rebuild the existing test source with a clean React/Bun/Vite structure.
 - [x] Add base global styles and theme variables.
 - [x] Scaffold core Sass tokens, mixins, global styles, and starter module styles.
-- [x] Configure Vite to discover multiple root-level HTML page entries.
+- [x] Configure Vite to build from a single root `index.html` and emit static route HTML files for presentation variants.
 - [ ] Build reusable presentation layout components.
 - [x] Add initial navbar, brand mark, section link, and section registry components.
 - [x] Refactor content out of data arrays into JSX-driven pages.

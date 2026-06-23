@@ -3,32 +3,43 @@
  * Licensed under the MIT License.
  */
 
-import classNames from "classnames";
 import type { PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import styles from "./NavbarLink.module.scss";
 
-/** Component used to render a single link of the navbar. */
-export function NavbarLink(props: SectionLinkProps) {
-    return (
-        <a
-            className={classNames(styles.link, props.className)}
-            data-active={props.isActive}
-            href={`#${props.id}`}
-            aria-current={props.isActive ? "page" : undefined}
-        >
-            {props.children}
-        </a>
-    );
+/** Link rendered inside the navigation bar. */
+export default function NavbarLink(props: NavbarLinkProps) {
+    const { t } = useTranslation();
+    const pageName = getPageName(document.location.pathname);
+    const isActive = props.id === pageName;
+
+    return <a
+        className={styles.link}
+        data-active={isActive}
+        aria-current={isActive}
+        id={`nav-link-${props.id}`}
+        href={`/${props.id}`}
+    >
+        {t(`${props.id}.title`)}
+    </a>;
 }
 
-export interface SectionLinkProps extends PropsWithChildren {
-    /** Flag set if the section should show as being active. */
-    isActive?: boolean;
-
-    /** Unique identifier for the section. */
+interface NavbarLinkProps extends PropsWithChildren {
+    /** Unique identifier of the link in the navbar. */
     id: string;
-
-    /** A class name added to the root element. */
-    className?: string;
 }
+
+function getPageName(pathname: string) {
+    const pageName = pathname
+        .replace(/\/$/, "")
+        .split("/")
+        .pop() ?? "";
+
+    if (pageName === "index.html") {
+        return "";
+    }
+
+    return pageName.replace(/\.html$/, "");
+}
+

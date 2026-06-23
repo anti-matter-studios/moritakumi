@@ -1,102 +1,102 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
 @use "../../styles/mixins" as *;
 
+
+/* Set the style of a full-screen presentation slide. */
 .slide {
     @include full-viewport-slide;
 
     position: relative;
-    isolation: isolate;
     display: grid;
     align-content: center;
     overflow: hidden;
-    view-timeline-axis: block;
-    view-timeline-name: --slide-view;
     padding-block: var(--slide-padding-block);
     padding-inline: max(
         var(--slide-padding-inline),
         calc(var(--timeline-width) + var(--space-6))
     ) var(--slide-padding-inline);
     background: linear-gradient(135deg, var(--color-page), var(--color-accent-soft));
+    view-timeline-axis: block;
+    view-timeline-name: --slide-view;
+
+    --slide-content-alignment: flex-start;
+    --slide-text-alignment: left;
+
+    // Keep alternating slides visually distinct without requiring content data arrays.
     &:nth-child(2n) {
+        --slide-content-alignment: flex-end;
+        --slide-text-alignment: right;
+
         background: linear-gradient(135deg, var(--color-accent-soft), var(--color-page));
     }
 
-    --slide-content-alignment: flex-start;
-    &:nth-child(2n) {
-        --slide-content-alignment: flex-end;
+    &[data-tone="plain"] {
+        background: var(--color-page);
+    }
+
+    &[data-tone="soft"] {
+        background:
+            radial-gradient(circle at 84% 18%, var(--color-surface-soft), transparent 34rem),
+            linear-gradient(135deg, var(--color-page), var(--color-accent-soft));
+    }
+
+    &[data-tone="strong"] {
+        background:
+            linear-gradient(
+                135deg,
+                color-mix(in srgb, var(--color-accent-soft) 76%, var(--color-surface)),
+                var(--color-page)
+            );
+    }
+
+    hr {
+        color: var(--color-accent-soft);
+        max-width: 80%;
     }
 }
 
+/* Set the style of the foreground slide content. */
 .content {
-    position: relative;
     z-index: 1;
-    width: min(100%, var(--content-max-width));
-    justify-self: var(--slide-content-alignment);
-}
-
-.header {
-    max-width: 48rem;
-}
-
-.eyebrow {
-    margin: 0 0 var(--space-4);
-    color: var(--color-accent-strong);
-    font-size: var(--font-size-kicker);
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: uppercase;
-}
-
-.title {
-    max-width: 13ch;
-    margin: 0;
-    font-size: var(--font-size-display);
-    line-height: var(--line-height-display);
-}
-
-.summary {
-    max-width: 42rem;
-    margin: var(--space-5) 0 0;
-    color: var(--color-muted);
-    font-size: var(--font-size-lead);
-    line-height: var(--line-height-relaxed);
-
-    p {
-        margin: 0;
-    }
-}
-
-.cardGrid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin-top: var(--space-7);
-}
-
-.card {
-    min-height: 10rem;
+    width: fit-content;
+    max-width: min(100%, var(--content-max-width));
     padding: var(--space-5);
     border: 0.0625rem solid var(--color-glass-border);
-    border-radius: var(--radius-md);
-    background: var(--color-glass);
-    box-shadow: 0 1rem 2.5rem var(--color-shadow);
-    backdrop-filter: blur(1rem);
+    border-radius: var(--radius-lg);
+    background:
+        linear-gradient(135deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.06)),
+        rgb(255 255 255 / 0.12);
+    box-shadow:
+        inset 0 0.0625rem 0 rgb(255 255 255 / 0.34),
+        0 1rem 2.5rem rgb(32 53 50 / 0.06);
+    backdrop-filter: blur(0.75rem);
+    justify-self: var(--slide-content-alignment);
+    text-align: var(--slide-text-alignment);
+}
 
-    h2 {
-        margin: 0 0 var(--space-3);
-        font-size: 1rem;
-        line-height: var(--line-height-tight);
-    }
-
-    p {
-        margin: 0;
-        color: var(--color-muted);
-        line-height: var(--line-height-relaxed);
-    }
+/* Set the style of grouped slide cards. */
+.cardList {
+    display: flex;
+    flex-direction: row; flex-wrap: wrap;
+    justify-content: var(--slide-content-alignment); align-items: stretch;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
 }
 
 @media (max-width: 56rem) {
-    .cardGrid {
-        grid-template-columns: 1fr;
+    .slide {
+        padding-inline: var(--slide-padding-inline);
+    }
+
+    .content {
+        padding: var(--space-4);
+    }
+
+    .cardList {
         margin-top: var(--space-5);
     }
 }

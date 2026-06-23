@@ -1,0 +1,14 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+/* Set the style of the presentation shell. */
+.layout {
+    height: 100vh;
+    overflow: hidden;
+    min-height: 100vh;
+    background: var(--color-page);
+    color: var(--color-text);
+}
