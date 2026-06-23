@@ -39,7 +39,9 @@ export default function presentationRouteHtml(routes: string[]): Plugin {
             const source = await readFile(resolve(outDir, "index.html"), "utf8");
 
             for (const route of routes) {
-                await writeFile(resolve(outDir, `${route}.html`), source);
+                if (route) {
+                    await writeFile(resolve(outDir, `${route}.html`), source);
+                }
             }
         },
     };
