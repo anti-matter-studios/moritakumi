@@ -3,10 +3,11 @@
  * Licensed under the MIT License.
  */
 
-import type { ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { Trans } from "react-i18next";
 
 import TextReplacement from "@/components/TextReplacement";
+import styles from "./index.module.scss";
 
 
 /** Renders translated rich text with a controlled set of inline tags. */
@@ -19,7 +20,14 @@ export default function RichText(props: RichTextProps) {
             b: <b />,
             i: <i />,
             span: <span />,
-            blue: <b style={{ color: "#0000FF" }} />,
+            small: <small />,
+            h1: <h1 />,
+            h2: <h2 />,
+            h3: <h3 />,
+            h4: <h4 />,
+            h5: <h5 />,
+            h6: <h6 />,
+            blue: <BlueText />,
             replace: <TextReplacement />,
             ...props.components,
         }}
@@ -40,4 +48,29 @@ export interface RichTextProps {
 
     /** Interpolation values. */
     values?: Record<string, unknown>;
+}
+
+function BlueText(props: BlueTextProps) {
+    const className = [
+        isEnabled(props.light) && styles.blueLight,
+        isEnabled(props.dark) && styles.blueDark,
+        isEnabled(props.gradient) && styles.blueGradient,
+    ].filter(Boolean).join(" ");
+
+    return <span className={className}>{props.children}</span>;
+}
+
+function isEnabled(value: unknown) {
+    return value !== undefined && value !== null && value !== false && value !== "false";
+}
+
+interface BlueTextProps extends PropsWithChildren {
+    /** Use the light blue presentation color. */
+    light?: boolean | string;
+
+    /** Use the dark blue presentation color. */
+    dark?: boolean | string;
+
+    /** Render the text as a dark-to-light blue gradient. */
+    gradient?: boolean | string;
 }

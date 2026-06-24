@@ -57,6 +57,11 @@
         color: var(--color-accent-soft);
         max-width: 80%;
     }
+
+    small {
+        font-size: var(--font-size-body);
+        color: var(--color-accent-strong);
+    }
 }
 
 /* Set the style of the foreground slide content. */
@@ -76,6 +81,23 @@
     backdrop-filter: blur(0.75rem);
     justify-self: var(--slide-content-alignment);
     text-align: var(--slide-text-alignment);
+
+    :global(a) {
+        color: var(--color-accent-strong);
+        font-weight: 700;
+        text-decoration-line: underline;
+        text-decoration-thickness: 0.12em;
+        text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+        text-underline-offset: 0.18em;
+        transition:
+            color 180ms ease,
+            text-decoration-color 180ms ease;
+
+        &:hover {
+            color: var(--color-text);
+            text-decoration-color: currentColor;
+        }
+    }
 }
 
 /* Set the style of grouped slide cards. */

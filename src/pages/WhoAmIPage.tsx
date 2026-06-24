@@ -23,6 +23,7 @@ export default function WhoAmIPage() {
             <Timeline>
                 <Timeline.Item id="who-am-i">{t("who-am-i.slides.whoAmI.navLabel")}</Timeline.Item>
                 <Timeline.Item id="how-am-i">{t("who-am-i.slides.howAmI.navLabel")}</Timeline.Item>
+                <Timeline.Item id="my-values">{t("who-am-i.slides.myValues.navLabel")}</Timeline.Item>
                 <Timeline.Item id="citation">{t("who-am-i.slides.citation.navLabel")}</Timeline.Item>
                 <Timeline.Item id="song">{t("who-am-i.slides.song.navLabel")}</Timeline.Item>
                 <Timeline.Item id="movie">{t("who-am-i.slides.movie.navLabel")}</Timeline.Item>
@@ -42,6 +43,11 @@ export default function WhoAmIPage() {
                 <Paragraphs i18nKey="who-am-i.slides.howAmI.paragraphs" />
             </Slide>
 
+            <Slide id="my-values" navLabel={t("who-am-i.slides.myValues.navLabel")}>
+                <SlideHeader><RichText i18nKey="who-am-i.slides.myValues.title" /></SlideHeader>
+                <Paragraphs i18nKey="who-am-i.slides.myValues.paragraphs" />
+            </Slide>
+
             <Slide id="citation" navLabel={t("who-am-i.slides.citation.navLabel")}>
                 <SlideCard>
                     <p><RichText i18nKey="who-am-i.slides.citation.card" /></p>
@@ -58,7 +64,7 @@ export default function WhoAmIPage() {
                     src: "/images/disparate-youth.jpg",
                     width: 689,
                     height: 689,
-                    placement: "top-left",
+                    placement: "top-right",
                 }}
             >
                 <SlideCard footer={<RichText i18nKey="who-am-i.slides.song.footer" />}>
@@ -76,7 +82,7 @@ export default function WhoAmIPage() {
                     src: "/images/interstellar.jpg",
                     width: 720,
                     height: 1080,
-                    placement: "top-right",
+                    placement: "top-left",
                 }}
             >
                 <SlideCard footer={<RichText i18nKey="who-am-i.slides.movie.footer" />}>

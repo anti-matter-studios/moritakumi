@@ -1,0 +1,20 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+.blueLight {
+    color: #42aef5;
+}
+
+.blueDark {
+    color: #0f4c81;
+}
+
+.blueGradient {
+    background: linear-gradient(90deg, #42aef5, #0f4c81);
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
