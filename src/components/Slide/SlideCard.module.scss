@@ -20,7 +20,7 @@
     background: rgb(255 255 255 / 0.18);
     box-shadow:
         inset 0 0.0625rem 0 rgb(255 255 255 / 0.28),
-        0 0.75rem 1.75rem rgb(32 53 50 / 0.05);
+        0 0.75rem 1.75rem rgba(32, 53, 50, 0.05);
     backdrop-filter: blur(1rem);
 
     h2 {
@@ -53,5 +53,14 @@
     .card {
         margin-block: var(--space-2);
         padding: var(--space-3);
+    }
+}
+
+@media print {
+    .card {
+        min-height: 6rem;
+        background: color-mix(in srgb, var(--color-surface) 42%, transparent);
+        box-shadow: 0 0.75rem 1.75rem rgba(32, 53, 50, 0.04);
+        backdrop-filter: none;
     }
 }

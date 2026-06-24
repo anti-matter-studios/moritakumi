@@ -136,3 +136,24 @@
         white-space: nowrap;
     }
 }
+
+@media print {
+    .track {
+        --timeline-progress: 1;
+    }
+
+    .link {
+        color: var(--color-text);
+        transform: none;
+    }
+
+    .marker {
+        box-shadow: none;
+    }
+
+    .label {
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+    }
+}

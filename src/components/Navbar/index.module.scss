@@ -79,3 +79,9 @@
         justify-self: flex-end;
     }
 }
+
+@media print {
+    .header {
+        display: none;
+    }
+}

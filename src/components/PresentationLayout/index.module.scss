@@ -12,3 +12,11 @@
     background: var(--color-page);
     color: var(--color-text);
 }
+
+@media print {
+    .layout {
+        height: auto;
+        overflow: visible;
+        min-height: 0;
+    }
+}

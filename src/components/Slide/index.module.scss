@@ -100,3 +100,23 @@
         margin-top: var(--space-5);
     }
 }
+
+@media print {
+    .slide {
+        break-after: page;
+        height: 100vh;
+        background: var(--color-page);
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+    }
+
+    .content {
+        background: color-mix(in srgb, var(--color-surface) 75%, transparent);
+        box-shadow: 0 1rem 2.5rem rgb(32 53 50 / 0.04);
+        backdrop-filter: none;
+    }
+}

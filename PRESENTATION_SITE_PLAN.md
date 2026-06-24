@@ -119,6 +119,10 @@ Expected module areas:
 
 ## Content Strategy
 
+Page structure should be owned by explicit React page components. Translation files may store copy, paragraph lists, short labels, and small rich-text tags such as `<b>`, `<i>`, `<br/>`, named inline effects, or named links, but they should not define arbitrary component trees or page layout.
+
+This keeps localized content editable while avoiding a fragile YAML-driven layout DSL. When a slide needs a special visual treatment, create or compose the React component in the page and feed it translated strings through small helpers such as `RichText` or `Paragraphs`.
+
 Until final content is ready, create structured placeholder slides rather than final copy.
 
 Suggested placeholders:
@@ -149,7 +153,7 @@ Suggested placeholders:
 - [x] Add base global styles and theme variables.
 - [x] Scaffold core Sass tokens, mixins, global styles, and starter module styles.
 - [x] Configure Vite to build from a single root `index.html` and emit static route HTML files for presentation variants.
-- [ ] Build reusable presentation layout components.
+- [x] Build reusable presentation layout components.
 - [x] Add initial navbar, brand mark, section link, and section registry components.
 - [x] Refactor content out of data arrays into JSX-driven pages.
 - [x] Add placeholder slide components.

@@ -14,3 +14,12 @@
     scroll-padding-top: 0;
     scroll-snap-type: y mandatory;
 }
+
+@media print {
+    .deck {
+        height: auto;
+        overflow: visible;
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+    }
+}

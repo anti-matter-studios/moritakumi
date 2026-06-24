@@ -129,3 +129,18 @@ button {
         --slide-padding-inline: clamp(1.25rem, 7vw, 2.5rem);
     }
 }
+
+@page {
+    size: 1600px 900px;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        width: 100%;
+        min-height: 0;
+        overflow: visible;
+        background: var(--color-page);
+    }
+}

@@ -3,10 +3,25 @@
  * Licensed under the MIT License.
  */
 
-import DynamicPage from "./components/DynamicPage";
+import type { ComponentType } from "react";
+
+import MyHobbiesPage from "./pages/MyHobbiesPage";
+import MyTravelsPage from "./pages/MyTravelsPage";
+import WhoAmIPage from "./pages/WhoAmIPage";
+
+const pages = {
+    "who-am-i": WhoAmIPage,
+    "my-hobbies": MyHobbiesPage,
+    "my-travels": MyTravelsPage,
+} satisfies Record<string, ComponentType>;
+
+type PageName = keyof typeof pages;
 
 export function App() {
-    return <DynamicPage pageKey={getRouteName(document.location.pathname)} />;
+    const routeName = getRouteName(document.location.pathname);
+    const Page = isPageName(routeName) ? pages[routeName] : WhoAmIPage;
+
+    return <Page />;
 }
 
 function getRouteName(pathname: string) {
@@ -17,4 +32,8 @@ function getRouteName(pathname: string) {
         .pop() ?? "";
 
     return routeName.replace(/\.html$/, "");
+}
+
+function isPageName(routeName: string): routeName is PageName {
+    return routeName in pages;
 }

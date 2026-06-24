@@ -8,7 +8,7 @@
     0% {
         opacity: 0;
         transform:
-            translateY(calc(-50% - var(--background-parallax-distance)))
+            translateY(calc(var(--background-placement-translate-y) - var(--background-parallax-distance)))
             rotate(var(--background-rotation))
             scale(0.94);
     }
@@ -17,7 +17,7 @@
     74% {
         opacity: var(--background-opacity);
         transform:
-            translateY(-50%)
+            translateY(var(--background-placement-translate-y))
             rotate(calc(var(--background-rotation) / 2))
             scale(1);
     }
@@ -25,7 +25,7 @@
     100% {
         opacity: 0;
         transform:
-            translateY(calc(-50% + var(--background-parallax-distance)))
+            translateY(calc(var(--background-placement-translate-y) + var(--background-parallax-distance)))
             rotate(var(--background-rotation))
             scale(1.04);
     }
@@ -52,8 +52,15 @@
 /* Set the style of a floating background image. */
 .background {
     --background-opacity: 0.24;
-    --background-image-width: min(42vw, 38rem);
+    --background-image-width-limit: min(42vw, 38rem);
+    --background-image-height-limit: min(62vh, 42rem);
+    --background-image-rendered-width: min(
+        var(--background-image-source-width, var(--background-image-width-limit)),
+        var(--background-image-width-limit),
+        calc(var(--background-image-height-limit) * var(--background-image-aspect-ratio, 1))
+    );
     --background-parallax-distance: clamp(3rem, 12vh, 12rem);
+    --background-placement-translate-y: -50%;
     --background-rotation: -4deg;
 
     position: absolute;
@@ -61,11 +68,11 @@
     top: 52%;
     right: clamp(var(--space-4), 7vw, var(--space-8));
     width: fit-content;
-    max-width: var(--background-image-width);
-    max-height: min(62vh, 42rem);
+    max-width: var(--background-image-rendered-width);
     margin: 0;
     opacity: var(--background-opacity);
     pointer-events: none;
+    transform: translateY(var(--background-placement-translate-y)) rotate(var(--background-rotation));
     will-change: opacity, transform;
 
     @supports (animation-timeline: view()) {
@@ -88,17 +95,22 @@
     }
 
     &[data-placement="top-left"] {
+        top: 12%;
+        bottom: auto;
         right: auto;
         left: max(var(--space-4), calc(var(--timeline-width) + var(--space-5)));
 
+        --background-placement-translate-y: 0%;
         --background-rotation: 4deg;
     }
 
     &[data-placement="top-right"] {
-        top: 52%;
+        top: 12%;
+        bottom: auto;
         right: clamp(var(--space-4), 7vw, var(--space-8));
         left: auto;
 
+        --background-placement-translate-y: 0%;
         --background-rotation: -4deg;
     }
 
@@ -108,6 +120,7 @@
         right: auto;
         left: max(var(--space-4), calc(var(--timeline-width) + var(--space-5)));
 
+        --background-placement-translate-y: 0%;
         --background-rotation: -4deg;
     }
 
@@ -117,6 +130,7 @@
         right: clamp(var(--space-4), 7vw, var(--space-8));
         left: auto;
 
+        --background-placement-translate-y: 0%;
         --background-rotation: 4deg;
     }
 
@@ -126,7 +140,7 @@
 
         --background-rotation: -2deg;
 
-        transform: translate(-50%, -50%) rotate(var(--background-rotation));
+        transform: translate(-50%, var(--background-placement-translate-y)) rotate(var(--background-rotation));
 
         @supports (animation-timeline: view()) {
             animation-name: background-parallax-center;
@@ -149,9 +163,8 @@
 .background img {
     position: relative;
     display: block;
-    width: var(--background-image-width);
-    height: min(62vh, 42rem);
-    object-fit: cover;
+    width: var(--background-image-rendered-width);
+    height: auto;
     border-radius: inherit;
     box-shadow: 0 2rem 5rem rgb(32 53 50 / 0.12);
     filter: blur(0.0625rem) saturate(0.78) contrast(0.92);
@@ -168,23 +181,41 @@
         top: 58%;
         right: var(--space-3);
         left: auto;
-        max-height: 46vh;
 
         --background-opacity: 0.18;
-        --background-image-width: min(76vw, 26rem);
+        --background-image-width-limit: min(76vw, 26rem);
+        --background-image-height-limit: 46vh;
 
         &[data-placement^="top-"],
         &[data-placement^="bottom-"] {
-            top: 58%;
-            bottom: auto;
+            top: 12%;
             right: var(--space-3);
             left: auto;
+        }
+
+        &[data-placement^="bottom-"] {
+            top: auto;
+            bottom: 12%;
         }
     }
 
     .background img {
-        width: var(--background-image-width);
-        height: 46vh;
-        object-fit: contain;
+        width: var(--background-image-rendered-width);
+    }
+}
+
+@media print {
+    .background {
+        animation: none;
+        will-change: auto;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .background img {
+        box-shadow: none;
+        filter: none;
     }
 }

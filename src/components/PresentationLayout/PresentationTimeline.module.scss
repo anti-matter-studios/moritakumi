@@ -20,3 +20,13 @@
         width: 2.25rem;
     }
 }
+
+@media print {
+    .timeline {
+        position: fixed;
+        top: 50%;
+        left: var(--space-5);
+        width: var(--timeline-width);
+        transform: translateY(-50%);
+    }
+}
