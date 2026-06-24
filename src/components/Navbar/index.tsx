@@ -23,7 +23,7 @@ export default function Navbar() {
         <NavbarLogo />
         <nav className={styles.nav} aria-label="Primary navigation" id="nav-links">
             <div className={styles.linkTrack}>
-                {links.map(link => <NavbarLink id={link} />)}
+                {links.map(link => <NavbarLink id={link} key={link} />)}
             </div>
         </nav>
         <LanguageToggle />

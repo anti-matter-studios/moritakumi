@@ -8,8 +8,10 @@ import type { ComponentType } from "react";
 import MyHobbiesPage from "./pages/MyHobbiesPage";
 import MyTravelsPage from "./pages/MyTravelsPage";
 import WhoAmIPage from "./pages/WhoAmIPage";
+import HomePage from "./pages/HomePage";
 
 const pages = {
+    "home": HomePage,
     "who-am-i": WhoAmIPage,
     "my-hobbies": MyHobbiesPage,
     "my-travels": MyTravelsPage,
@@ -19,7 +21,7 @@ type PageName = keyof typeof pages;
 
 export function App() {
     const routeName = getRouteName(document.location.pathname);
-    const Page = isPageName(routeName) ? pages[routeName] : WhoAmIPage;
+    const Page = isPageName(routeName) ? pages[routeName] : HomePage;
 
     return <Page />;
 }

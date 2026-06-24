@@ -1,10 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import ContentLock from "./components/ContentLock";
 
-import "./i18n";
 import "./styles/global.scss";
 
 const root = document.getElementById("root") as HTMLElement;
-createRoot(root).render(<StrictMode><App /></StrictMode>,);
-
+createRoot(root).render(
+    <StrictMode>
+        <ContentLock>
+            <App />
+        </ContentLock>
+    </StrictMode>,
+);

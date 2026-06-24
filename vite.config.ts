@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import yaml from "@modyfi/vite-plugin-yaml";
 import presentationRouteHtml from "./config/presentationRouteHtml";
+import encryptedTranslations from "./config/encryptedTranslations";
 
 const presentationRoutes = ["", "who-am-i", "my-hobbies", "my-travels"];
 
@@ -18,6 +19,7 @@ export default defineConfig({
         react(),
         viteTsconfigPaths(),
         yaml(),
+        encryptedTranslations(),
         presentationRouteHtml(presentationRoutes),
     ],
 });
