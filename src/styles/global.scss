@@ -28,10 +28,10 @@
     --font-size-tiny: 1rem;
     --font-size-kicker: 1.75rem;
     --font-size-body: 1.75rem;
-    --font-size-lead: clamp(2.25rem, 2vw, 3rem);
-    --font-size-title: clamp(4rem, 6vw, 9.5rem);
-    --font-size-title-small: clamp(3rem, 4vw, 5rem);
-    --font-size-display: clamp(6rem, 12vw, 16rem);
+    --font-size-lead: 3rem;
+    --font-size-title: 5rem;
+    --font-size-title-small: 4rem;
+    --font-size-display: 6rem;
 
     @include mixins.below-desktop {
         --font-size-tiny: 0.5rem;
