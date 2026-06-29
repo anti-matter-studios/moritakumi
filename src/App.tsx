@@ -9,12 +9,14 @@ import MyHobbiesPage from "./pages/MyHobbiesPage";
 import MyTravelsPage from "./pages/MyTravelsPage";
 import WhoAmIPage from "./pages/WhoAmIPage";
 import HomePage from "./pages/HomePage";
+import ThanksPage from "./pages/Thanks";
 
 const pages = {
     "home": HomePage,
     "who-am-i": WhoAmIPage,
     "my-hobbies": MyHobbiesPage,
     "my-travels": MyTravelsPage,
+    "thanks": ThanksPage,
 } satisfies Record<string, ComponentType>;
 
 type PageName = keyof typeof pages;

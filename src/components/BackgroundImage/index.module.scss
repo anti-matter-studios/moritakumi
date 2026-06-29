@@ -65,8 +65,8 @@
 
     position: absolute;
     z-index: 0;
-    top: 52%;
-    right: clamp(var(--space-4), 7vw, var(--space-8));
+    top: var(--space-8);
+    right: var(--space-8);
     width: fit-content;
     max-width: var(--background-image-rendered-width);
     margin: 0;
@@ -95,19 +95,19 @@
     }
 
     &[data-placement="top-left"] {
-        top: 12%;
+        top: calc(var(--space-8) + var(--nav-height));
         bottom: auto;
         right: auto;
-        left: max(var(--space-4), calc(var(--timeline-width) + var(--space-5)));
+        left: var(--space-8);
 
         --background-placement-translate-y: 0%;
         --background-rotation: 4deg;
     }
 
     &[data-placement="top-right"] {
-        top: 12%;
+        top: calc(var(--space-8) + var(--nav-height));
         bottom: auto;
-        right: clamp(var(--space-4), 7vw, var(--space-8));
+        right: var(--space-8);
         left: auto;
 
         --background-placement-translate-y: 0%;
@@ -116,9 +116,9 @@
 
     &[data-placement="bottom-left"] {
         top: auto;
-        bottom: 12%;
+        bottom: var(--space-8);
         right: auto;
-        left: max(var(--space-4), calc(var(--timeline-width) + var(--space-5)));
+        left: var(--space-8);
 
         --background-placement-translate-y: 0%;
         --background-rotation: -4deg;
@@ -126,8 +126,8 @@
 
     &[data-placement="bottom-right"] {
         top: auto;
-        bottom: 12%;
-        right: clamp(var(--space-4), 7vw, var(--space-8));
+        bottom: var(--space-8);
+        right: var(--space-8);
         left: auto;
 
         --background-placement-translate-y: 0%;

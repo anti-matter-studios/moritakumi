@@ -19,7 +19,8 @@ const pages = [
     { route: "index.html", fileName: "index.pdf", pageSize: "21cm 29.7cm", noTimeline: true },
     { route: "who-am-i", fileName: "who-am-i.pdf" },
     { route: "my-hobbies", fileName: "my-hobbies.pdf" },
-    { route: "my-travels", fileName: "my-travels.pdf" }
+    { route: "my-travels", fileName: "my-travels.pdf" },
+    { route: "thanks", fileName: "thanks.pdf" }
 ];
 
 const mimeTypes = new Map([

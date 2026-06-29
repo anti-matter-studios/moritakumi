@@ -85,5 +85,5 @@ export interface TextReplacementProps {
 
     /** Fallback original text when `text` is omitted. */
     children?: ReactNode;
-    characterSet: "full" | "reduced";
+    characterSet?: "full" | "reduced";
 }

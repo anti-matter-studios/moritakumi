@@ -388,7 +388,7 @@ function prefersReducedMotion() {
     );
 }
 
-function shuffleSourceLetters(sourceLetters: string[]) {
+function shuffleSourceLetters(sourceLetters: readonly string[]) {
     const pool = sourceLetters.filter((letter) => letter !== " ");
 
     return sourceLetters
@@ -410,7 +410,7 @@ function createReplacementFrame(
     targetLetters: string[],
     revealedCount: number,
     revealOrder: number[],
-    characterSet: string[] = RANDOM_CHARACTERS
+    characterSet: readonly string[] = RANDOM_CHARACTERS
 ) {
     const frameLength = Math.max(sourceLetters.length, targetLetters.length);
     const shuffledLetters = Array.from(shuffleSourceLetters(characterSet));

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
-    PresentationTimeline,
+    PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
 import Slide, { SlideCard, SlideHeader } from "@/components/Slide";
@@ -33,7 +33,16 @@ export default function WhoAmIPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="who-am-i" navLabel={t("who-am-i.slides.whoAmI.navLabel")}>
+            <Slide
+                id="who-am-i"
+                navLabel={t("who-am-i.slides.whoAmI.navLabel")}
+                backgroundImage={{
+                    src: "/images/myself.jpg",
+                    width: 979,
+                    height: 1299,
+                    placement: "top-right",
+                }}
+            >
                 <SlideHeader><RichText i18nKey="who-am-i.slides.whoAmI.title" /></SlideHeader>
                 <Paragraphs i18nKey="who-am-i.slides.whoAmI.paragraphs" />
             </Slide>
@@ -64,7 +73,7 @@ export default function WhoAmIPage() {
                     src: "/images/disparate-youth.jpg",
                     width: 689,
                     height: 689,
-                    placement: "top-right",
+                    placement: "top-right"
                 }}
             >
                 <SlideCard footer={<RichText i18nKey="who-am-i.slides.song.footer" />}>
@@ -82,7 +91,7 @@ export default function WhoAmIPage() {
                     src: "/images/interstellar.jpg",
                     width: 720,
                     height: 1080,
-                    placement: "top-left",
+                    placement: "top-left"
                 }}
             >
                 <SlideCard footer={<RichText i18nKey="who-am-i.slides.movie.footer" />}>
@@ -100,7 +109,7 @@ export default function WhoAmIPage() {
                     src: "/images/207.jpg",
                     width: 1535,
                     height: 2048,
-                    placement: "bottom-right",
+                    placement: "bottom-right"
                 }}
             >
                 <SlideHeader><RichText i18nKey="who-am-i.slides.place.title" /></SlideHeader>

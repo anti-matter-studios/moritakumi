@@ -6,6 +6,7 @@
 import type { PropsWithChildren, ReactNode } from "react";
 import { Trans } from "react-i18next";
 
+import TraitSlider from "@/components/TraitSlider";
 import TextReplacement from "@/components/TextReplacement";
 import styles from "./index.module.scss";
 
@@ -29,6 +30,7 @@ export default function RichText(props: RichTextProps) {
             h6: <h6 />,
             blue: <BlueText />,
             replace: <TextReplacement />,
+            "trait-slider": <TraitSlider />,
             ...props.components,
         }}
     >

@@ -29,12 +29,30 @@ export default function MyHobbiesPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="horseback-riding" navLabel={t("my-hobbies.slides.horsebackRiding.navLabel")}>
+            <Slide
+                id="horseback-riding"
+                navLabel={t("my-hobbies.slides.horsebackRiding.navLabel")}
+                backgroundImage={{
+                    src: "/images/horseback-riding.jpg",
+                    width: 960,
+                    height: 940,
+                    placement: "top-right"
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-hobbies.slides.horsebackRiding.title" /></SlideHeader>
                 <Paragraphs i18nKey="my-hobbies.slides.horsebackRiding.paragraphs" />
             </Slide>
 
-            <Slide id="winter-sports" navLabel={t("my-hobbies.slides.winterSports.navLabel")}>
+            <Slide
+                id="winter-sports"
+                navLabel={t("my-hobbies.slides.winterSports.navLabel")}
+                backgroundImage={{
+                    src: "/images/ski.jpg",
+                    width: 1535,
+                    height: 2048,
+                    placement: "bottom-left"
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-hobbies.slides.winterSports.title" /></SlideHeader>
                 <Paragraphs i18nKey="my-hobbies.slides.winterSports.paragraphs" />
             </Slide>
@@ -44,7 +62,16 @@ export default function MyHobbiesPage() {
                 <Paragraphs i18nKey="my-hobbies.slides.womensRights.paragraphs" />
             </Slide>
 
-            <Slide id="blood-donation" navLabel={t("my-hobbies.slides.bloodDonation.navLabel")}>
+            <Slide
+                id="blood-donation"
+                navLabel={t("my-hobbies.slides.bloodDonation.navLabel")}
+                backgroundImage={{
+                    src: "/images/efs-don.jpg",
+                    width: 2048,
+                    height: 1534,
+                    placement: "bottom-left"
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-hobbies.slides.bloodDonation.title" /></SlideHeader>
                 <Paragraphs
                     i18nKey="my-hobbies.slides.bloodDonation.paragraphs"
