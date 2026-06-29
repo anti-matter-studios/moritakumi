@@ -27,8 +27,8 @@ export default function WhoAmIPage() {
                 <Timeline.Item id="citation">{t("who-am-i.slides.citation.navLabel")}</Timeline.Item>
                 <Timeline.Item id="song">{t("who-am-i.slides.song.navLabel")}</Timeline.Item>
                 <Timeline.Item id="movie">{t("who-am-i.slides.movie.navLabel")}</Timeline.Item>
-                <Timeline.Item id="colour">{t("who-am-i.slides.colour.navLabel")}</Timeline.Item>
                 <Timeline.Item id="place">{t("who-am-i.slides.place.navLabel")}</Timeline.Item>
+                <Timeline.Item id="colour">{t("who-am-i.slides.colour.navLabel")}</Timeline.Item>
             </Timeline>
         </PresentationTimeline>
 
@@ -93,11 +93,6 @@ export default function WhoAmIPage() {
                 <Paragraphs i18nKey="who-am-i.slides.movie.paragraphs" />
             </Slide>
 
-            <Slide id="colour" navLabel={t("who-am-i.slides.colour.navLabel")}>
-                <SlideHeader><RichText i18nKey="who-am-i.slides.colour.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.colour.paragraphs" />
-            </Slide>
-
             <Slide
                 id="place"
                 navLabel={t("who-am-i.slides.place.navLabel")}
@@ -105,11 +100,16 @@ export default function WhoAmIPage() {
                     src: "/images/207.jpg",
                     width: 1535,
                     height: 2048,
-                    placement: "top-right",
+                    placement: "bottom-right",
                 }}
             >
                 <SlideHeader><RichText i18nKey="who-am-i.slides.place.title" /></SlideHeader>
                 <Paragraphs i18nKey="who-am-i.slides.place.paragraphs" />
+            </Slide>
+
+            <Slide id="colour" navLabel={t("who-am-i.slides.colour.navLabel")}>
+                <SlideHeader><RichText i18nKey="who-am-i.slides.colour.title" /></SlideHeader>
+                <Paragraphs i18nKey="who-am-i.slides.colour.paragraphs" />
             </Slide>
         </PresentationDeck>
     </PresentationLayout>;
