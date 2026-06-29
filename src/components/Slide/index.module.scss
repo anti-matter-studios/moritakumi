@@ -6,6 +6,16 @@
 @use "../../styles/mixins" as *;
 
 
+@keyframes colour-shift-background {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 /* Set the style of a full-screen presentation slide. */
 .slide {
     @include full-viewport-slide;
@@ -55,6 +65,30 @@
                 color-mix(in srgb, var(--color-accent-soft) 76%, var(--color-surface)),
                 var(--color-page)
             );
+    }
+
+    &[data-tone="colour-shift"] {
+        background:
+            radial-gradient(circle at 84% 18%, var(--color-surface-soft), transparent 34rem),
+            linear-gradient(135deg, var(--color-accent-soft), var(--color-page));
+
+        &::before {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 24%, rgb(66 174 245 / 0.32), transparent 34rem),
+                radial-gradient(circle at 86% 18%, rgb(15 76 129 / 0.18), transparent 36rem),
+                linear-gradient(135deg, #f3f9ff, #d8ecff 52%, #bde1ff);
+            content: "";
+            opacity: 0;
+            pointer-events: none;
+            will-change: opacity;
+        }
+
+        &[data-background-animation="ready"]::before {
+            animation: colour-shift-background 2s ease-in-out forwards;
+        }
     }
 
     hr {
@@ -118,6 +152,14 @@
     margin-top: var(--space-2);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .slide[data-tone="colour-shift"][data-background-animation="ready"]::before {
+        animation: none;
+        opacity: 1;
+        will-change: auto;
+    }
+}
+
 @media (max-width: 56rem) {
     .slide {
         padding-inline: var(--slide-padding-inline);
@@ -139,6 +181,10 @@
         background: var(--color-page);
         scroll-snap-align: none;
         scroll-snap-stop: normal;
+    }
+
+    .slide[data-tone="colour-shift"]::before {
+        display: none;
     }
 
     .slide:last-child {

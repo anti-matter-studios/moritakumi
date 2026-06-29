@@ -23,6 +23,7 @@ export default function TextReplacement(props: TextReplacementProps) {
         shuffleFrameCount: props.shuffleFrameCount,
         shuffleFrameMs: props.shuffleFrameMs,
         speed: props.speed,
+        characterSet: props.characterSet,
         text: originalText,
     });
 
@@ -84,4 +85,5 @@ export interface TextReplacementProps {
 
     /** Fallback original text when `text` is omitted. */
     children?: ReactNode;
+    characterSet: "full" | "reduced";
 }

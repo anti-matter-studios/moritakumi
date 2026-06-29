@@ -107,7 +107,7 @@ export default function WhoAmIPage() {
                 <Paragraphs i18nKey="who-am-i.slides.place.paragraphs" />
             </Slide>
 
-            <Slide id="colour" navLabel={t("who-am-i.slides.colour.navLabel")}>
+            <Slide id="colour" navLabel={t("who-am-i.slides.colour.navLabel")} tone="colour-shift">
                 <SlideHeader><RichText i18nKey="who-am-i.slides.colour.title" /></SlideHeader>
                 <Paragraphs i18nKey="who-am-i.slides.colour.paragraphs" />
             </Slide>

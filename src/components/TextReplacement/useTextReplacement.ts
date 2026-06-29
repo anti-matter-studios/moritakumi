@@ -5,18 +5,224 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+
 const defaultTiming = {
     shuffleFrameCount: 5,
     shuffleFrameMs: 28,
     replacementFrameMs: 34,
-    revealStepCount: 2,
+    revealStepCount: 2
 } as const;
 
 const speedFactors = {
     slow: 0.7,
     normal: 1,
-    fast: 1.6,
+    fast: 1.6
 } as const;
+
+const RANDOM_CHARACTERS = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "а",
+    "б",
+    "в",
+    "г",
+    "д",
+    "е",
+    "ё",
+    "ж",
+    "з",
+    "и",
+    "й",
+    "к",
+    "л",
+    "м",
+    "н",
+    "о",
+    "п",
+    "р",
+    "с",
+    "т",
+    "у",
+    "ф",
+    "х",
+    "ц",
+    "ч",
+    "ш",
+    "щ",
+    "ъ",
+    "ы",
+    "ь",
+    "э",
+    "ю",
+    "я",
+    "А",
+    "Б",
+    "В",
+    "Г",
+    "Д",
+    "Е",
+    "Ё",
+    "Ж",
+    "З",
+    "И",
+    "Й",
+    "К",
+    "Л",
+    "М",
+    "Н",
+    "О",
+    "П",
+    "Р",
+    "С",
+    "Т",
+    "У",
+    "Ф",
+    "Х",
+    "Ц",
+    "Ч",
+    "Ш",
+    "Щ",
+    "Ъ",
+    "Ы",
+    "Ь",
+    "Э",
+    "Ю",
+    "Я",
+    "ا",
+    "ب",
+    "ت",
+    "ث",
+    "ج",
+    "ح",
+    "خ",
+    "د",
+    "ذ",
+    "ر",
+    "ز",
+    "س",
+    "ش",
+    "ص",
+    "ض",
+    "ط",
+    "ظ",
+    "ع",
+    "غ",
+    "ف",
+    "ق",
+    "ك",
+    "ل",
+    "م",
+    "ن",
+    "ه",
+    "و",
+    "ي",
+    "ｱ",
+    "ｲ",
+    "ｳ",
+    "ｴ",
+    "ｵ",
+    "ｶ",
+    "ｷ",
+    "ｸ",
+    "ｹ",
+    "ｺ",
+    "ｻ",
+    "ｼ",
+    "ｽ",
+    "ｾ",
+    "ｿ",
+    "ﾀ",
+    "ﾁ",
+    "ﾂ",
+    "ﾃ",
+    "ﾄ",
+    "ﾅ",
+    "ﾆ",
+    "ﾇ",
+    "ﾈ",
+    "ﾉ",
+    "ﾊ",
+    "ﾋ",
+    "ﾌ",
+    "ﾍ",
+    "ﾎ",
+    "ﾏ",
+    "ﾐ",
+    "ﾑ",
+    "ﾒ",
+    "ﾓ",
+    "ﾔ",
+    "ﾕ",
+    "ﾖ",
+    "ﾗ",
+    "ﾘ",
+    "ﾙ",
+    "ﾚ",
+    "ﾛ",
+    "ﾜ",
+    "ｦ",
+    "ﾝ"
+] as const;
 
 
 /** Animates a short piece of text between an original and replacement value. */
@@ -26,11 +232,12 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
         options.revealStepCount,
         options.shuffleFrameCount,
         options.shuffleFrameMs,
-        options.speed,
+        options.speed
     ]);
 
     const [displayText, setDisplayText] = useState(options.text);
     const displayTextRef = useRef(options.text);
+    const currentTargetRef = useRef<TextReplacementTarget>("original");
     const timeoutRef = useRef<number | undefined>(undefined);
 
     const setDisplayedText = useCallback((text: string) => {
@@ -45,10 +252,16 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
         }
     }, []);
 
-    const animateTo = useCallback((targetText: string) => {
+    const animateTo = useCallback((targetText: string, target: TextReplacementTarget) => {
         clearTimer();
 
-        if (prefersReducedMotion() || displayTextRef.current === targetText) {
+        const shouldAnimate = (
+            displayTextRef.current !== targetText ||
+            currentTargetRef.current !== target
+        );
+        currentTargetRef.current = target;
+
+        if (prefersReducedMotion() || !shouldAnimate) {
             setDisplayedText(targetText);
             return;
         }
@@ -69,12 +282,13 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
                     targetLetters,
                     revealedCount,
                     revealOrder,
-                ),
+                    options.characterSet == "reduced" ? targetLetters : RANDOM_CHARACTERS
+                )
             );
 
             timeoutRef.current = window.setTimeout(
                 () => runReveal(revealedCount + timing.revealStepCount),
-                timing.replacementFrameMs,
+                timing.replacementFrameMs
             );
         };
 
@@ -87,7 +301,7 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
             setDisplayedText(shuffleSourceLetters(sourceLetters));
             timeoutRef.current = window.setTimeout(
                 () => runShuffle(frame + 1),
-                timing.shuffleFrameMs,
+                timing.shuffleFrameMs
             );
         };
 
@@ -95,14 +309,15 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
     }, [clearTimer, setDisplayedText, timing]);
 
     const showReplacement = useCallback(() => {
-        animateTo(options.replacement);
+        animateTo(options.replacement, "replacement");
     }, [animateTo, options.replacement]);
 
     const showOriginal = useCallback(() => {
-        animateTo(options.text);
+        animateTo(options.text, "original");
     }, [animateTo, options.text]);
 
     useEffect(() => {
+        currentTargetRef.current = "original";
         setDisplayedText(options.text);
     }, [options.text, setDisplayedText]);
 
@@ -111,7 +326,7 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
     return {
         displayText,
         showOriginal,
-        showReplacement,
+        showReplacement
     };
 }
 
@@ -121,20 +336,20 @@ function createTiming(options: UseTextReplacementOptions) {
     return {
         shuffleFrameCount: parsePositiveInteger(
             options.shuffleFrameCount,
-            defaultTiming.shuffleFrameCount,
+            defaultTiming.shuffleFrameCount
         ),
         shuffleFrameMs: parsePositiveInteger(
             options.shuffleFrameMs,
-            Math.round(defaultTiming.shuffleFrameMs / speedFactor),
+            Math.round(defaultTiming.shuffleFrameMs / speedFactor)
         ),
         replacementFrameMs: parsePositiveInteger(
             options.replacementFrameMs,
-            Math.round(defaultTiming.replacementFrameMs / speedFactor),
+            Math.round(defaultTiming.replacementFrameMs / speedFactor)
         ),
         revealStepCount: parsePositiveInteger(
             options.revealStepCount,
-            Math.max(1, Math.round(defaultTiming.revealStepCount * speedFactor)),
-        ),
+            Math.max(1, Math.round(defaultTiming.revealStepCount * speedFactor))
+        )
     };
 }
 
@@ -195,9 +410,10 @@ function createReplacementFrame(
     targetLetters: string[],
     revealedCount: number,
     revealOrder: number[],
+    characterSet: string[] = RANDOM_CHARACTERS
 ) {
     const frameLength = Math.max(sourceLetters.length, targetLetters.length);
-    const shuffledLetters = Array.from(shuffleSourceLetters(sourceLetters));
+    const shuffledLetters = Array.from(shuffleSourceLetters(characterSet));
     const revealedIndexes = new Set(revealOrder.slice(0, revealedCount));
 
     return Array.from({ length: frameLength }, (_letter, index) => {
@@ -226,6 +442,8 @@ function createRandomOrder(length: number) {
 
 export type TextReplacementSpeed = "slow" | "normal" | "fast" | `${number}` | number;
 
+type TextReplacementTarget = "original" | "replacement";
+
 export interface UseTextReplacementOptions {
     /** Text displayed before interaction. */
     text: string;
@@ -247,4 +465,7 @@ export interface UseTextReplacementOptions {
 
     /** Number of characters revealed on each replacement frame. */
     revealStepCount?: number | string;
+
+    /** Character set to use for the replacement effect. */
+    characterSet?: "full" | "reduced";
 }
