@@ -51,7 +51,7 @@
 
 /* Set the style of a floating background image. */
 .background {
-    --background-opacity: 0.24;
+    --background-opacity: 0.5;
     --background-image-width-limit: min(42vw, 38rem);
     --background-image-height-limit: min(62vh, 42rem);
     --background-image-rendered-width: min(
@@ -182,7 +182,7 @@
         right: var(--space-3);
         left: auto;
 
-        --background-opacity: 0.18;
+        --background-opacity: 0.5;
         --background-image-width-limit: min(76vw, 26rem);
         --background-image-height-limit: 46vh;
 
