@@ -21,7 +21,7 @@ export default function Paragraphs(props: ParagraphsProps) {
     return <>
         {paragraphs.map((paragraph) => (
             <p key={paragraph}>
-                <RichText components={props.components}>{paragraph}</RichText>
+                <RichText values={props.values} components={props.components}>{paragraph}</RichText>
             </p>
         ))}
     </>;
@@ -37,4 +37,7 @@ export interface ParagraphsProps {
 
     /** Named inline components allowed inside each paragraph. */
     components?: Record<string, ReactNode>;
+
+    /** Interpolation values. */
+    values?: Record<string, unknown>;
 }

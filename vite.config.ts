@@ -15,6 +15,9 @@ const presentationRoutes = ["", "who-am-i", "my-hobbies", "my-travels"];
 export default defineConfig({
     appType: "mpa",
     server: { port: 10201 },
+    define: {
+        CONTENT_PASSWORD: JSON.stringify(process.env.MORITAKUMI_CONTENT_PASSWORD),
+    },
     plugins: [
         react(),
         viteTsconfigPaths(),
@@ -22,4 +25,11 @@ export default defineConfig({
         encryptedTranslations(),
         presentationRouteHtml(presentationRoutes),
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                loadPaths: ["src/styles"]
+            }
+        }
+    }
 });

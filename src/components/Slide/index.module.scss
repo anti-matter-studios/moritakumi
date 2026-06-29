@@ -34,6 +34,10 @@
         background: linear-gradient(135deg, var(--color-accent-soft), var(--color-page));
     }
 
+    &.fullWidth {
+        padding-inline: var(--slide-padding-inline);
+    }
+
     &[data-tone="plain"] {
         background: var(--color-page);
     }
@@ -66,6 +70,7 @@
 
 /* Set the style of the foreground slide content. */
 .content {
+    position: relative;
     z-index: 1;
     width: fit-content;
     max-width: min(100%, var(--content-max-width));
@@ -97,6 +102,10 @@
             color: var(--color-text);
             text-decoration-color: currentColor;
         }
+    }
+
+    .fullWidth & {
+        max-width: unset;
     }
 }
 

@@ -16,6 +16,7 @@ const pdfDir = resolve(distDir, "pdfs");
 const contentPassword = process.env.MORITAKUMI_CONTENT_PASSWORD;
 
 const pages = [
+    { route: "index.html", fileName: "index.pdf", pageSize: "21cm 29.7cm", noTimeline: true },
     { route: "who-am-i", fileName: "who-am-i.pdf" },
     { route: "my-hobbies", fileName: "my-hobbies.pdf" },
     { route: "my-travels", fileName: "my-travels.pdf" }
@@ -60,12 +61,17 @@ try {
 
     for (const pageConfig of pages) {
         const page = await context.newPage();
-        const url = `${origin}/${pageConfig.route}.html`;
+        const url = getPageUrl(origin, pageConfig.route);
         const outputPath = join(pdfDir, pageConfig.fileName);
 
         await page.goto(url, { waitUntil: "networkidle" });
         await unlockContentForPdf(page);
-        await preparePdfTimeline(page);
+        if (pageConfig.pageSize !== undefined) {
+            await preparePdfPageSize(page, pageConfig.pageSize);
+        }
+        if (!pageConfig.noTimeline) {
+            await preparePdfTimeline(page);
+        }
         await page.emulateMedia({ media: "print" });
         await page.pdf({
             path: outputPath,
@@ -80,6 +86,25 @@ try {
 } finally {
     await browser?.close();
     await close(server);
+}
+
+function getPageUrl(origin, route) {
+    if (route.endsWith(".html")) {
+        return `${origin}/${route}`;
+    }
+
+    return `${origin}/${route}.html`;
+}
+
+async function preparePdfPageSize(page, pageSize) {
+    await page.addStyleTag({
+        content: `
+            @page {
+                size: ${pageSize};
+                margin: 0;
+            }
+        `
+    });
 }
 
 async function unlockContentForPdf(page) {

@@ -11,6 +11,7 @@ import BackgroundImage, {
 import SlideCard, { type SlideCardProps } from "./SlideCard";
 import SlideHeader, { type SlideHeaderProps } from "./SlideHeader";
 import styles from "./index.module.scss";
+import classNames from "classnames";
 
 
 export { SlideCard, SlideHeader };
@@ -18,8 +19,10 @@ export type { SlideCardProps, SlideHeaderProps };
 
 /** Full-screen presentation slide. */
 export default function Slide(props: SlideProps) {
+    const className = classNames(styles.slide, { [styles.fullWidth]: props.fullWidth  });
+
     return <section
-        className={styles.slide}
+        className={className}
         data-tone={props.tone ?? "default"}
         id={props.id}
         aria-label={props.navLabel}
@@ -53,6 +56,9 @@ export interface SlideProps extends PropsWithChildren {
 
     /** Image to render in the background. */
     backgroundImage?: BackgroundImageProps;
+
+    /** If set, disables the left-right disposition of the slide. */
+    fullWidth?: boolean;
 }
 
 type SlideCardGridProps = PropsWithChildren;

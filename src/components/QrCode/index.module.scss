@@ -1,0 +1,74 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+
+.card {
+    display: grid;
+    gap: var(--space-1);
+    width: var(--qr-code-size, clamp(11rem, 18vw, 15rem));
+    padding: var(--space-3);
+    border: 0.0625rem solid var(--color-glass-border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.25)), rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0.0625rem 0 rgb(255 255 255 / 0.48),
+    0 1.25rem 3rem rgb(32 53 50 / 0.14);
+    color: var(--color-text);
+    text-decoration: none !important;
+    transform: rotate(3deg);
+    transform-origin: 82% 82%;
+    transition: box-shadow 180ms ease,
+    transform 180ms ease;
+
+    &:hover {
+        box-shadow: inset 0 0.0625rem 0 rgb(255 255 255 / 0.58),
+        0 1.5rem 3.5rem rgb(32 53 50 / 0.18);
+        transform: rotate(1deg) translateY(-0.125rem);
+    }
+
+    &:focus-visible {
+        outline-offset: 0.3rem;
+    }
+}
+
+.code {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: visible;
+}
+
+.background {
+    fill: transparent;
+}
+
+.module {
+    fill: var(--color-text);
+}
+
+.finderModule {
+    fill: var(--color-accent-strong);
+}
+
+.label {
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    text-align: center;
+    text-decoration: none;
+}
+
+@media (max-width: 56rem) {
+    .card {
+        width: var(--qr-code-size, clamp(8.75rem, 38vw, 11rem));
+        padding: var(--space-2);
+    }
+}
+
+@media print {
+    .card {
+        box-shadow: none;
+    }
+}

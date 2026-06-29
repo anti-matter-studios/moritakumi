@@ -1,0 +1,57 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+@use "mixins";
+
+.qrShadow,
+.qrCode {
+    --home-qr-size: 20rem;
+    --home-qr-overflow-x: var(--space-7);
+    --home-qr-overflow-y: var(--space-6);
+
+    --qr-code-size: var(--home-qr-size);
+}
+
+.copy {
+    --home-qr-shadow-height: 0px;
+    --home-qr-shadow-offset: 0px;
+    --home-qr-shadow-width: 0px;
+}
+
+.qrShadow {
+    display: inline-block;
+    float: right;
+    width: calc(var(--home-qr-shadow-width));
+    height: calc(var(--home-qr-shadow-height));
+    margin-block-start: var(--home-qr-shadow-offset);
+    margin-inline-start: var(--space-4);
+    pointer-events: none;
+}
+
+.qrCode {
+    position: absolute;
+    z-index: 2;
+    right: calc(var(--home-qr-overflow-x) * -1);
+    bottom: calc(var(--home-qr-overflow-y) * -1);
+}
+
+@media print {
+    .qrShadow,
+    .qrCode {
+        --home-qr-size: 12rem;
+        --home-qr-overflow-x: var(--space-4);
+        --home-qr-overflow-y: var(--space-4);
+        --qr-code-size: var(--home-qr-size);
+    }
+}
+
+@include mixins.below-desktop {
+    .qrShadow,
+    .qrCode {
+        --home-qr-size: 12rem;
+        --home-qr-overflow-x: var(--space-4);
+        --home-qr-overflow-y: var(--space-4);
+    }
+}
