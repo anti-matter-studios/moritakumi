@@ -161,4 +161,11 @@ button {
         overflow: visible;
         background: var(--color-page);
     }
+
+    *,
+    *::before,
+    *::after {
+        // Blurred shadows rasterize as visible alpha boxes in generated PDFs.
+        box-shadow: none !important;
+    }
 }

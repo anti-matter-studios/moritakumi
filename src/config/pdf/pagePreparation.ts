@@ -22,6 +22,11 @@ export async function unlockContentForPdf(page: Page) {
     const password = await page.evaluate(() => window.__MORITAKUMI_PDF_PASSWORD__);
     const passwordInput = page.locator('input[type="password"]');
 
+    await page.waitForFunction(() => (
+        document.querySelector('input[type="password"]') !== null
+        || document.querySelector("section[id][data-nav-label]") !== null
+    ));
+
     if (await passwordInput.count() === 0) {
         return;
     }
@@ -35,6 +40,7 @@ export async function unlockContentForPdf(page: Page) {
     await passwordInput.fill(password);
     await page.locator('button[type="submit"], button').first().click();
     await page.waitForSelector('input[type="password"]', { state: "detached" });
+    await page.waitForSelector("section[id][data-nav-label]");
     await page.waitForLoadState("networkidle");
     await waitForContentImages(page);
 

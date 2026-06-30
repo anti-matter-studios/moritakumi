@@ -107,4 +107,14 @@
     .slider {
         break-inside: avoid;
     }
+
+    .track {
+        border: 0.0625rem solid color-mix(in srgb, var(--trait-slider-color) 72%, var(--color-surface));
+    }
+
+    .thumb {
+        border-color: var(--color-surface);
+        outline: 0.0625rem solid color-mix(in srgb, var(--trait-slider-color) 58%, var(--color-text));
+        outline-offset: -0.0625rem;
+    }
 }
