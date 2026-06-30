@@ -88,7 +88,12 @@ export default function ContentLock({ children }: ContentLockProps) {
             <p className={styles.message}>
                 Enter the password to decrypt and view this presentation.
             </p>
-            <form className={styles.form} onSubmit={event => { void unlock(event); }}>
+            {isUnlocking
+                ? <div className={styles.loader} role="status" aria-live="polite">
+                    <span className={styles.spinner} aria-hidden="true" />
+                    <span>Decrypting content</span>
+                </div>
+                : <form className={styles.form} onSubmit={event => { void unlock(event); }}>
                 <label className={styles.label}>
                     Password
                     <input
@@ -106,6 +111,7 @@ export default function ContentLock({ children }: ContentLockProps) {
                 </button>
                 <p className={styles.error} aria-live="polite">{error}</p>
             </form>
+            }
         </section>
     </main>;
 }

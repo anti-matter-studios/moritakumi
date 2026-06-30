@@ -192,8 +192,9 @@
     }
 
     .content {
-        background: color-mix(in srgb, var(--color-surface) 75%, transparent);
-        box-shadow: 0 1rem 2.5rem rgb(32 53 50 / 0.04);
+        border-color: color-mix(in srgb, var(--color-accent-soft) 62%, var(--color-surface));
+        background: color-mix(in srgb, var(--color-surface) 94%, var(--color-page));
+        box-shadow: none;
         backdrop-filter: none;
     }
 }

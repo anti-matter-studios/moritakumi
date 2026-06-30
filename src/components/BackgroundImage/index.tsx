@@ -3,10 +3,12 @@
  * Licensed under the MIT License.
  */
 
+import classNames from "classnames";
 import type { CSSProperties } from "react";
 
 import BackgroundMap, { type BackgroundMapLocation } from "./BackgroundMap";
 import styles from "./index.module.scss";
+import useContentImageSource from "./useContentImageSource";
 
 
 /** Floating image rendered behind a slide's foreground content. */
@@ -29,15 +31,23 @@ export default function BackgroundImage(props: BackgroundImageProps) {
     >
         {"map" in props
             ? <BackgroundMap height={props.height} map={props.map} width={props.width} />
-            : <img
-                alt={props.alt ?? ""}
-                className={styles.media}
-                height={props.height}
-                src={props.src}
-                width={props.width}
-            />
+            : <BackgroundPhoto {...props} />
         }
     </figure>;
+}
+
+function BackgroundPhoto(props: BackgroundPhotoProps) {
+    const imageSource = useContentImageSource(props.src);
+
+    return imageSource
+        ? <img
+            alt={props.alt ?? ""}
+            className={styles.media}
+            height={props.height}
+            src={imageSource}
+            width={props.width}
+        />
+        : <span className={classNames(styles.media, styles.placeholder)} data-content-image-placeholder="true" />;
 }
 
 interface BackgroundBaseProps {

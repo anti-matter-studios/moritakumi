@@ -7,18 +7,26 @@ import classNames from "classnames";
 
 import mapStyles from "./BackgroundMap.module.scss";
 import styles from "./index.module.scss";
+import useContentImageSource from "./useContentImageSource";
 
 
 /** OpenStreetMap export rendered with a presentation pin overlay. */
 export default function BackgroundMap(props: BackgroundMapProps) {
+    const imageSource = useContentImageSource(props.map.imageSrc);
+
     return <>
-        <img
-            alt=""
-            className={classNames(styles.media, styles.unblurred)}
-            height={props.height}
-            src={props.map.imageSrc}
-            width={props.width}
-        />
+        {imageSource
+            ? <img
+                alt=""
+                className={classNames(styles.media, styles.unblurred)}
+                height={props.height}
+                src={imageSource}
+                width={props.width}
+            />
+            : <span
+                className={classNames(styles.media, styles.placeholder, styles.unblurred)}
+                data-content-image-placeholder="true"
+            />}
         <span aria-label={props.map.title} className={mapStyles.pin} role="img" />
         <span className={mapStyles.attribution}>© OpenStreetMap contributors</span>
     </>;

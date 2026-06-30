@@ -53,9 +53,17 @@
     --nav-height: 4.5rem;
     --nav-offset: 1.25rem;
     --timeline-width: 11rem;
-    --content-max-width: 76rem;
+    --content-max-width: 66vw;
     --slide-padding-block: clamp(5rem, 10vw, 8rem);
     --slide-padding-inline: clamp(2rem, 8vw, 7rem);
+
+    @include mixins.below-desktop {
+        --content-max-width: 75vw;
+    }
+
+    @include mixins.below-tablet {
+        --content-max-width: 85vw;
+    }
 }
 
 @each $name in map.keys(tokens.$themes) {

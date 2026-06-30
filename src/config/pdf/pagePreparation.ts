@@ -35,6 +35,18 @@ export async function unlockContentForPdf(page: Page) {
     await page.locator('button[type="submit"], button').first().click();
     await page.waitForSelector('input[type="password"]', { state: "detached" });
     await page.waitForLoadState("networkidle");
+    await waitForContentImages(page);
+}
+
+/** Waits until decrypted image object URLs have replaced temporary placeholders. */
+export async function waitForContentImages(page: Page) {
+    await page.waitForSelector('[data-content-image-placeholder="true"]', {
+        state: "detached",
+        timeout: 15_000,
+    }).catch(() => undefined);
+    await page.waitForFunction(() => (
+        Array.from(document.images).every((image) => image.complete && image.naturalWidth > 0)
+    ));
 }
 
 /** Adds a static timeline to every slide so printed pages remain navigable. */

@@ -3,7 +3,7 @@ A portfolio website developed by Anti-Matter Studios for Caillaud Michele's mast
 
 ## Encrypted content
 
-Production builds encrypt the translation content with `MORITAKUMI_CONTENT_PASSWORD`.
+Production builds encrypt the translation and image content with `MORITAKUMI_CONTENT_PASSWORD`.
 
 ```sh
 MORITAKUMI_CONTENT_PASSWORD="your password" bun run build

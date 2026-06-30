@@ -12,6 +12,7 @@ import TextReplacement from "@/components/TextReplacement";
 import Tooltip from "@/components/Tooltip";
 import styles from "./index.module.scss";
 import { SlideCard, SlideCardList } from "../Slide";
+import classNames from "classnames";
 
 
 /** Renders translated rich text with a controlled set of inline tags. */
@@ -39,7 +40,7 @@ export default function RichText(props: RichTextProps) {
             card: <SlideCard />,
             "card-list": <SlideCardList />,
             "trait-slider": <TraitSlider />,
-            ...props.components,
+            ...props.components
         }}
     >
         {props.children}
@@ -61,17 +62,16 @@ export interface RichTextProps {
 }
 
 function BlueText(props: BlueTextProps) {
-    const className = [
-        isEnabled(props.light) && styles.blueLight,
-        isEnabled(props.dark) && styles.blueDark,
-        isEnabled(props.gradient) && styles.blueGradient,
-    ].filter(Boolean).join(" ");
+    const className = classNames(
+        styles.blue,
+        {
+            [styles.blueLight]: props.light,
+            [styles.blueDark]: props.dark,
+            [styles.blueGradient]: props.gradient
+        }
+    );
 
     return <span className={className}>{props.children}</span>;
-}
-
-function isEnabled(value: unknown) {
-    return value !== undefined && value !== null && value !== false && value !== "false";
 }
 
 interface BlueTextProps extends PropsWithChildren {
