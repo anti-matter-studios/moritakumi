@@ -6,6 +6,7 @@
 import type { PropsWithChildren, ReactNode } from "react";
 import { Trans } from "react-i18next";
 
+import LoveNote from "@/components/LoveNote";
 import TraitSlider from "@/components/TraitSlider";
 import TextReplacement from "@/components/TextReplacement";
 import Tooltip from "@/components/Tooltip";
@@ -32,6 +33,7 @@ export default function RichText(props: RichTextProps) {
             h5: <h5 />,
             h6: <h6 />,
             blue: <BlueText />,
+            love: <LoveNote />,
             replace: <TextReplacement />,
             tooltip: <Tooltip />,
             card: <SlideCard />,

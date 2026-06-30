@@ -1,0 +1,79 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+@keyframes heart-rise {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0.15em, 0) scale(0.7) rotate(-8deg);
+    }
+
+    28% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--love-note-heart-x), -1.15em, 0) scale(1.08) rotate(10deg);
+    }
+}
+
+.loveNote {
+    position: relative;
+    display: inline;
+    box-decoration-break: clone;
+    background:
+        linear-gradient(90deg, #c55f7e, #f2b7c0, #80202e)
+        0 100% / 0 0.09em no-repeat;
+    color: var(--color-accent-strong);
+    cursor: default;
+    transition:
+        background-size 320ms ease,
+        color 220ms ease,
+        text-shadow 220ms ease;
+    -webkit-box-decoration-break: clone;
+
+    &:hover {
+        background-size: 100% 0.09em;
+        color: #aa3f63;
+        text-shadow: 0 0.12em 0.7em rgb(197 95 126 / 0.22);
+    }
+
+    &:hover .heart {
+        animation: heart-rise 1150ms ease-out both;
+    }
+}
+
+.heart {
+    --love-note-heart-x: 0.25em;
+
+    position: absolute;
+    inset-block-start: -0.15em;
+    inset-inline-end: -0.65em;
+    color: #c55f7e;
+    font-size: 0.58em;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    text-shadow: 0 0.16em 0.6em rgb(197 95 126 / 0.28);
+    transform-origin: center;
+
+    &:last-child {
+        --love-note-heart-x: -0.35em;
+
+        inset-block-start: 0.32em;
+        inset-inline-end: -1em;
+        color: #e7a4b1;
+        font-size: 0.45em;
+        animation-delay: 120ms;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loveNote:hover .heart {
+        animation: none;
+        opacity: 1;
+        transform: translate3d(0, -0.35em, 0);
+    }
+}
