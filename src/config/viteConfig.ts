@@ -10,7 +10,10 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 
 import presentationRoutes from "./presentationRoutes";
 import encryptedTranslations from "./vite/encryptedTranslations";
+import openStreetMapExports from "./vite/openStreetMapExports";
 import presentationRouteHtml from "./vite/presentationRouteHtml";
+
+const isMapExportOnly = process.env.MORITAKUMI_MAP_EXPORT_ONLY === "1";
 
 /** Vite configuration shared by development, page build, and PDF generation. */
 export default defineConfig({
@@ -19,13 +22,22 @@ export default defineConfig({
     define: {
         CONTENT_PASSWORD: JSON.stringify(process.env.MORITAKUMI_CONTENT_PASSWORD),
     },
-    plugins: [
+    plugins: isMapExportOnly ? [
+        openStreetMapExports(),
+    ] : [
         react(),
         viteTsconfigPaths(),
         yaml(),
         encryptedTranslations(),
+        openStreetMapExports(),
         presentationRouteHtml([...presentationRoutes]),
     ],
+    build: isMapExportOnly ? {
+        outDir: ".map-export-build",
+        rollupOptions: {
+            input: "src/config/vite/mapExportEntry.ts",
+        },
+    } : undefined,
     css: {
         preprocessorOptions: {
             scss: {

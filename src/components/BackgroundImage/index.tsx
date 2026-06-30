@@ -5,6 +5,7 @@
 
 import type { CSSProperties } from "react";
 
+import BackgroundMap, { type BackgroundMapLocation } from "./BackgroundMap";
 import styles from "./index.module.scss";
 
 
@@ -21,33 +22,52 @@ export default function BackgroundImage(props: BackgroundImageProps) {
 
     return <figure
         className={styles.background}
+        data-kind={"map" in props ? "map" : "image"}
         data-placement={props.placement ?? "top-right"}
         data-shape={props.shape ?? "rounded"}
         style={style}
     >
-        <img alt={props.alt ?? ""} src={props.src} width={props.width} height={props.height} />
+        {"map" in props
+            ? <BackgroundMap height={props.height} map={props.map} width={props.width} />
+            : <img
+                alt={props.alt ?? ""}
+                className={styles.media}
+                height={props.height}
+                src={props.src}
+                width={props.width}
+            />
+        }
     </figure>;
 }
 
-export interface BackgroundImageProps {
-    /** Image source rendered behind the slide content. */
-    src: string;
-
-    /** Width of the image. */
+interface BackgroundBaseProps {
+    /** Width of the background visual. */
     width?: number;
 
-    /** Height of the image. */
+    /** Height of the background visual. */
     height?: number;
 
-    /** Accessible image description. Leave empty or omit for decorative images. */
-    alt?: string;
-
-    /** Side of the slide where the floating image should sit. */
+    /** Side of the slide where the floating visual should sit. */
     placement?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
 
     /** Visual frame shape. */
     shape?: "rounded" | "circle" | "soft";
 }
+
+interface BackgroundPhotoProps extends BackgroundBaseProps {
+    /** Image source rendered behind the slide content. */
+    src: string;
+
+    /** Accessible image description. Leave empty or omit for decorative images. */
+    alt?: string;
+}
+
+interface BackgroundMapImageProps extends BackgroundBaseProps {
+    /** OpenStreetMap location rendered behind the slide content. */
+    map: BackgroundMapLocation;
+}
+
+export type BackgroundImageProps = BackgroundPhotoProps | BackgroundMapImageProps;
 
 type BackgroundImageStyle = CSSProperties & {
     "--background-image-aspect-ratio"?: string;

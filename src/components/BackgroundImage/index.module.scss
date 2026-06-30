@@ -114,9 +114,13 @@
     &[data-shape="circle"] {
         border-radius: 50%;
     }
+
+    &[data-kind="map"] {
+        --background-opacity: 0.62;
+    }
 }
 
-.background img {
+.media {
     position: relative;
     display: block;
     width: var(--background-image-rendered-width);
@@ -124,6 +128,10 @@
     border-radius: inherit;
     box-shadow: 0 2rem 5rem rgb(32 53 50 / 0.12);
     filter: blur(0.0625rem) saturate(0.78) contrast(0.92);
+
+    &.unblurred {
+        filter: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -155,7 +163,7 @@
         }
     }
 
-    .background img {
+    .media {
         width: var(--background-image-rendered-width);
     }
 }
@@ -170,7 +178,7 @@
         }
     }
 
-    .background img {
+    .media {
         box-shadow: none;
         filter: none;
     }

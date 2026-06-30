@@ -1,0 +1,44 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+.pin {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 1.35rem;
+    height: 1.35rem;
+    border: 0.18rem solid var(--color-surface);
+    border-radius: 50% 50% 50% 0;
+    background: var(--color-accent-strong);
+    box-shadow:
+        0 0.45rem 1rem rgb(32 53 50 / 0.24),
+        inset 0 0 0 0.22rem color-mix(in srgb, var(--color-accent-soft) 18%, var(--color-surface));
+    transform: translate(-50%, -92%) rotate(-45deg);
+
+    &::after {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        width: 0.34rem;
+        height: 0.34rem;
+        border-radius: 50%;
+        background: var(--color-surface);
+        content: "";
+        transform: translate(-50%, -50%);
+    }
+}
+
+.attribution {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.45rem;
+    z-index: 1;
+    padding: 0.12rem 0.32rem;
+    border-radius: 0.25rem;
+    background: rgb(255 255 255 / 0.82);
+    color: rgb(36 45 43 / 0.86);
+    font-size: 0.625rem;
+    line-height: 1.2;
+}
