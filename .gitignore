@@ -12,4 +12,6 @@ yarn-error.log*
 .vscode/*
 /dist
 /.map-export-build
+/public/images
 /public/images/maps/tiles
+/src/locales

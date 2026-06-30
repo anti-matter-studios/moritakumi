@@ -8,7 +8,6 @@ import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 import {
-    type EncryptedBytes,
     deriveEncryptedContentKey,
     encryptBytes,
     encryptedContentIterations,
@@ -19,6 +18,7 @@ import {
     type EncryptedImageInput,
     loadEncryptedImageInputs
 } from "./encryptedContentAssets";
+import { loadContentVault } from "./encryptedContentVault";
 
 const require = createRequire(import.meta.url);
 const { load } = require("js-yaml") as { load(this: void, source: string): unknown };
@@ -47,6 +47,16 @@ export default function encryptedContent(): Plugin {
         async load(id) {
             if (id !== resolvedVirtualModuleId) {
                 return undefined;
+            }
+
+            const vault = await loadContentVault(config.root, this.emitFile.bind(this));
+
+            if (vault !== undefined && config.command === "build") {
+                for (const filePath of vault.watchFiles) {
+                    this.addWatchFile(filePath);
+                }
+
+                return createEncryptedModuleCode(vault);
             }
 
             for (const locale of locales) {
@@ -98,6 +108,9 @@ export default function encryptedContent(): Plugin {
             }));
 
             return createEncryptedModuleCode({
+                hash: "SHA-256",
+                iterations: encryptedContentIterations,
+                kdf: "PBKDF2",
                 salt,
                 translations,
                 images: encryptedImages,
@@ -132,7 +145,7 @@ function createEncryptedModuleCode(content: EncryptedContentBuild) {
         [
             "{",
             `url: import.meta.ROLLUP_FILE_URL_${image.referenceId},`,
-            `iv: ${JSON.stringify(toBase64(image.iv))},`,
+            `iv: ${JSON.stringify(serializeEncryptedValue(image.iv))},`,
             `mimeType: ${JSON.stringify(image.mimeType)}`,
             "}",
         ].join(""),
@@ -141,13 +154,13 @@ function createEncryptedModuleCode(content: EncryptedContentBuild) {
     return [
         "export default {",
         'type: "encrypted",',
-        'kdf: "PBKDF2",',
-        'hash: "SHA-256",',
-        `iterations: ${encryptedContentIterations.toString()},`,
-        `salt: ${JSON.stringify(toBase64(content.salt))},`,
+        `kdf: ${JSON.stringify(content.kdf)},`,
+        `hash: ${JSON.stringify(content.hash)},`,
+        `iterations: ${content.iterations.toString()},`,
+        `salt: ${JSON.stringify(serializeEncryptedValue(content.salt))},`,
         "translations: {",
-        `iv: ${JSON.stringify(toBase64(content.translations.iv))},`,
-        `data: ${JSON.stringify(toBase64(content.translations.data))}`,
+        `iv: ${JSON.stringify(serializeEncryptedValue(content.translations.iv))},`,
+        `data: ${JSON.stringify(serializeEncryptedValue(content.translations.data))}`,
         "},",
         "images: {",
         images.map(([path, metadata]) => `${path}: ${metadata}`).join(","),
@@ -156,13 +169,27 @@ function createEncryptedModuleCode(content: EncryptedContentBuild) {
     ].join("");
 }
 
+function serializeEncryptedValue(value: string | Uint8Array) {
+    return typeof value === "string" ? value : toBase64(value);
+}
+
 interface EncryptedContentBuild {
-    salt: Uint8Array<ArrayBuffer>;
-    translations: EncryptedBytes;
+    hash: "SHA-256";
+    iterations: number;
+    kdf: "PBKDF2";
+    salt: string | Uint8Array<ArrayBuffer>;
+    translations: SerializableEncryptedBytes;
     images: Array<EncryptedImageBuild>;
 }
 
-interface EncryptedImageBuild extends EncryptedBytes, EncryptedImageInput {
+interface SerializableEncryptedBytes {
+    iv: string | Uint8Array<ArrayBuffer>;
+    data: string | Uint8Array<ArrayBuffer>;
+}
+
+interface EncryptedImageBuild extends Partial<EncryptedImageInput> {
     publicPath: string;
+    iv: string | Uint8Array<ArrayBuffer>;
+    mimeType: string;
     referenceId: string;
 }

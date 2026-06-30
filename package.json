@@ -9,6 +9,8 @@
         "build:pdf": "bun --bun node src/config/pdf/buildPdfs.ts",
         "build:maps": "MORITAKUMI_MAP_EXPORT_ONLY=1 OSM_TILE_REFRESH=1 vite build",
         "build": "bun run build:page && bun run build:pdf",
+        "content:seal": "bun --bun node src/config/contentVault/sealContent.ts",
+        "content:open": "bun --bun node src/config/contentVault/openContent.ts",
         "preview": "vite preview",
         "typecheck": "tsc"
     },
