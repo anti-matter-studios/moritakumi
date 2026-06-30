@@ -17,18 +17,19 @@ export async function preparePdfPageSize(page: Page, pageSize: string) {
     });
 }
 
-/** Unlocks encrypted translations in the browser before printing protected pages. */
+/** Unlocks encrypted content in the browser before printing protected pages. */
 export async function unlockContentForPdf(page: Page) {
     const password = await page.evaluate(() => window.__MORITAKUMI_PDF_PASSWORD__);
-
-    if (typeof password !== "string" || password.length === 0) {
-        return;
-    }
-
     const passwordInput = page.locator('input[type="password"]');
 
     if (await passwordInput.count() === 0) {
         return;
+    }
+
+    if (typeof password !== "string" || password.length === 0) {
+        throw new Error(
+            "PDF generation reached the content lock. Set MORITAKUMI_CONTENT_PASSWORD before running build:pdf.",
+        );
     }
 
     await passwordInput.fill(password);
@@ -36,6 +37,10 @@ export async function unlockContentForPdf(page: Page) {
     await page.waitForSelector('input[type="password"]', { state: "detached" });
     await page.waitForLoadState("networkidle");
     await waitForContentImages(page);
+
+    if (await passwordInput.count() > 0) {
+        throw new Error("PDF generation could not unlock encrypted content.");
+    }
 }
 
 /** Waits until decrypted image object URLs have replaced temporary placeholders. */
