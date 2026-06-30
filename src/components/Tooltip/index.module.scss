@@ -1,0 +1,98 @@
+/*!
+ * Copyright © 2026 Anti-Matter Studios
+ * Licensed under the MIT License.
+ */
+
+.trigger {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0.125rem;
+    background: transparent;
+    color: var(--color-accent-strong);
+    cursor: help;
+    font: inherit;
+    font-weight: 700;
+    text-align: inherit;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 0.1em;
+    text-decoration-color: color-mix(in srgb, currentColor 56%, transparent);
+    text-underline-offset: 0.1em;
+    transition:
+        color 160ms ease,
+        text-decoration-color 160ms ease;
+
+    &:hover,
+    &:focus-visible,
+    &[aria-expanded="true"] {
+        color: var(--color-text);
+        text-decoration-color: currentColor;
+    }
+}
+
+.tooltip {
+    z-index: 1000;
+    display: block;
+    width: max-content;
+    max-width: min(22rem, calc(100vw - 2rem));
+    padding: 0.6rem 0.8rem;
+    border: 0.0625rem solid color-mix(in srgb, var(--color-accent-strong) 24%, transparent);
+    border-radius: var(--radius-sm);
+    background: var(--color-glass-strong);
+    box-shadow: 0 0.75rem 2rem var(--color-shadow);
+    color: var(--color-text);
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}
+
+.arrow,
+.arrow::before {
+    position: absolute;
+    width: 0.65rem;
+    height: 0.65rem;
+    background: inherit;
+}
+
+.arrow {
+    visibility: hidden;
+}
+
+.arrow::before {
+    border: inherit;
+    content: "";
+    transform: rotate(45deg);
+    visibility: visible;
+}
+
+.tooltip[data-popper-placement^="top"] > .arrow {
+    bottom: -0.33rem;
+}
+
+.tooltip[data-popper-placement^="bottom"] > .arrow {
+    top: -0.33rem;
+}
+
+.tooltip[data-popper-placement^="left"] > .arrow {
+    right: -0.33rem;
+}
+
+.tooltip[data-popper-placement^="right"] > .arrow {
+    left: -0.33rem;
+}
+
+@media print {
+    .trigger {
+        color: inherit;
+        cursor: inherit;
+        text-decoration: none;
+    }
+
+    .tooltip {
+        display: none;
+    }
+}

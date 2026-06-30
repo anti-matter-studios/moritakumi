@@ -37,8 +37,11 @@ export default function ContentLock({ children }: ContentLockProps) {
             return;
         }
 
-        setIsUnlocking(true);
-        void initializeTranslationsWithStoredKey(storedContentKey)
+        void Promise.resolve()
+            .then(() => {
+                setIsUnlocking(true);
+            })
+            .then(() => initializeTranslationsWithStoredKey(storedContentKey))
             .then(() => {
                 setIsUnlocked(true);
             })

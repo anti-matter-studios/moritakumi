@@ -36,6 +36,15 @@
         font-style: italic;
         text-align: right;
     }
+
+    :global(.tight) & {
+        margin: 0; padding: var(--space-1) var(--space-2);
+        text-align: center;
+    }
+
+    :global(.small) & {
+        font-size: var(--font-size-small);
+    }
 }
 
 /* Set the style of card body content. */

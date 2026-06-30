@@ -26,21 +26,23 @@
     --radius-lg: 0.75rem;
 
     --font-size-tiny: 1rem;
-    --font-size-kicker: 1.75rem;
+    --font-size-small: 1.25rem;
+    --font-size-kicker: 1.5rem;
     --font-size-body: 1.75rem;
     --font-size-lead: 3rem;
-    --font-size-title: 5rem;
-    --font-size-title-small: 4rem;
+    --font-size-title: 4rem;
+    --font-size-title-small: 2rem;
     --font-size-display: 6rem;
 
     @include mixins.below-desktop {
         --font-size-tiny: 0.5rem;
+        --font-size-small: 0.75rem;
         --font-size-kicker: 0.875rem;
         --font-size-body: 1rem;
-        --font-size-lead: clamp(1.125rem, 2vw, 1.5rem);
-        --font-size-title: clamp(2rem, 6vw, 4.75rem);
-        --font-size-title-small: clamp(1.5rem, 4vw, 3.5rem);
-        --font-size-display: clamp(3rem, 12vw, 8rem);
+        --font-size-lead: 2rem;
+        --font-size-title: 3rem;
+        --font-size-title-small: 2rem;
+        --font-size-display: 4rem;
     }
 
     --line-height-display: 0.95;
@@ -64,6 +66,8 @@
 
 * {
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 html {

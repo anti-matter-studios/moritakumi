@@ -16,7 +16,7 @@ export default function BackgroundImage(props: BackgroundImageProps) {
 
     const style = {
         "--background-image-aspect-ratio": imageRatio?.toString(),
-        "--background-image-source-width": props.width ? `${props.width}px` : undefined,
+        "--background-image-source-width": props.width ? `${props.width.toString()}px` : undefined,
     } as BackgroundImageStyle;
 
     return <figure

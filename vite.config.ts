@@ -10,7 +10,7 @@ import yaml from "@modyfi/vite-plugin-yaml";
 import presentationRouteHtml from "./config/presentationRouteHtml";
 import encryptedTranslations from "./config/encryptedTranslations";
 
-const presentationRoutes = ["", "who-am-i", "my-hobbies", "my-travels", "thanks"];
+const presentationRoutes = ["", "who-am-i", "my-hobbies", "my-travels", "personality", "skills", "school", "career", "project", "thanks"];
 
 export default defineConfig({
     appType: "mpa",

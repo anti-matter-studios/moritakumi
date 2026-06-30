@@ -31,22 +31,22 @@ export default function LanguageToggle() {
     </button>;
 }
 
-type Language = "fr" | "en" | "de";
+type Language = keyof typeof languageOptions;
 
 const languageOptions = {
     fr: {
         flag: "🇫🇷",
         labelKey: "navbar.french",
     },
-    en: {
-        flag: "🇬🇧",
-        labelKey: "navbar.english",
-    },
-    de: {
-        flag: "🇩🇪",
-        labelKey: "navbar.german",
-    },
-} as const satisfies Record<Language, LanguageOption>;
+    // en: {
+    //     flag: "🇬🇧",
+    //     labelKey: "navbar.english",
+    // },
+    // de: {
+    //     flag: "🇩🇪",
+    //     labelKey: "navbar.german",
+    // },
+} as const;
 
 function getLanguage(language: string): Language {
     for (const supportedLanguage of Object.keys(languageOptions) as Language[]) {
@@ -63,9 +63,4 @@ function getNextLanguage(language: Language): Language {
     const currentIndex = supportedLanguages.indexOf(language);
     const nextIndex = (currentIndex + 1) % supportedLanguages.length;
     return supportedLanguages[nextIndex];
-}
-
-interface LanguageOption {
-    flag: string;
-    labelKey: "navbar.french" | "navbar.english" | "navbar.german";
 }

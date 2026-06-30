@@ -20,6 +20,11 @@ const pages = [
     { route: "who-am-i", fileName: "who-am-i.pdf" },
     { route: "my-hobbies", fileName: "my-hobbies.pdf" },
     { route: "my-travels", fileName: "my-travels.pdf" },
+    { route: "personality", fileName: "personality.pdf" },
+    { route: "skills", fileName: "skills.pdf" },
+    { route: "school", fileName: "school.pdf" },
+    { route: "career", fileName: "career.pdf" },
+    { route: "project", fileName: "project.pdf" },
     { route: "thanks", fileName: "thanks.pdf" }
 ];
 

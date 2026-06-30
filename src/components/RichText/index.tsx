@@ -8,7 +8,9 @@ import { Trans } from "react-i18next";
 
 import TraitSlider from "@/components/TraitSlider";
 import TextReplacement from "@/components/TextReplacement";
+import Tooltip from "@/components/Tooltip";
 import styles from "./index.module.scss";
+import { SlideCard, SlideCardList } from "../Slide";
 
 
 /** Renders translated rich text with a controlled set of inline tags. */
@@ -20,6 +22,7 @@ export default function RichText(props: RichTextProps) {
             br: <br />,
             b: <b />,
             i: <i />,
+            u: <u />,
             span: <span />,
             small: <small />,
             h1: <h1 />,
@@ -30,6 +33,9 @@ export default function RichText(props: RichTextProps) {
             h6: <h6 />,
             blue: <BlueText />,
             replace: <TextReplacement />,
+            tooltip: <Tooltip />,
+            card: <SlideCard />,
+            "card-list": <SlideCardList />,
             "trait-slider": <TraitSlider />,
             ...props.components,
         }}

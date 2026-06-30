@@ -30,6 +30,7 @@ export default function Slide(props: SlideProps) {
         data-background-animation={isBackgroundAnimationActive ? "ready" : undefined}
         id={props.id}
         aria-label={props.navLabel}
+        data-slide-id={props.slideId ?? props.id}
         data-nav-label={props.navLabel}
         data-short-nav-label={props.shortNavLabel}
     >
@@ -45,7 +46,6 @@ function useAnimatedBackground(enabled: boolean, slideRef: RefObject<HTMLElement
 
     useEffect(() => {
         if (!enabled) {
-            setIsActive(false);
             return;
         }
 
@@ -56,8 +56,13 @@ function useAnimatedBackground(enabled: boolean, slideRef: RefObject<HTMLElement
         }
 
         if (!("IntersectionObserver" in window)) {
-            setIsActive(true);
-            return;
+            const animationFrame = globalThis.requestAnimationFrame(() => {
+                setIsActive(true);
+            });
+
+            return () => {
+                globalThis.cancelAnimationFrame(animationFrame);
+            };
         }
 
         const deck = document.getElementById("presentation");
@@ -91,17 +96,21 @@ function useAnimatedBackground(enabled: boolean, slideRef: RefObject<HTMLElement
         };
     }, [enabled, slideRef]);
 
-    return isActive;
+    return enabled && isActive;
 }
 
 /** Grid used to group reusable slide cards. */
-export function SlideCardList({ children }: SlideCardGridProps) {
-    return <div className={styles.cardList}>{children}</div>;
+export function SlideCardList({ children, tight, small }: SlideCardGridProps) {
+    const className = classNames(styles.cardList, { tight: tight, small: small });
+    return <div className={className}>{children}</div>;
 }
 
 export interface SlideProps extends PropsWithChildren {
-    /** Unique identifier used for anchors, timelines, and active-section tracking. */
+    /** Unique identifier used for anchors and hashes. */
     id: string;
+
+    /** Logical identifier used to group split slides in the timeline. */
+    slideId?: string;
 
     /** Human-readable label for navigation and accessibility. */
     navLabel: string;
@@ -119,4 +128,7 @@ export interface SlideProps extends PropsWithChildren {
     fullWidth?: boolean;
 }
 
-type SlideCardGridProps = PropsWithChildren;
+interface SlideCardGridProps extends PropsWithChildren {
+    tight?: boolean;
+    small?: boolean;
+}

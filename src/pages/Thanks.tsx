@@ -33,7 +33,7 @@ export default function ThanksPage() {
 
         <PresentationDeck>
             <Slide
-                id="-brother"
+                id="brother"
                 navLabel={t("thanks.slides.brother.navLabel")}
                 backgroundImage={{
                     src: "/images/my-brother.jpg",
@@ -46,12 +46,12 @@ export default function ThanksPage() {
                 <Paragraphs i18nKey="thanks.slides.brother.paragraphs" />
             </Slide>
 
-            <Slide id="-family" navLabel={t("thanks.slides.family.navLabel")}>
+            <Slide id="family" navLabel={t("thanks.slides.family.navLabel")}>
                 <SlideHeader><RichText i18nKey="thanks.slides.family.title" /></SlideHeader>
                 <Paragraphs i18nKey="thanks.slides.family.paragraphs" />
             </Slide>
 
-            <Slide id="-school" navLabel={t("thanks.slides.school.navLabel")}>
+            <Slide id="school" navLabel={t("thanks.slides.school.navLabel")}>
                 <SlideHeader><RichText i18nKey="thanks.slides.school.title" /></SlideHeader>
                 <Paragraphs i18nKey="thanks.slides.school.paragraphs" />
             </Slide>

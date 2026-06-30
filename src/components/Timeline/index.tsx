@@ -70,15 +70,32 @@ function useActiveSectionId(sectionIds: string[]) {
         }
 
         const deck = document.getElementById("presentation");
+        const sections = getTimelineSections(deck, sectionIds);
+
+        if (sections.length === 0) {
+            return;
+        }
+
+        const sectionVisibility = new Map<Element, number>();
         const observer = new IntersectionObserver(
             (entries) => {
-                const visibleEntry = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((first, second) => second.intersectionRatio - first.intersectionRatio)
+                for (const entry of entries) {
+                    sectionVisibility.set(
+                        entry.target,
+                        entry.isIntersecting ? entry.intersectionRatio : 0,
+                    );
+                }
+
+                const activeSection = sections
+                    .map((section) => ({
+                        section,
+                        visibility: sectionVisibility.get(section) ?? 0,
+                    }))
+                    .sort((first, second) => second.visibility - first.visibility)
                     .at(0);
 
-                if (visibleEntry !== undefined) {
-                    setActiveSectionId(visibleEntry.target.id);
+                if (activeSection !== undefined && activeSection.visibility > 0) {
+                    setActiveSectionId(getTimelineSectionId(activeSection.section));
                 }
             },
             {
@@ -87,12 +104,8 @@ function useActiveSectionId(sectionIds: string[]) {
             },
         );
 
-        for (const sectionId of sectionIds) {
-            const section = document.getElementById(sectionId);
-
-            if (section !== null) {
-                observer.observe(section);
-            }
+        for (const section of sections) {
+            observer.observe(section);
         }
 
         return () => {
@@ -101,6 +114,20 @@ function useActiveSectionId(sectionIds: string[]) {
     }, [sectionIds]);
 
     return activeSectionId;
+}
+
+function getTimelineSections(deck: HTMLElement | null, sectionIds: string[]) {
+    if (deck === null) {
+        return [];
+    }
+
+    return Array.from(deck.children)
+        .filter((child): child is HTMLElement => child instanceof HTMLElement)
+        .filter((section) => sectionIds.includes(getTimelineSectionId(section)));
+}
+
+function getTimelineSectionId(section: HTMLElement) {
+    return section.dataset.slideId ?? section.id;
 }
 
 function isTimelineItem(child: ReactNode): child is ReactElement<TimelineItemProps> {

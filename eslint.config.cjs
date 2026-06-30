@@ -9,12 +9,19 @@ const { configs: ReactConfigs } = require("eslint-plugin-react");
 const { configs: ReactHookConfigs } = require("eslint-plugin-react-hooks");
 
 module.exports = defineConfig(
+    {
+        ignores: [
+            "dist/**",
+        ],
+    },
     TypeScriptConfigs.strictTypeChecked,
     {
         // Configure the TypeScript project loader.
         languageOptions: {
             parserOptions: {
-                projectService: true,
+                projectService: {
+                    allowDefaultProject: ["eslint.config.cjs", "config/*.mjs"],
+                },
             },
         },
 
@@ -35,6 +42,21 @@ module.exports = defineConfig(
                     ignoreRestSiblings: true,
                 },
             ],
+        },
+    },
+    {
+        // JavaScript build/config scripts rely on untyped Node and Playwright APIs.
+        files: ["*.cjs", "config/*.mjs"],
+        rules: {
+            "@typescript-eslint/no-misused-promises": ["off"],
+            "@typescript-eslint/no-require-imports": ["off"],
+            "@typescript-eslint/no-unsafe-argument": ["off"],
+            "@typescript-eslint/no-unsafe-assignment": ["off"],
+            "@typescript-eslint/no-unsafe-call": ["off"],
+            "@typescript-eslint/no-unsafe-member-access": ["off"],
+            "@typescript-eslint/no-unsafe-return": ["off"],
+            "@typescript-eslint/prefer-promise-reject-errors": ["off"],
+            "@typescript-eslint/restrict-template-expressions": ["off"],
         },
     },
     {

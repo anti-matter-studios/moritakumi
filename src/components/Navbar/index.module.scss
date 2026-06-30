@@ -50,7 +50,8 @@
     // Display the contents in a row.
     display: flex; flex-direction: row;
     justify-content: space-between; align-items: stretch;
-    padding: var(--space-2); gap: var(--space-2);
+    border: solid var(--space-2) transparent;
+    padding: 0; gap: var(--space-2);
     overflow: auto hidden;
 
     // Hide the scrollbar.

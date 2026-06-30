@@ -38,11 +38,11 @@ export default function TextReplacement(props: TextReplacementProps) {
     return <span
         aria-label={`${originalText} / ${replacementText}`}
         className={styles.text}
-        onBlur={() => setIsFocused(false)}
-        onClick={() => setIsFocused(true)}
-        onFocus={() => setIsFocused(true)}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onBlur={() => { setIsFocused(false); }}
+        onClick={() => { setIsFocused(true); }}
+        onFocus={() => { setIsFocused(true); }}
+        onMouseEnter={() => { setIsHovered(true); }}
+        onMouseLeave={() => { setIsHovered(false); }}
         tabIndex={0}
     >
         {displayText}

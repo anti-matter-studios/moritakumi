@@ -227,13 +227,7 @@ const RANDOM_CHARACTERS = [
 
 /** Animates a short piece of text between an original and replacement value. */
 export function useTextReplacement(options: UseTextReplacementOptions) {
-    const timing = useMemo(() => createTiming(options), [
-        options.replacementFrameMs,
-        options.revealStepCount,
-        options.shuffleFrameCount,
-        options.shuffleFrameMs,
-        options.speed
-    ]);
+    const timing = useMemo(() => createTiming(options), [options]);
 
     const [displayText, setDisplayText] = useState(options.text);
     const displayTextRef = useRef(options.text);
@@ -252,61 +246,76 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
         }
     }, []);
 
-    const animateTo = useCallback((targetText: string, target: TextReplacementTarget) => {
-        clearTimer();
+    const animateTo = useCallback(
+        (targetText: string, target: TextReplacementTarget) => {
+            clearTimer();
 
-        const shouldAnimate = (
-            displayTextRef.current !== targetText ||
-            currentTargetRef.current !== target
-        );
-        currentTargetRef.current = target;
+            const shouldAnimate = (
+                displayTextRef.current !== targetText ||
+                currentTargetRef.current !== target
+            );
+            currentTargetRef.current = target;
 
-        if (prefersReducedMotion() || !shouldAnimate) {
-            setDisplayedText(targetText);
-            return;
-        }
-
-        const sourceLetters = Array.from(displayTextRef.current);
-        const targetLetters = Array.from(targetText);
-        const revealOrder = createRandomOrder(targetLetters.length);
-
-        const runReveal = (revealedCount: number) => {
-            if (revealedCount > targetLetters.length) {
+            if (prefersReducedMotion() || !shouldAnimate) {
                 setDisplayedText(targetText);
                 return;
             }
 
-            setDisplayedText(
-                createReplacementFrame(
-                    sourceLetters,
-                    targetLetters,
-                    revealedCount,
-                    revealOrder,
-                    options.characterSet == "reduced" ? targetLetters : RANDOM_CHARACTERS
-                )
-            );
+            const sourceLetters = Array.from(displayTextRef.current);
+            const targetLetters = Array.from(targetText);
+            const revealOrder = createRandomOrder(targetLetters.length);
 
-            timeoutRef.current = window.setTimeout(
-                () => runReveal(revealedCount + timing.revealStepCount),
-                timing.replacementFrameMs
-            );
-        };
+            const runReveal = (revealedCount: number) => {
+                if (revealedCount > targetLetters.length) {
+                    setDisplayedText(targetText);
+                    return;
+                }
 
-        const runShuffle = (frame: number) => {
-            if (frame >= timing.shuffleFrameCount) {
-                runReveal(0);
-                return;
-            }
+                setDisplayedText(
+                    createReplacementFrame(
+                        sourceLetters,
+                        targetLetters,
+                        revealedCount,
+                        revealOrder,
+                        options.characterSet === "reduced" ? targetLetters : RANDOM_CHARACTERS
+                    )
+                );
 
-            setDisplayedText(shuffleSourceLetters(sourceLetters));
-            timeoutRef.current = window.setTimeout(
-                () => runShuffle(frame + 1),
-                timing.shuffleFrameMs
-            );
-        };
+                timeoutRef.current = window.setTimeout(
+                    () => {
+                        runReveal(revealedCount + timing.revealStepCount);
+                    },
+                    timing.replacementFrameMs
+                );
+            };
 
-        runShuffle(0);
-    }, [clearTimer, setDisplayedText, timing]);
+            const runShuffle = (frame: number) => {
+                if (frame >= timing.shuffleFrameCount) {
+                    runReveal(0);
+                    return;
+                }
+
+                setDisplayedText(shuffleSourceLetters(sourceLetters));
+                timeoutRef.current = window.setTimeout(
+                    () => {
+                        runShuffle(frame + 1);
+                    },
+                    timing.shuffleFrameMs
+                );
+            };
+
+            runShuffle(0);
+        },
+        [
+            clearTimer,
+            options.characterSet,
+            setDisplayedText,
+            timing.replacementFrameMs,
+            timing.revealStepCount,
+            timing.shuffleFrameCount,
+            timing.shuffleFrameMs
+        ]
+    );
 
     const showReplacement = useCallback(() => {
         animateTo(options.replacement, "replacement");
@@ -318,7 +327,14 @@ export function useTextReplacement(options: UseTextReplacementOptions) {
 
     useEffect(() => {
         currentTargetRef.current = "original";
-        setDisplayedText(options.text);
+
+        const animationFrame = window.requestAnimationFrame(() => {
+            setDisplayedText(options.text);
+        });
+
+        return () => {
+            window.cancelAnimationFrame(animationFrame);
+        };
     }, [options.text, setDisplayedText]);
 
     useEffect(() => clearTimer, [clearTimer]);

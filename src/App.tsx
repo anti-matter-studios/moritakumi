@@ -10,12 +10,22 @@ import MyTravelsPage from "./pages/MyTravelsPage";
 import WhoAmIPage from "./pages/WhoAmIPage";
 import HomePage from "./pages/HomePage";
 import ThanksPage from "./pages/Thanks";
+import PersonalityPage from "./pages/Personality";
+import SkillsPage from "./pages/Skills";
+import CareerPage from "./pages/Career";
+import SchoolPage from "./pages/School";
+import ProfessionalProjectPage from "./pages/ProfesionalProject";
 
 const pages = {
     "home": HomePage,
     "who-am-i": WhoAmIPage,
     "my-hobbies": MyHobbiesPage,
     "my-travels": MyTravelsPage,
+    "personality": PersonalityPage,
+    "skills": SkillsPage,
+    "school": SchoolPage,
+    "career": CareerPage,
+    "project": ProfessionalProjectPage,
     "thanks": ThanksPage,
 } satisfies Record<string, ComponentType>;
 
