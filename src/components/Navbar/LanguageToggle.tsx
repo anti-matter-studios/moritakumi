@@ -38,10 +38,10 @@ const languageOptions = {
         flag: "🇫🇷",
         labelKey: "navbar.french",
     },
-    // en: {
-    //     flag: "🇬🇧",
-    //     labelKey: "navbar.english",
-    // },
+    en: {
+        flag: "🇬🇧",
+        labelKey: "navbar.english",
+    },
     // de: {
     //     flag: "🇩🇪",
     //     labelKey: "navbar.german",
