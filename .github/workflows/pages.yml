@@ -25,6 +25,8 @@ jobs:
         with: { bun-version: latest }
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Install playwright
+        run: bunx --bun playwright install
       - name: Build
         env:
           MORITAKUMI_CONTENT_PASSWORD: ${{ secrets.MORITAKUMI_CONTENT_PASSWORD }}

@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 
@@ -29,7 +29,7 @@ export default function presentationRouteHtml(routes: string[]): Plugin {
                 });
             };
         },
-        async buildEnd() {
+        async closeBundle() {
             if (config.command !== "build") {
                 return;
             }
@@ -42,11 +42,7 @@ export default function presentationRouteHtml(routes: string[]): Plugin {
                     continue;
                 }
 
-                this.emitFile({
-                    type: "asset",
-                    fileName: `${route}.html`,
-                    source
-                });
+                await writeFile(resolve(outDir, `${route}.html`), source);
             }
         },
     };
