@@ -3,18 +3,21 @@
  * Licensed under the MIT License.
  */
 
-import { useEffect, useRef, useState, type PropsWithChildren, type RefObject } from "react";
+import { useRef, type PropsWithChildren } from "react";
 
 import BackgroundImage, {
     type BackgroundImageProps
 } from "@/components/BackgroundImage";
 import SlideCard, { type SlideCardProps } from "./SlideCard";
+import SlideCardList from "./SlideCardList";
 import SlideHeader, { type SlideHeaderProps } from "./SlideHeader";
 import styles from "./index.module.scss";
 import classNames from "classnames";
+import { useAnimatedBackground } from "./useAnimatedBackground";
 
 
 export { SlideCard, SlideHeader };
+export { SlideCardList };
 export type { SlideCardProps, SlideHeaderProps };
 
 /** Full-screen presentation slide. */
@@ -41,70 +44,6 @@ export default function Slide(props: SlideProps) {
     </section>;
 }
 
-function useAnimatedBackground(enabled: boolean, slideRef: RefObject<HTMLElement | null>) {
-    const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
-        if (!enabled) {
-            return;
-        }
-
-        const slide = slideRef.current;
-
-        if (slide === null) {
-            return;
-        }
-
-        if (!("IntersectionObserver" in window)) {
-            const animationFrame = globalThis.requestAnimationFrame(() => {
-                setIsActive(true);
-            });
-
-            return () => {
-                globalThis.cancelAnimationFrame(animationFrame);
-            };
-        }
-
-        const deck = document.getElementById("presentation");
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const entry = entries.find((observedEntry) => observedEntry.target === slide);
-
-                if (entry === undefined) {
-                    return;
-                }
-
-                if (!entry.isIntersecting) {
-                    setIsActive(false);
-                    return;
-                }
-
-                if (entry.intersectionRatio >= 0.6) {
-                    setIsActive(true);
-                }
-            },
-            {
-                root: deck,
-                threshold: [0, 0.6],
-            },
-        );
-
-        observer.observe(slide);
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [enabled, slideRef]);
-
-    return enabled && isActive;
-}
-
-/** Grid used to group reusable slide cards. */
-export function SlideCardList({ children, tight, small }: SlideCardGridProps) {
-    const className = classNames(styles.cardList, { tight: tight, small: small });
-    return <div className={className}>{children}</div>;
-}
-
 export interface SlideProps extends PropsWithChildren {
     /** Unique identifier used for anchors and hashes. */
     id: string;
@@ -126,9 +65,4 @@ export interface SlideProps extends PropsWithChildren {
 
     /** If set, disables the left-right disposition of the slide. */
     fullWidth?: boolean;
-}
-
-interface SlideCardGridProps extends PropsWithChildren {
-    tight?: boolean;
-    small?: boolean;
 }

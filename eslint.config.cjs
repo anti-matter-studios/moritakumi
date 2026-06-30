@@ -20,7 +20,7 @@ module.exports = defineConfig(
         languageOptions: {
             parserOptions: {
                 projectService: {
-                    allowDefaultProject: ["eslint.config.cjs", "config/*.mjs"],
+                    allowDefaultProject: ["eslint.config.cjs"],
                 },
             },
         },
@@ -45,8 +45,8 @@ module.exports = defineConfig(
         },
     },
     {
-        // JavaScript build/config scripts rely on untyped Node and Playwright APIs.
-        files: ["*.cjs", "config/*.mjs"],
+        // JavaScript tool entrypoints rely on untyped Node APIs.
+        files: ["*.cjs"],
         rules: {
             "@typescript-eslint/no-misused-promises": ["off"],
             "@typescript-eslint/no-require-imports": ["off"],

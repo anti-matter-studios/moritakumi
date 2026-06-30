@@ -3,9 +3,10 @@
  * Licensed under the MIT License.
  */
 
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { useTextReplacement, type TextReplacementSpeed } from "./useTextReplacement";
+import { useTextReplacementTrigger } from "./useTextReplacementTrigger";
 import styles from "./index.module.scss";
 
 
@@ -13,9 +14,6 @@ import styles from "./index.module.scss";
 export default function TextReplacement(props: TextReplacementProps) {
     const originalText = props.text ?? reactNodeToText(props.children);
     const replacementText = props.replacement ?? originalText;
-    const [isHovered, setIsHovered] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
-
     const { displayText, showOriginal, showReplacement } = useTextReplacement({
         replacement: replacementText,
         replacementFrameMs: props.replacementFrameMs,
@@ -26,23 +24,12 @@ export default function TextReplacement(props: TextReplacementProps) {
         characterSet: props.characterSet,
         text: originalText,
     });
-
-    useEffect(() => {
-        if (isHovered || isFocused) {
-            showReplacement();
-        } else {
-            showOriginal();
-        }
-    }, [isFocused, isHovered, showOriginal, showReplacement]);
+    const triggerEvents = useTextReplacementTrigger({ showOriginal, showReplacement });
 
     return <span
         aria-label={`${originalText} / ${replacementText}`}
         className={styles.text}
-        onBlur={() => { setIsFocused(false); }}
-        onClick={() => { setIsFocused(true); }}
-        onFocus={() => { setIsFocused(true); }}
-        onMouseEnter={() => { setIsHovered(true); }}
-        onMouseLeave={() => { setIsHovered(false); }}
+        {...triggerEvents}
         tabIndex={0}
     >
         {displayText}

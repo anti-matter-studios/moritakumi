@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build:page": "tsc && vite build",
-        "build:pdf": "bun --bun node config/buildPdfs.mjs",
+        "build:pdf": "bun --bun node src/config/pdf/buildPdfs.ts",
         "build": "bun run build:page && bun run build:pdf",
         "preview": "vite preview",
         "typecheck": "tsc"

@@ -3,53 +3,9 @@
  * Licensed under the MIT License.
  */
 
+@use "./animations";
 
-@keyframes background-parallax {
-    0% {
-        opacity: 0;
-        transform:
-            translateY(calc(var(--background-placement-translate-y) - var(--background-parallax-distance)))
-            rotate(var(--background-rotation))
-            scale(0.94);
-    }
-
-    24%,
-    74% {
-        opacity: var(--background-opacity);
-        transform:
-            translateY(var(--background-placement-translate-y))
-            rotate(calc(var(--background-rotation) / 2))
-            scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translateY(calc(var(--background-placement-translate-y) + var(--background-parallax-distance)))
-            rotate(var(--background-rotation))
-            scale(1.04);
-    }
-}
-
-@keyframes background-parallax-center {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, calc(-50% - var(--background-parallax-distance))) rotate(0) scale(0.96);
-    }
-
-    24%,
-    74% {
-        opacity: var(--background-opacity);
-        transform: translate(-50%, -50%) rotate(calc(var(--background-rotation) / 2)) scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(-50%, calc(-50% + var(--background-parallax-distance))) rotate(var(--background-rotation)) scale(1.02);
-    }
-}
-
-/* Set the style of a floating background image. */
+/* Floating image placement, sizing, and viewport-linked motion. */
 .background {
     --background-opacity: 0.5;
     --background-image-width-limit: min(42vw, 38rem);

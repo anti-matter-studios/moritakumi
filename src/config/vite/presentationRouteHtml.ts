@@ -7,7 +7,6 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 
-
 /** Creates HTML route entries from the single source index file. */
 export default function presentationRouteHtml(routes: string[]): Plugin {
     let config: ResolvedConfig;
@@ -38,11 +37,11 @@ export default function presentationRouteHtml(routes: string[]): Plugin {
             const outDir = resolve(config.root, config.build.outDir);
             const source = await readFile(resolve(outDir, "index.html"), "utf8");
 
-            for (const route of routes) {
-                if (route) {
+            await Promise.all(routes.map(async (route) => {
+                if (route.length > 0) {
                     await writeFile(resolve(outDir, `${route}.html`), source);
                 }
-            }
+            }));
         },
     };
 }

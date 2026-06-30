@@ -3,9 +3,9 @@
  * Licensed under the MIT License.
  */
 
-import { createRequire } from "node:module";
 import { webcrypto } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 
@@ -32,11 +32,7 @@ export default function encryptedTranslations(): Plugin {
             config = resolvedConfig;
         },
         resolveId(id) {
-            if (id === virtualModuleId) {
-                return resolvedVirtualModuleId;
-            }
-
-            return undefined;
+            return id === virtualModuleId ? resolvedVirtualModuleId : undefined;
         },
         async load(id) {
             if (id !== resolvedVirtualModuleId) {
@@ -50,25 +46,18 @@ export default function encryptedTranslations(): Plugin {
             const resources = await loadTranslationResources(config.root);
 
             if (config.command !== "build") {
-                return `export default ${JSON.stringify({
-                    type: "plain",
-                    resources,
-                })};`;
+                return `export default ${JSON.stringify({ type: "plain", resources })};`;
             }
 
             const password = process.env[passwordEnvName];
 
             if (password === undefined || password.length === 0) {
-                throw new Error(
-                    `Set ${passwordEnvName} before building to encrypt the site translations.`,
-                );
+                throw new Error(`Set ${passwordEnvName} before building translations.`);
             }
-
-            const payload = await encryptJson(resources, password);
 
             return `export default ${JSON.stringify({
                 type: "encrypted",
-                ...payload,
+                ...await encryptJson(resources, password),
             })};`;
         },
     };
@@ -78,10 +67,7 @@ async function loadTranslationResources(root: string) {
     const entries = await Promise.all(locales.map(async (locale) => {
         const source = await readFile(resolve(root, locale.path), "utf8");
 
-        return [
-            locale.language,
-            { translation: load(source) },
-        ] as const;
+        return [locale.language, { translation: load(source) }] as const;
     }));
 
     return Object.fromEntries(entries);
@@ -92,11 +78,7 @@ async function encryptJson(value: unknown, password: string) {
     const iv = getRandomBytes(12);
     const key = await deriveKey(password, salt);
     const encoded = new TextEncoder().encode(JSON.stringify(value));
-    const encrypted = await webcrypto.subtle.encrypt(
-        { name: "AES-GCM", iv },
-        key,
-        encoded,
-    );
+    const encrypted = await webcrypto.subtle.encrypt({ name: "AES-GCM", iv }, key, encoded);
 
     return {
         kdf: "PBKDF2",
@@ -118,12 +100,7 @@ async function deriveKey(password: string, salt: Uint8Array<ArrayBuffer>) {
     );
 
     return webcrypto.subtle.deriveKey(
-        {
-            name: "PBKDF2",
-            hash: "SHA-256",
-            salt,
-            iterations,
-        },
+        { name: "PBKDF2", hash: "SHA-256", salt, iterations },
         keyMaterial,
         { name: "AES-GCM", length: 256 },
         false,
