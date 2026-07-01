@@ -16,6 +16,7 @@ import styles from "./HomePage.module.scss";
 
 
 const websiteUrl = "https://moritakumi.anti-matter.studio";
+declare const CONTENT_PASSWORD: string;
 
 export default function HomePage() {
     const { t } = useTranslation();
@@ -36,7 +37,7 @@ export default function HomePage() {
                     value={websiteUrl}
                     label={t("home.slides.home.qrCode.label")}
                 >
-                    <Trans components={{ br: <br /> }}>
+                    <Trans components={{ br: <br /> }} values={{ password: CONTENT_PASSWORD }}>
                         home.slides.home.qrCode.caption
                     </Trans>
                 </QrCode>

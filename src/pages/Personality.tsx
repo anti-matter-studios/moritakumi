@@ -33,7 +33,12 @@ export default function PersonalityPage() {
         <PresentationDeck>
             <Slide id="introduction" navLabel={t("personality.slides.introduction.navLabel")}>
                 <SlideHeader><RichText i18nKey="personality.slides.introduction.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.introduction.paragraphs" />
+                <Paragraphs
+                    i18nKey="personality.slides.introduction.paragraphs"
+                    components={{
+                        personalities: <a href="https://16-personalities.com" />,
+                    }}
+                />
             </Slide>
 
             <Slide id="relational" navLabel={t("personality.slides.relational.navLabel")}>

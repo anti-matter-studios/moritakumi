@@ -30,6 +30,41 @@ export default function Navbar() {
         };
     }, [links]);
 
+    useEffect(() => {
+        const linkTrack = linkTrackRef.current;
+
+        if (linkTrack === null) {
+            return;
+        }
+
+        const scrollHorizontally = (event: WheelEvent) => {
+            if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+                return;
+            }
+
+            const maxScrollLeft = linkTrack.scrollWidth - linkTrack.clientWidth;
+
+            if (maxScrollLeft <= 0) {
+                return;
+            }
+
+            const nextScrollLeft = Math.min(Math.max(linkTrack.scrollLeft + event.deltaY, 0), maxScrollLeft);
+
+            if (nextScrollLeft === linkTrack.scrollLeft) {
+                return;
+            }
+
+            event.preventDefault();
+            linkTrack.scrollLeft = nextScrollLeft;
+        };
+
+        linkTrack.addEventListener("wheel", scrollHorizontally, { passive: false });
+
+        return () => {
+            linkTrack.removeEventListener("wheel", scrollHorizontally);
+        };
+    }, []);
+
     return <header className={styles.header} data-visible={isVisible}>
         <NavbarLogo />
         <nav className={styles.nav} aria-label="Primary navigation" id="nav-links">

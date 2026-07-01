@@ -54,10 +54,29 @@
     border-radius: 999rem;
     padding: 0; gap: var(--space-2);
     overflow: auto hidden;
+    overscroll-behavior-inline: contain;
 
-    // Hide the scrollbar.
-    scrollbar-width: none;
-    &::-webkit-scrollbar { display: none; }
+    @media (pointer: coarse) {
+        // Hide the scrollbar on touch screens.
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
+    }
+
+    @media (pointer: fine) {
+        // Keep mouse users aware that the track can scroll.
+        scrollbar-width: thin;
+        scrollbar-color: rgb(255 255 255 / 0.36) transparent;
+
+        &::-webkit-scrollbar {
+            display: block;
+            height: 0.45rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 999rem;
+            background: rgb(255 255 255 / 0.36);
+        }
+    }
 }
 
 @media (max-width: 68rem) {

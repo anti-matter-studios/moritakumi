@@ -24,7 +24,7 @@ export const mapImageSize = {
     height: 460
 } as const;
 
-export const defaultTileZoom = 13;
+export const defaultTileZoom = 14;
 
 export interface RenderMapOptions {
     /** Project root used for the tile cache. */

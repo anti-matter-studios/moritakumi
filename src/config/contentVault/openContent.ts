@@ -13,6 +13,7 @@ import {
 } from "./constants";
 import type { ContentVaultManifest } from "./format";
 import { readContentPassword } from "./password";
+import { stringify } from "yaml";
 
 const rootDir = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
 const manifest = JSON.parse(
@@ -23,7 +24,7 @@ const resources = JSON.parse(new TextDecoder().decode(await decryptBytes(
     manifest.translations.data,
     manifest.translations.iv,
     key,
-))) as Record<string, { translation: unknown }>;
+))) as Record<string, { translation?: unknown } | undefined>;
 
 for (const locale of plaintextLocales) {
     const resource = resources[locale.language]?.translation;
@@ -32,7 +33,8 @@ for (const locale of plaintextLocales) {
         throw new Error(`Missing ${locale.language} translations in content vault.`);
     }
 
-    await writeTextFile(resolve(rootDir, locale.path), JSON.stringify(resource, null, 2));
+    await mkdir(dirname(resolve(rootDir, locale.path)), { recursive: true });
+    await writeTextFile(resolve(rootDir, locale.path), stringify(resource));
 }
 
 for (const [publicPath, image] of Object.entries(manifest.images)) {

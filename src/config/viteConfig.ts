@@ -19,6 +19,9 @@ const isMapExportOnly = process.env.MORITAKUMI_MAP_EXPORT_ONLY === "1";
 export default defineConfig({
     appType: "mpa",
     server: { port: 10201 },
+    define: {
+        CONTENT_PASSWORD: JSON.stringify(process.env["MORITAKUMI_CONTENT_PASSWORD"]),
+    },
     plugins: isMapExportOnly ? [
         openStreetMapExports(),
     ] : [

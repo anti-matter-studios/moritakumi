@@ -12,7 +12,7 @@ export interface PdfPageConfig {
 
 /** PDF outputs generated from each presentation route. */
 const pdfPages = [
-    { route: "index.html", fileName: "index.pdf", pageSize: "21cm 29.7cm", noTimeline: true },
+    { route: "index.html", fileName: "index.pdf", pageSize: "29.7cm 42cm", noTimeline: true },
     { route: "who-am-i", fileName: "who-am-i.pdf" },
     { route: "my-hobbies", fileName: "my-hobbies.pdf" },
     { route: "my-travels", fileName: "my-travels.pdf" },

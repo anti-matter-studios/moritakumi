@@ -67,9 +67,8 @@
 
 @media print {
     .card {
-        min-height: 6rem;
-        border-color: color-mix(in srgb, var(--color-accent-soft) 66%, var(--color-surface));
-        background: color-mix(in srgb, var(--color-surface) 86%, var(--color-page));
+        border-color: color-mix(in srgb, var(--color-accent) 66%, var(--color-surface));
+        background: color-mix(in srgb, var(--color-surface-soft) 86%, var(--color-page));
         box-shadow: none;
         backdrop-filter: none;
     }
