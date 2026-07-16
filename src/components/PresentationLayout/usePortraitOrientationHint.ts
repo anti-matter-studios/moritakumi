@@ -5,6 +5,8 @@
 
 import { useEffect, useState } from "react";
 
+const orientationHintDuration = 2_000;
+
 /** Shows the rotate-device hint while the deck is viewed in portrait orientation. */
 export function usePortraitOrientationHint() {
     const [isPortrait, setIsPortrait] = useState(isPortraitViewport);
@@ -29,6 +31,22 @@ export function usePortraitOrientationHint() {
     useEffect(() => {
         setIsVisible(isPortrait);
     }, [isPortrait]);
+
+    useEffect(() => {
+        if (!isPortrait || !isVisible) {
+            return;
+        }
+
+        // Mobile browsers do not always dispatch animationend when rendering is
+        // interrupted, so visibility must not depend on that event alone.
+        const hideTimer = window.setTimeout(() => {
+            setIsVisible(false);
+        }, orientationHintDuration);
+
+        return () => {
+            window.clearTimeout(hideTimer);
+        };
+    }, [isPortrait, isVisible]);
 
     return {
         isVisible: isPortrait && isVisible,
