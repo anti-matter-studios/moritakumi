@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react";
 /** Hook used to decide if the navbar should be visible while scrolling the page. */
 export default function useVisible() {
     const [isVisible, setIsVisible] = useState(true);
-    const hasTouchInteraction = useRef(false);
     const lastScrollTop = useRef(0);
     const scrollFrame = useRef<number | null>(null);
 
@@ -17,7 +16,6 @@ export default function useVisible() {
         const scrollContainer = document.getElementById("presentation");
 
         function hideOnMobileTouch() {
-            hasTouchInteraction.current = true;
             setIsVisible(false);
         }
 
@@ -30,9 +28,7 @@ export default function useVisible() {
                 const scrollTop = scrollContainer?.scrollTop ?? document.scrollingElement?.scrollTop ?? window.scrollY;
                 const scrollDelta = scrollTop - lastScrollTop.current;
 
-                if (!hasTouchInteraction.current) {
-                    setIsVisible(true);
-                } else if (scrollDelta > 8) {
+                if (scrollDelta > 8) {
                     setIsVisible(false);
                 } else if (scrollDelta < -8) {
                     setIsVisible(true);
