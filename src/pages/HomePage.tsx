@@ -7,8 +7,7 @@ import { Fragment, useLayoutEffect, useRef, type RefObject } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import {
-    getParagraphSlideBreak,
-    splitParagraphsAtSlideBreaks,
+    getResponsiveParagraphText,
     type SlideSplitStrategy,
 } from "@/components/Paragraphs";
 import PresentationLayout, {
@@ -40,48 +39,41 @@ function HomeSlides() {
     const translatedParagraphs = t("home.slides.home.paragraphs", { returnObjects: true });
     const splitStrategy = useSlideSplitStrategy();
     const paragraphs = isStringArray(translatedParagraphs)
-        ? addDefaultHomeSlideBreaks(translatedParagraphs)
+        ? translatedParagraphs
+            .map((paragraph) => getResponsiveParagraphText(paragraph, splitStrategy))
+            .filter((paragraph): paragraph is string => paragraph !== undefined)
         : [];
-    const chunks = splitParagraphsAtSlideBreaks(paragraphs, splitStrategy);
 
     useQrShadowLayout(copyRef, qrCodeRef, qrShadowRef, splitStrategy);
 
-    return <>
-            {chunks.map((chunk, chunkIndex) => {
-                const isLastChunk = chunkIndex === chunks.length - 1;
-                const slideId = chunkIndex === 0 ? "home" : `home-${(chunkIndex + 1).toString()}`;
-
-                return <Slide
-                    id={slideId}
-                    key={slideId}
-                    slideId="home"
-                    navLabel={t("home.slides.home.navLabel")}
-                    fullWidth
-                >
-                    <SlideHeader small><RichText i18nKey="home.slides.home.title" /></SlideHeader>
-                    <div ref={isLastChunk ? copyRef : undefined} className={styles.copy}>
-                        {chunk.paragraphs.map((paragraph, paragraphIndex) => (
-                            <Fragment key={`${paragraphIndex.toString()}-${paragraph}`}>
-                                {isLastChunk && paragraphIndex === chunk.paragraphs.length - 1 && (
-                                    <span ref={qrShadowRef} className={styles.qrShadow} aria-hidden="true" />
-                                )}
-                                <p><RichText>{paragraph}</RichText></p>
-                            </Fragment>
-                        ))}
-                    </div>
-                    {isLastChunk && <QrCode
-                        ref={qrCodeRef}
-                        className={styles.qrCode}
-                        value={websiteUrl}
-                        label={t("home.slides.home.qrCode.label")}
-                    >
-                        <Trans components={{ br: <br /> }} values={{ password: CONTENT_PASSWORD }}>
-                            home.slides.home.qrCode.caption
-                        </Trans>
-                    </QrCode>}
-                </Slide>;
-            })}
-    </>;
+    return <Slide
+        id="home"
+        slideId="home"
+        navLabel={t("home.slides.home.navLabel")}
+        fullWidth
+    >
+        <SlideHeader small><RichText i18nKey="home.slides.home.title" /></SlideHeader>
+        <div ref={copyRef} className={styles.copy}>
+            {paragraphs.map((paragraph, paragraphIndex) => (
+                <Fragment key={`${paragraphIndex.toString()}-${paragraph}`}>
+                    {paragraphIndex === paragraphs.length - 1 && (
+                        <span ref={qrShadowRef} className={styles.qrShadow} aria-hidden="true" />
+                    )}
+                    <p><RichText>{paragraph}</RichText></p>
+                </Fragment>
+            ))}
+        </div>
+        <QrCode
+            ref={qrCodeRef}
+            className={styles.qrCode}
+            value={websiteUrl}
+            label={t("home.slides.home.qrCode.label")}
+        >
+            <Trans components={{ br: <br /> }} values={{ password: CONTENT_PASSWORD }}>
+                home.slides.home.qrCode.caption
+            </Trans>
+        </QrCode>
+    </Slide>;
 }
 
 function useQrShadowLayout(
@@ -136,24 +128,6 @@ function useQrShadowLayout(
             window.removeEventListener("resize", updateShadow);
         };
     }, [copyRef, layoutKey, qrCodeRef, qrShadowRef]);
-}
-
-function addDefaultHomeSlideBreaks(paragraphs: string[]) {
-    if (paragraphs.some((paragraph) => getParagraphSlideBreak(paragraph) !== undefined)) {
-        return paragraphs;
-    }
-
-    return paragraphs.flatMap((paragraph, index) => {
-        if (index === 2) {
-            return ['<slide-break screen-size="medium" />', paragraph];
-        }
-
-        if (index === 4) {
-            return ['<slide-break screen-size="small" />', paragraph];
-        }
-
-        return [paragraph];
-    });
 }
 
 function isStringArray(value: unknown): value is string[] {

@@ -7,6 +7,8 @@ import type { PropsWithChildren, ReactNode } from "react";
 import { Trans } from "react-i18next";
 
 import LoveNote from "@/components/LoveNote";
+import { useSlideSplitStrategy } from "@/components/PresentationLayout/responsiveSlideSplitting";
+import type { SlideSplitStrategy } from "@/components/Paragraphs";
 import TraitSlider from "@/components/TraitSlider";
 import TextReplacement from "@/components/TextReplacement";
 import Tooltip from "@/components/Tooltip";
@@ -34,6 +36,7 @@ export default function RichText(props: RichTextProps) {
             h5: <h5 />,
             h6: <h6 />,
             blue: <BlueText />,
+            "hidden-text": <HiddenText />,
             love: <LoveNote />,
             replace: <TextReplacement />,
             tooltip: <Tooltip />,
@@ -84,3 +87,26 @@ interface BlueTextProps extends PropsWithChildren {
     /** Render the text as a dark-to-light blue gradient. */
     gradient?: boolean | string;
 }
+
+/** Hides non-essential copy below the requested presentation size. */
+function HiddenText(props: HiddenTextProps) {
+    const strategy = useSlideSplitStrategy();
+    const showFrom = props["show-from"] ?? "medium";
+
+    if (slideSizeRanks[strategy] < slideSizeRanks[showFrom]) {
+        return null;
+    }
+
+    return <>{props.children}</>;
+}
+
+interface HiddenTextProps extends PropsWithChildren {
+    /** Smallest presentation size at which the copy is shown. */
+    "show-from"?: SlideSplitStrategy;
+}
+
+const slideSizeRanks = {
+    small: 1,
+    medium: 2,
+    large: 3,
+} satisfies Record<SlideSplitStrategy, number>;

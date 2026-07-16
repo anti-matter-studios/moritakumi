@@ -58,10 +58,10 @@
     }
 }
 
-@include below-tablet {
+@include below-desktop {
     .card {
         margin-block: var(--space-2);
-        padding: var(--space-3);
+        padding: var(--space-2) var(--space-4);
     }
 }
 

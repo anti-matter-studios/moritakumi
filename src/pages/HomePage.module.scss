@@ -50,6 +50,7 @@
 @include mixins.below-desktop {
     .qrShadow,
     .qrCode {
+        display: none;
         --home-qr-size: 12rem;
         --home-qr-overflow-x: var(--space-4);
         --home-qr-overflow-y: var(--space-4);

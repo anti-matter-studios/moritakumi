@@ -88,6 +88,10 @@
         }
     }
 
+    p:last-child {
+        margin-bottom: 0;
+    }
+
     hr {
         color: var(--color-accent-soft);
         max-width: 80%;
@@ -161,7 +165,7 @@
     }
 }
 
-@media (max-width: 56rem) {
+@include below-desktop {
     .slide {
         padding-inline:
             calc(var(--slide-padding-inline) + var(--safe-area-left))
@@ -169,11 +173,12 @@
     }
 
     .content {
-        padding: var(--space-4);
+        padding: var(--space-2) var(--space-4);
     }
 
     .cardList {
-        margin-top: var(--space-5);
+        margin-top: 0;
+        gap: var(--space-2);
     }
 }
 
