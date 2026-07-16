@@ -57,7 +57,16 @@ export default function MyHobbiesPage() {
                 <Paragraphs i18nKey="my-hobbies.slides.winterSports.paragraphs" />
             </Slide>
 
-            <Slide id="womens-rights" navLabel={t("my-hobbies.slides.womensRights.navLabel")}>
+            <Slide
+                id="womens-rights"
+                navLabel={t("my-hobbies.slides.womensRights.navLabel")}
+                backgroundImage={{
+                    src: "/images/awid.jpg",
+                    width: 1428,
+                    height: 1101,
+                    placement: "bottom-right"
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-hobbies.slides.womensRights.title" /></SlideHeader>
                 <Paragraphs i18nKey="my-hobbies.slides.womensRights.paragraphs" />
             </Slide>

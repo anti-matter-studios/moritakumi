@@ -39,7 +39,16 @@ export default function MyTravelsPage() {
                 <Paragraphs i18nKey="my-travels.slides.title.paragraphs" />
             </Slide>
 
-            <Slide id="italy" navLabel={t("my-travels.slides.italy.navLabel")}>
+            <Slide
+                id="italy"
+                navLabel={t("my-travels.slides.italy.navLabel")}
+                backgroundImage={{
+                    src: "/images/roma.jpg",
+                    width: 1199,
+                    height: 1600,
+                    placement: "top-left",
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-travels.slides.italy.title" /></SlideHeader>
                 <PlaceCards i18nKey="my-travels.slides.italy.places" />
                 <Paragraphs i18nKey="my-travels.slides.italy.paragraphs" />
@@ -75,7 +84,16 @@ export default function MyTravelsPage() {
                 <Paragraphs i18nKey="my-travels.slides.london.paragraphs" />
             </Slide>
 
-            <Slide id="spain" navLabel={t("my-travels.slides.spain.navLabel")}>
+            <Slide
+                id="spain"
+                navLabel={t("my-travels.slides.spain.navLabel")}
+                backgroundImage={{
+                    src: "/images/madrid.jpg",
+                    width: 1152,
+                    height: 2048,
+                    placement: "top-right",
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-travels.slides.spain.title" /></SlideHeader>
                 <PlaceCards i18nKey="my-travels.slides.spain.places" />
                 <Paragraphs i18nKey="my-travels.slides.spain.paragraphs" />
@@ -111,7 +129,16 @@ export default function MyTravelsPage() {
                 <Paragraphs i18nKey="my-travels.slides.northAmerica.paragraphs" />
             </Slide>
 
-            <Slide id="peru" navLabel={t("my-travels.slides.peru.navLabel")}>
+            <Slide
+                id="peru"
+                navLabel={t("my-travels.slides.peru.navLabel")}
+                backgroundImage={{
+                    src: "/images/peru.jpg",
+                    width: 902,
+                    height: 1346,
+                    placement: "top-left",
+                }}
+            >
                 <SlideHeader><RichText i18nKey="my-travels.slides.peru.title" /></SlideHeader>
                 <PlaceCards i18nKey="my-travels.slides.peru.places" />
                 <Paragraphs i18nKey="my-travels.slides.peru.paragraphs" />

@@ -70,7 +70,16 @@ export default function ThanksPage() {
                 <Paragraphs i18nKey="thanks.slides.efs.paragraphs" />
             </Slide>
 
-            <Slide id="tutors" navLabel={t("thanks.slides.tutors.navLabel")}>
+            <Slide
+                id="tutors"
+                navLabel={t("thanks.slides.tutors.navLabel")}
+                backgroundImage={{
+                    src: "/images/tutors.jpg",
+                    width: 1694,
+                    height: 1693,
+                    placement: "top-right"
+                }}
+            >
                 <SlideHeader><RichText i18nKey="thanks.slides.tutors.title" /></SlideHeader>
                 <Paragraphs i18nKey="thanks.slides.tutors.paragraphs" />
             </Slide>
