@@ -8,6 +8,7 @@
 .deck {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     isolation: isolate;
     scroll-behavior: smooth;
@@ -21,7 +22,11 @@
     inset: 0;
     display: grid;
     place-items: center;
-    padding: var(--space-5);
+    padding:
+        calc(var(--space-5) + var(--safe-area-top))
+        calc(var(--space-5) + var(--safe-area-right))
+        calc(var(--space-5) + var(--safe-area-bottom))
+        calc(var(--space-5) + var(--safe-area-left));
     background:
         radial-gradient(circle at 50% 44%, rgb(244 251 248 / 0.18), transparent 24rem),
         rgb(14 28 25 / 0.56);
@@ -41,8 +46,8 @@
 .backToTop {
     position: fixed;
     z-index: 17;
-    right: var(--space-5);
-    bottom: var(--space-5);
+    right: calc(var(--space-5) + var(--safe-area-right));
+    bottom: calc(var(--space-5) + var(--safe-area-bottom));
     display: grid;
     width: 2.75rem;
     height: 2.75rem;
@@ -219,8 +224,8 @@
 
 @media (max-width: 56rem) {
     .backToTop {
-        right: var(--space-3);
-        bottom: var(--space-3);
+        right: calc(var(--space-3) + var(--safe-area-right));
+        bottom: calc(var(--space-3) + var(--safe-area-bottom));
     }
 }
 

@@ -7,8 +7,10 @@
 /* Set the style of the presentation shell. */
 .layout {
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--color-page);
     color: var(--color-text);
 }

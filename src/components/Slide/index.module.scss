@@ -24,11 +24,12 @@
     display: grid;
     align-content: center;
     overflow: hidden;
-    padding-block: var(--slide-padding-block);
-    padding-inline: max(
-        var(--slide-padding-inline),
-        calc(var(--timeline-width) + var(--space-6))
-    ) var(--slide-padding-inline);
+    padding-block:
+        calc(var(--slide-padding-block) + var(--safe-area-top))
+        calc(var(--slide-padding-block) + var(--safe-area-bottom));
+    padding-inline:
+        calc(var(--safe-area-left) + var(--timeline-width) + var(--space-6))
+        calc(var(--slide-padding-inline) + var(--safe-area-right));
     background: linear-gradient(135deg, var(--color-page), var(--color-accent-soft));
     view-timeline-axis: block;
     view-timeline-name: --slide-view;
@@ -162,7 +163,9 @@
 
 @media (max-width: 56rem) {
     .slide {
-        padding-inline: var(--slide-padding-inline);
+        padding-inline:
+            calc(var(--slide-padding-inline) + var(--safe-area-left))
+            calc(var(--slide-padding-inline) + var(--safe-area-right));
     }
 
     .content {

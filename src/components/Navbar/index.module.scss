@@ -6,8 +6,13 @@
 
 /* Set the style of the nav container. */
 .header {
+    --navbar-gutter: var(--space-5);
+
     // Fix to the top of the screen.
-    position: fixed; inset: var(--space-5); bottom: unset;
+    position: fixed;
+    top: calc(var(--navbar-gutter) + var(--safe-area-top));
+    right: calc(var(--navbar-gutter) + var(--safe-area-right));
+    left: calc(var(--navbar-gutter) + var(--safe-area-left));
     z-index: 20;
 
     // Keep the logo and links aligned on a single row.
@@ -25,7 +30,7 @@
     &[data-visible="false"] {
         opacity: 0;
         pointer-events: none;
-        transform: translateY(calc(-100% - var(--space-5)));
+        transform: translateY(calc(-100% - var(--navbar-gutter) - var(--safe-area-top)));
         visibility: hidden;
     }
 }
@@ -81,16 +86,16 @@
 
 @media (max-width: 68rem) {
     .header {
-        inset: var(--space-4);
-        bottom: unset;
+        --navbar-gutter: var(--space-4);
+
         gap: var(--space-2);
     }
 }
 
 @media (max-width: 42rem) {
     .header {
-        inset: var(--space-3);
-        bottom: unset;
+        --navbar-gutter: var(--space-3);
+
         gap: var(--space-2);
         grid-template-columns: auto minmax(0, 1fr);
     }

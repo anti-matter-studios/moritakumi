@@ -14,6 +14,13 @@ export default function useVisible() {
 
     useEffect(() => {
         const scrollContainer = document.getElementById("presentation");
+        const mobileViewport = window.matchMedia("(max-width: 42rem)");
+
+        function hideOnMobileTouch() {
+            if (mobileViewport.matches) {
+                setIsVisible(false);
+            }
+        }
 
         function updateVisibility() {
             if (scrollFrame.current !== null) {
@@ -38,9 +45,11 @@ export default function useVisible() {
 
         const target = scrollContainer ?? window;
         target.addEventListener("scroll", updateVisibility, { passive: true });
+        target.addEventListener("touchstart", hideOnMobileTouch, { passive: true });
 
         return () => {
             target.removeEventListener("scroll", updateVisibility);
+            target.removeEventListener("touchstart", hideOnMobileTouch);
 
             if (scrollFrame.current !== null) {
                 cancelAnimationFrame(scrollFrame.current);

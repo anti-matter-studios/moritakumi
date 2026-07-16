@@ -9,14 +9,14 @@
     position: fixed;
     z-index: 16;
     top: 50%;
-    left: var(--space-5);
+    left: calc(var(--space-5) + var(--safe-area-left));
     width: var(--timeline-width);
     transform: translateY(-50%);
 }
 
 @media (max-width: 56rem) {
     .timeline {
-        left: var(--space-3);
+        left: calc(var(--space-3) + var(--safe-area-left));
         width: 2.25rem;
     }
 }
