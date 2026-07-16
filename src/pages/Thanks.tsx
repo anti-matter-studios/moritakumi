@@ -5,15 +5,36 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
+import type { BackgroundImageProps } from "@/components/BackgroundImage";
 import Timeline from "@/components/Timeline";
 
+
+const thanksBackgroundImages = {
+    brother: {
+        src: "/images/my-brother.jpg",
+        width: 1299,
+        height: 982,
+        placement: "top-right",
+    },
+    efs: {
+        src: "/images/efs.png",
+        width: 300,
+        height: 300,
+        placement: "top-right",
+    },
+    tutors: {
+        src: "/images/tutors.jpg",
+        width: 1694,
+        height: 1693,
+        placement: "top-right",
+    },
+} satisfies Partial<Record<ThanksSlideKey, BackgroundImageProps>>;
 
 export default function ThanksPage() {
     const { t } = useTranslation();
@@ -32,67 +53,30 @@ export default function ThanksPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide
-                id="brother"
-                navLabel={t("thanks.slides.brother.navLabel")}
-                backgroundImage={{
-                    src: "/images/my-brother.jpg",
-                    width: 1299,
-                    height: 982,
-                    placement: "top-right"
-                }}
-            >
-                <SlideHeader><RichText i18nKey="thanks.slides.brother.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.brother.paragraphs" />
-            </Slide>
-
-            <Slide id="family" navLabel={t("thanks.slides.family.navLabel")}>
-                <SlideHeader><RichText i18nKey="thanks.slides.family.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.family.paragraphs" />
-            </Slide>
-
-            <Slide id="school" navLabel={t("thanks.slides.school.navLabel")}>
-                <SlideHeader><RichText i18nKey="thanks.slides.school.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.school.paragraphs" />
-            </Slide>
-
-            <Slide
-                id="efs"
-                navLabel={t("thanks.slides.efs.navLabel")}
-                backgroundImage={{
-                    src: "/images/efs.png",
-                    width: 300,
-                    height: 300,
-                    placement: "top-right"
-                }}
-            >
-                <SlideHeader><RichText i18nKey="thanks.slides.efs.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.efs.paragraphs" />
-            </Slide>
-
-            <Slide
-                id="tutors"
-                navLabel={t("thanks.slides.tutors.navLabel")}
-                backgroundImage={{
-                    src: "/images/tutors.jpg",
-                    width: 1694,
-                    height: 1693,
-                    placement: "top-right"
-                }}
-            >
-                <SlideHeader><RichText i18nKey="thanks.slides.tutors.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.tutors.paragraphs" />
-            </Slide>
-
-            <Slide id="team" navLabel={t("thanks.slides.team.navLabel")}>
-                <SlideHeader><RichText i18nKey="thanks.slides.team.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.team.paragraphs" />
-            </Slide>
-
-            <Slide id="personnel" navLabel={t("thanks.slides.personnel.navLabel")}>
-                <SlideHeader><RichText i18nKey="thanks.slides.personnel.title" /></SlideHeader>
-                <Paragraphs i18nKey="thanks.slides.personnel.paragraphs" />
-            </Slide>
+            <ThanksSlide slideKey="brother" />
+            <ThanksSlide slideKey="family" />
+            <ThanksSlide slideKey="school" />
+            <ThanksSlide slideKey="efs" />
+            <ThanksSlide slideKey="tutors" />
+            <ThanksSlide slideKey="team" />
+            <ThanksSlide slideKey="personnel" />
         </PresentationDeck>
     </PresentationLayout>;
 }
+
+function ThanksSlide({ slideKey }: { slideKey: ThanksSlideKey }) {
+    const { t } = useTranslation();
+    const backgroundImage = slideKey in thanksBackgroundImages
+        ? thanksBackgroundImages[slideKey as keyof typeof thanksBackgroundImages]
+        : undefined;
+
+    return <ResponsiveSlide
+        id={slideKey}
+        navLabel={t(`thanks.slides.${slideKey}.navLabel`)}
+        paragraphsI18nKey={`thanks.slides.${slideKey}.paragraphs`}
+        header={<SlideHeader><RichText i18nKey={`thanks.slides.${slideKey}.title`} /></SlideHeader>}
+        backgroundImage={backgroundImage}
+    />;
+}
+
+type ThanksSlideKey = "brother" | "family" | "school" | "efs" | "tutors" | "team" | "personnel";

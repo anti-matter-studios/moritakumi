@@ -12,6 +12,7 @@ import styles from "./index.module.scss";
 
 
 export { PresentationDeck, PresentationTimeline };
+export { useSlideSplitStrategy } from "./responsiveSlideSplitting";
 export type { PresentationDeckProps, PresentationTimelineProps };
 
 /** Container used to render the presentation of the page. */

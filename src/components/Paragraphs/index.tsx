@@ -7,11 +7,14 @@ import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import RichText from "@/components/RichText";
+import { useSlideSplitStrategy } from "@/components/PresentationLayout/responsiveSlideSplitting";
+import styles from "./index.module.scss";
 
 
 /** Renders an array of translated paragraphs. */
 export default function Paragraphs(props: ParagraphsProps) {
     const { t } = useTranslation();
+    const strategy = useSlideSplitStrategy();
     const paragraphs = props.paragraphs ?? (
         props.i18nKey !== undefined
             ? t(props.i18nKey, { returnObjects: true })
@@ -23,11 +26,18 @@ export default function Paragraphs(props: ParagraphsProps) {
     }
 
     return <>
-        {paragraphs.filter(isRenderableParagraph).map((paragraph) => (
-            <p key={paragraph}>
-                <RichText values={props.values} components={props.components}>{paragraph}</RichText>
-            </p>
-        ))}
+        {paragraphs.map((paragraph) => getResponsiveParagraphText(paragraph, strategy))
+            .filter((paragraph): paragraph is string => paragraph !== undefined)
+            .map((paragraph, index) => {
+                const contents = <RichText values={props.values} components={props.components}>
+                    {paragraph}
+                </RichText>;
+                const key = `${index.toString()}-${paragraph}`;
+
+                return containsBlockRichText(paragraph)
+                    ? <div className={styles.block} key={key}>{contents}</div>
+                    : <p key={key}>{contents}</p>;
+            })}
     </>;
 }
 
@@ -49,7 +59,11 @@ export function splitParagraphsAtSlideBreaks(
             continue;
         }
 
-        chunks.at(-1)?.paragraphs.push(paragraph);
+        const responsiveText = getResponsiveParagraphText(paragraph, strategy);
+
+        if (responsiveText !== undefined) {
+            chunks.at(-1)?.paragraphs.push(responsiveText);
+        }
     }
 
     return chunks.filter((chunk) => chunk.paragraphs.length > 0);
@@ -59,8 +73,8 @@ function isStringArray(value: unknown): value is string[] {
     return Array.isArray(value) && value.every((item) => typeof item === "string");
 }
 
-function isRenderableParagraph(paragraph: string) {
-    return getParagraphSlideBreak(paragraph) === undefined;
+function containsBlockRichText(paragraph: string) {
+    return /<(?:card|card-list)\b/i.test(paragraph);
 }
 
 export function getParagraphSlideBreak(paragraph: string) {
@@ -77,8 +91,52 @@ export function getParagraphSlideBreak(paragraph: string) {
     };
 }
 
+/** Resolves optional show-on/hide-on metadata and returns visible paragraph text. */
+export function getResponsiveParagraphText(
+    paragraph: string,
+    strategy: SlideSplitStrategy,
+) {
+    if (getParagraphSlideBreak(paragraph) !== undefined) {
+        return undefined;
+    }
+
+    const match = paragraph.trim().match(
+        /^<responsive-text(?<attributes>[^>]*)>(?<content>[\s\S]*)<\/responsive-text>$/,
+    );
+
+    if (match === null) {
+        return paragraph;
+    }
+
+    const attributes = match.groups?.attributes ?? "";
+    const showOn = getScreenSizes(getAttribute(attributes, "show-on"));
+    const hideOn = getScreenSizes(getAttribute(attributes, "hide-on"));
+
+    if (showOn.length > 0 && !showOn.includes(strategy)) {
+        return undefined;
+    }
+
+    if (hideOn.includes(strategy)) {
+        return undefined;
+    }
+
+    return match.groups?.content.trim() ?? "";
+}
+
 function getAttribute(attributes: string, name: string) {
     return attributes.match(new RegExp(`\\b${name}="([^"]+)"`))?.[1];
+}
+
+function getScreenSizes(value: string | undefined) {
+    if (value === undefined) {
+        return [];
+    }
+
+    return value
+        .split(/[\s,]+/)
+        .filter((screenSize): screenSize is SlideSplitStrategy => (
+            screenSize === "small" || screenSize === "medium" || screenSize === "large"
+        ));
 }
 
 function shouldSplitAtSlideBreak(slideBreak: ParagraphSlideBreak, strategy: SlideSplitStrategy) {

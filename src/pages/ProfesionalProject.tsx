@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 
 
@@ -31,35 +30,25 @@ export default function ProfessionalProjectPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="shortTerm" navLabel={t("project.slides.shortTerm.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.shortTerm.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.shortTerm.paragraphs" />
-            </Slide>
-
-            <Slide id="longTerm" navLabel={t("project.slides.longTerm.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.longTerm.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.longTerm.paragraphs" />
-            </Slide>
-
-            <Slide id="ideal" navLabel={t("project.slides.ideal.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.ideal.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.ideal.paragraphs" />
-            </Slide>
-
-            <Slide id="aim" navLabel={t("project.slides.aim.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.aim.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.aim.paragraphs" />
-            </Slide>
-
-            <Slide id="environment" navLabel={t("project.slides.environment.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.environment.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.environment.paragraphs" />
-            </Slide>
-
-            <Slide id="plan" navLabel={t("project.slides.plan.navLabel")}>
-                <SlideHeader><RichText i18nKey="project.slides.plan.title" /></SlideHeader>
-                <Paragraphs i18nKey="project.slides.plan.paragraphs" />
-            </Slide>
+            <ProjectSlide slideKey="shortTerm" />
+            <ProjectSlide slideKey="longTerm" />
+            <ProjectSlide slideKey="ideal" />
+            <ProjectSlide slideKey="aim" />
+            <ProjectSlide slideKey="environment" />
+            <ProjectSlide slideKey="plan" />
         </PresentationDeck>
     </PresentationLayout>;
 }
+
+function ProjectSlide({ slideKey }: { slideKey: ProjectSlideKey }) {
+    const { t } = useTranslation();
+
+    return <ResponsiveSlide
+        id={slideKey}
+        navLabel={t(`project.slides.${slideKey}.navLabel`)}
+        paragraphsI18nKey={`project.slides.${slideKey}.paragraphs`}
+        header={<SlideHeader><RichText i18nKey={`project.slides.${slideKey}.title`} /></SlideHeader>}
+    />;
+}
+
+type ProjectSlideKey = "shortTerm" | "longTerm" | "ideal" | "aim" | "environment" | "plan";

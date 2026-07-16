@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 
 
@@ -31,47 +30,59 @@ export default function SkillsPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="professional" navLabel={t("skills.slides.professional.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.professional.eyebrow")}>
+            <ResponsiveSlide
+                id="professional"
+                navLabel={t("skills.slides.professional.navLabel")}
+                paragraphsI18nKey="skills.slides.professional.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.professional.eyebrow")}>
                     <RichText i18nKey="skills.slides.professional.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.professional.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
 
-            <Slide id="humanResources" navLabel={t("skills.slides.humanResources.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.humanResources.eyebrow")}>
+            <ResponsiveSlide
+                id="humanResources"
+                navLabel={t("skills.slides.humanResources.navLabel")}
+                paragraphsI18nKey="skills.slides.humanResources.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.humanResources.eyebrow")}>
                     <RichText i18nKey="skills.slides.humanResources.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.humanResources.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
 
-            <Slide id="relational" navLabel={t("skills.slides.relational.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.relational.eyebrow")}>
+            <ResponsiveSlide
+                id="relational"
+                navLabel={t("skills.slides.relational.navLabel")}
+                paragraphsI18nKey="skills.slides.relational.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.relational.eyebrow")}>
                     <RichText i18nKey="skills.slides.relational.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.relational.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
 
-            <Slide id="transverse" navLabel={t("skills.slides.transverse.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.transverse.eyebrow")}>
+            <ResponsiveSlide
+                id="transverse"
+                navLabel={t("skills.slides.transverse.navLabel")}
+                paragraphsI18nKey="skills.slides.transverse.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.transverse.eyebrow")}>
                     <RichText i18nKey="skills.slides.transverse.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.transverse.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
 
-            <Slide id="it" navLabel={t("skills.slides.it.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.it.eyebrow")}>
+            <ResponsiveSlide
+                id="it"
+                navLabel={t("skills.slides.it.navLabel")}
+                paragraphsI18nKey="skills.slides.it.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.it.eyebrow")}>
                     <RichText i18nKey="skills.slides.it.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.it.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
 
-            <Slide id="language" navLabel={t("skills.slides.language.navLabel")}>
-                <SlideHeader eyebrow={t("skills.slides.language.eyebrow")}>
+            <ResponsiveSlide
+                id="language"
+                navLabel={t("skills.slides.language.navLabel")}
+                paragraphsI18nKey="skills.slides.language.paragraphs"
+                header={<SlideHeader eyebrow={t("skills.slides.language.eyebrow")}>
                     <RichText i18nKey="skills.slides.language.title" />
-                </SlideHeader>
-                <Paragraphs i18nKey="skills.slides.language.paragraphs" />
-            </Slide>
+                </SlideHeader>}
+            />
         </PresentationDeck>
     </PresentationLayout>;
 }

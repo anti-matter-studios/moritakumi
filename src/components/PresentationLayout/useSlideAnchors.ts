@@ -34,7 +34,18 @@ export function useSlideAnchors(deckRef: RefObject<HTMLElement | null>) {
             return;
         }
 
-        return observeActiveSlide(deck);
+        let disconnectSlideObserver = observeActiveSlide(deck);
+        const mutationObserver = new MutationObserver(() => {
+            disconnectSlideObserver?.();
+            disconnectSlideObserver = observeActiveSlide(deck);
+        });
+
+        mutationObserver.observe(deck, { childList: true });
+
+        return () => {
+            disconnectSlideObserver?.();
+            mutationObserver.disconnect();
+        };
     }, [deckRef]);
 }
 

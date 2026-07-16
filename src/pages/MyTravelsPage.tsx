@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 import { PlaceCards } from "./pageHelpers";
 
@@ -34,115 +33,110 @@ export default function MyTravelsPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="title" navLabel={t("my-travels.slides.title.navLabel")}>
-                <SlideHeader><RichText i18nKey="my-travels.slides.title.title" /></SlideHeader>
-                <Paragraphs i18nKey="my-travels.slides.title.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="title"
+                navLabel={t("my-travels.slides.title.navLabel")}
+                paragraphsI18nKey="my-travels.slides.title.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.title.title" /></SlideHeader>}
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="italy"
                 navLabel={t("my-travels.slides.italy.navLabel")}
+                paragraphsI18nKey="my-travels.slides.italy.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.italy.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.italy.places" />}
                 backgroundImage={{
                     src: "/images/roma.jpg",
                     width: 1199,
                     height: 1600,
                     placement: "top-left",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.italy.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.italy.places" />
-                <Paragraphs i18nKey="my-travels.slides.italy.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="japan"
                 navLabel={t("my-travels.slides.japan.navLabel")}
+                paragraphsI18nKey="my-travels.slides.japan.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.japan.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.japan.places" />}
                 backgroundImage={{
                     src: "/images/tokyo.jpg",
                     width: 1048,
                     height: 785,
                     placement: "top-right",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.japan.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.japan.places" />
-                <Paragraphs i18nKey="my-travels.slides.japan.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="london"
                 navLabel={t("my-travels.slides.london.navLabel")}
+                paragraphsI18nKey="my-travels.slides.london.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.london.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.london.places" />}
                 backgroundImage={{
                     src: "/images/london.jpg",
                     width: 1488,
                     height: 1085,
                     placement: "top-left",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.london.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.london.places" />
-                <Paragraphs i18nKey="my-travels.slides.london.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="spain"
                 navLabel={t("my-travels.slides.spain.navLabel")}
+                paragraphsI18nKey="my-travels.slides.spain.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.spain.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.spain.places" />}
                 backgroundImage={{
                     src: "/images/madrid.jpg",
                     width: 1152,
                     height: 2048,
                     placement: "top-right",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.spain.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.spain.places" />
-                <Paragraphs i18nKey="my-travels.slides.spain.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="saint-marten"
                 navLabel={t("my-travels.slides.saintMarten.navLabel")}
+                paragraphsI18nKey="my-travels.slides.saintMarten.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.saintMarten.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.saintMarten.places" />}
                 backgroundImage={{
                     src: "/images/saint-martin.jpg",
                     width: 2048,
                     height: 1533,
                     placement: "bottom-left",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.saintMarten.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.saintMarten.places" />
-                <Paragraphs i18nKey="my-travels.slides.saintMarten.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="north-america"
                 navLabel={t("my-travels.slides.northAmerica.navLabel")}
+                paragraphsI18nKey="my-travels.slides.northAmerica.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.northAmerica.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.northAmerica.places" />}
                 backgroundImage={{
                     src: "/images/new-york.jpg",
                     width: 2048,
                     height: 1534,
                     placement: "top-right",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.northAmerica.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.northAmerica.places" />
-                <Paragraphs i18nKey="my-travels.slides.northAmerica.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="peru"
                 navLabel={t("my-travels.slides.peru.navLabel")}
+                paragraphsI18nKey="my-travels.slides.peru.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-travels.slides.peru.title" /></SlideHeader>}
+                supportingContent={<PlaceCards i18nKey="my-travels.slides.peru.places" />}
                 backgroundImage={{
                     src: "/images/peru.jpg",
                     width: 902,
                     height: 1346,
                     placement: "top-left",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-travels.slides.peru.title" /></SlideHeader>
-                <PlaceCards i18nKey="my-travels.slides.peru.places" />
-                <Paragraphs i18nKey="my-travels.slides.peru.paragraphs" />
-            </Slide>
+            />
         </PresentationDeck>
     </PresentationLayout>;
 }

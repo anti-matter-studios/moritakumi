@@ -55,3 +55,18 @@
         --home-qr-overflow-y: var(--space-4);
     }
 }
+
+@include mixins.below-tablet {
+    .qrShadow {
+        display: none;
+    }
+
+    .qrCode {
+        --home-qr-size: min(10rem, 48vw);
+
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin: var(--space-4) auto 0;
+    }
+}

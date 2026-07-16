@@ -15,16 +15,45 @@ export function useActiveSectionId(sectionIds: string[]) {
         }
 
         const deck = document.getElementById("presentation");
-        const sections = getTimelineSections(deck, sectionIds);
+        let disconnectSectionObserver = observeTimelineSections(
+            deck,
+            sectionIds,
+            setActiveSectionId,
+        );
+        const mutationObserver = new MutationObserver(() => {
+            disconnectSectionObserver?.();
+            disconnectSectionObserver = observeTimelineSections(
+                deck,
+                sectionIds,
+                setActiveSectionId,
+            );
+        });
 
-        if (sections.length === 0) {
-            return;
+        if (deck !== null) {
+            mutationObserver.observe(deck, { childList: true });
         }
 
-        return observeSections(sections, deck, setActiveSectionId);
+        return () => {
+            disconnectSectionObserver?.();
+            mutationObserver.disconnect();
+        };
     }, [sectionIds]);
 
     return activeSectionId;
+}
+
+function observeTimelineSections(
+    deck: HTMLElement | null,
+    sectionIds: string[],
+    setActiveSectionId: (id: string) => void,
+) {
+    const sections = getTimelineSections(deck, sectionIds);
+
+    if (sections.length === 0) {
+        return undefined;
+    }
+
+    return observeSections(sections, deck, setActiveSectionId);
 }
 
 function observeSections(

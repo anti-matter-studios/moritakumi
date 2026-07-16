@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 
 
@@ -31,40 +30,50 @@ export default function PersonalityPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide id="introduction" navLabel={t("personality.slides.introduction.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.introduction.title" /></SlideHeader>
-                <Paragraphs
-                    i18nKey="personality.slides.introduction.paragraphs"
-                    components={{
+            <ResponsiveSlide
+                id="introduction"
+                navLabel={t("personality.slides.introduction.navLabel")}
+                paragraphsI18nKey="personality.slides.introduction.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.introduction.title" /></SlideHeader>}
+                paragraphComponents={{
                         personalities: <a href="https://16-personalities.com" />,
-                    }}
-                />
-            </Slide>
+                }}
+            />
 
-            <Slide id="relational" navLabel={t("personality.slides.relational.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.relational.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.relational.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="relational"
+                navLabel={t("personality.slides.relational.navLabel")}
+                paragraphsI18nKey="personality.slides.relational.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.relational.title" /></SlideHeader>}
+            />
 
-            <Slide id="vision" navLabel={t("personality.slides.vision.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.vision.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.vision.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="vision"
+                navLabel={t("personality.slides.vision.navLabel")}
+                paragraphsI18nKey="personality.slides.vision.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.vision.title" /></SlideHeader>}
+            />
 
-            <Slide id="sensibility" navLabel={t("personality.slides.sensibility.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.sensibility.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.sensibility.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="sensibility"
+                navLabel={t("personality.slides.sensibility.navLabel")}
+                paragraphsI18nKey="personality.slides.sensibility.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.sensibility.title" /></SlideHeader>}
+            />
 
-            <Slide id="organisation" navLabel={t("personality.slides.organisation.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.organisation.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.organisation.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="organisation"
+                navLabel={t("personality.slides.organisation.navLabel")}
+                paragraphsI18nKey="personality.slides.organisation.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.organisation.title" /></SlideHeader>}
+            />
 
-            <Slide id="confidence" navLabel={t("personality.slides.confidence.navLabel")}>
-                <SlideHeader><RichText i18nKey="personality.slides.confidence.title" /></SlideHeader>
-                <Paragraphs i18nKey="personality.slides.confidence.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="confidence"
+                navLabel={t("personality.slides.confidence.navLabel")}
+                paragraphsI18nKey="personality.slides.confidence.paragraphs"
+                header={<SlideHeader><RichText i18nKey="personality.slides.confidence.title" /></SlideHeader>}
+            />
         </PresentationDeck>
     </PresentationLayout>;
 }

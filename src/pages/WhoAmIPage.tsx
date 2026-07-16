@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideCard, SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideCard, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 
 
@@ -33,93 +32,104 @@ export default function WhoAmIPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide
+            <ResponsiveSlide
                 id="who-am-i"
                 navLabel={t("who-am-i.slides.whoAmI.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.whoAmI.paragraphs"
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.whoAmI.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/myself.jpg",
                     width: 979,
                     height: 1299,
                     placement: "top-right",
                 }}
-            >
-                <SlideHeader><RichText i18nKey="who-am-i.slides.whoAmI.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.whoAmI.paragraphs" />
-            </Slide>
+            />
 
-            <Slide id="how-am-i" navLabel={t("who-am-i.slides.howAmI.navLabel")}>
-                <SlideHeader><RichText i18nKey="who-am-i.slides.howAmI.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.howAmI.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="how-am-i"
+                navLabel={t("who-am-i.slides.howAmI.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.howAmI.paragraphs"
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.howAmI.title" /></SlideHeader>}
+            />
 
-            <Slide id="my-values" navLabel={t("who-am-i.slides.myValues.navLabel")}>
-                <SlideHeader><RichText i18nKey="who-am-i.slides.myValues.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.myValues.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="my-values"
+                navLabel={t("who-am-i.slides.myValues.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.myValues.paragraphs"
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.myValues.title" /></SlideHeader>}
+            />
 
-            <Slide id="citation" navLabel={t("who-am-i.slides.citation.navLabel")}>
-                <SlideCard>
+            <ResponsiveSlide
+                id="citation"
+                navLabel={t("who-am-i.slides.citation.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.citation.paragraphs"
+                leadContent={<>
+                    <SlideCard>
                     <p><RichText i18nKey="who-am-i.slides.citation.card" /></p>
-                </SlideCard>
-                <hr />
-                <SlideHeader><RichText i18nKey="who-am-i.slides.citation.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.citation.paragraphs" />
-            </Slide>
+                    </SlideCard>
+                    <hr />
+                </>}
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.citation.title" /></SlideHeader>}
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="song"
                 navLabel={t("who-am-i.slides.song.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.song.paragraphs"
+                leadContent={<>
+                    <SlideCard footer={<RichText i18nKey="who-am-i.slides.song.footer" />}>
+                        <p><RichText i18nKey="who-am-i.slides.song.card" /></p>
+                    </SlideCard>
+                    <hr />
+                </>}
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.song.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/disparate-youth.jpg",
                     width: 689,
                     height: 689,
                     placement: "top-right"
                 }}
-            >
-                <SlideCard footer={<RichText i18nKey="who-am-i.slides.song.footer" />}>
-                    <p><RichText i18nKey="who-am-i.slides.song.card" /></p>
-                </SlideCard>
-                <hr />
-                <SlideHeader><RichText i18nKey="who-am-i.slides.song.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.song.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="movie"
                 navLabel={t("who-am-i.slides.movie.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.movie.paragraphs"
+                leadContent={<>
+                    <SlideCard footer={<RichText i18nKey="who-am-i.slides.movie.footer" />}>
+                        <p><RichText i18nKey="who-am-i.slides.movie.card" /></p>
+                    </SlideCard>
+                    <hr />
+                </>}
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.movie.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/interstellar.jpg",
                     width: 720,
                     height: 1080,
                     placement: "top-left"
                 }}
-            >
-                <SlideCard footer={<RichText i18nKey="who-am-i.slides.movie.footer" />}>
-                    <p><RichText i18nKey="who-am-i.slides.movie.card" /></p>
-                </SlideCard>
-                <hr />
-                <SlideHeader><RichText i18nKey="who-am-i.slides.movie.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.movie.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="place"
                 navLabel={t("who-am-i.slides.place.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.place.paragraphs"
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.place.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/207.jpg",
                     width: 1535,
                     height: 2048,
                     placement: "bottom-right"
                 }}
-            >
-                <SlideHeader><RichText i18nKey="who-am-i.slides.place.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.place.paragraphs" />
-            </Slide>
+            />
 
-            <Slide id="colour" navLabel={t("who-am-i.slides.colour.navLabel")} tone="colour-shift">
-                <SlideHeader><RichText i18nKey="who-am-i.slides.colour.title" /></SlideHeader>
-                <Paragraphs i18nKey="who-am-i.slides.colour.paragraphs" />
-            </Slide>
+            <ResponsiveSlide
+                id="colour"
+                navLabel={t("who-am-i.slides.colour.navLabel")}
+                paragraphsI18nKey="who-am-i.slides.colour.paragraphs"
+                header={<SlideHeader><RichText i18nKey="who-am-i.slides.colour.title" /></SlideHeader>}
+                tone="colour-shift"
+            />
         </PresentationDeck>
     </PresentationLayout>;
 }

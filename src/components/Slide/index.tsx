@@ -18,6 +18,7 @@ import { useAnimatedBackground } from "./useAnimatedBackground";
 
 export { SlideCard, SlideHeader };
 export { SlideCardList };
+export { default as ResponsiveSlide } from "./ResponsiveSlide";
 export type { SlideCardProps, SlideHeaderProps };
 
 /** Full-screen presentation slide. */

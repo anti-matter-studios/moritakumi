@@ -5,13 +5,12 @@
 
 import { useTranslation } from "react-i18next";
 
-import Paragraphs from "@/components/Paragraphs";
 import PresentationLayout, {
     PresentationDeck,
     PresentationTimeline,
 } from "@/components/PresentationLayout";
 import RichText from "@/components/RichText";
-import Slide, { SlideHeader } from "@/components/Slide";
+import { ResponsiveSlide, SlideHeader } from "@/components/Slide";
 import Timeline from "@/components/Timeline";
 
 
@@ -29,66 +28,60 @@ export default function MyHobbiesPage() {
         </PresentationTimeline>
 
         <PresentationDeck>
-            <Slide
+            <ResponsiveSlide
                 id="horseback-riding"
                 navLabel={t("my-hobbies.slides.horsebackRiding.navLabel")}
+                paragraphsI18nKey="my-hobbies.slides.horsebackRiding.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-hobbies.slides.horsebackRiding.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/horseback-riding.jpg",
                     width: 960,
                     height: 940,
                     placement: "top-right"
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-hobbies.slides.horsebackRiding.title" /></SlideHeader>
-                <Paragraphs i18nKey="my-hobbies.slides.horsebackRiding.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="winter-sports"
                 navLabel={t("my-hobbies.slides.winterSports.navLabel")}
+                paragraphsI18nKey="my-hobbies.slides.winterSports.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-hobbies.slides.winterSports.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/ski.jpg",
                     width: 1535,
                     height: 2048,
                     placement: "bottom-left"
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-hobbies.slides.winterSports.title" /></SlideHeader>
-                <Paragraphs i18nKey="my-hobbies.slides.winterSports.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="womens-rights"
                 navLabel={t("my-hobbies.slides.womensRights.navLabel")}
+                paragraphsI18nKey="my-hobbies.slides.womensRights.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-hobbies.slides.womensRights.title" /></SlideHeader>}
                 backgroundImage={{
                     src: "/images/awid.jpg",
                     width: 1428,
                     height: 1101,
                     placement: "bottom-right"
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-hobbies.slides.womensRights.title" /></SlideHeader>
-                <Paragraphs i18nKey="my-hobbies.slides.womensRights.paragraphs" />
-            </Slide>
+            />
 
-            <Slide
+            <ResponsiveSlide
                 id="blood-donation"
                 navLabel={t("my-hobbies.slides.bloodDonation.navLabel")}
+                paragraphsI18nKey="my-hobbies.slides.bloodDonation.paragraphs"
+                header={<SlideHeader><RichText i18nKey="my-hobbies.slides.bloodDonation.title" /></SlideHeader>}
+                paragraphComponents={{
+                    efs: <a href="https://dondesang.efs.sante.fr" />,
+                }}
                 backgroundImage={{
                     src: "/images/efs-don.jpg",
                     width: 2048,
                     height: 1534,
                     placement: "bottom-left"
                 }}
-            >
-                <SlideHeader><RichText i18nKey="my-hobbies.slides.bloodDonation.title" /></SlideHeader>
-                <Paragraphs
-                    i18nKey="my-hobbies.slides.bloodDonation.paragraphs"
-                    components={{
-                        efs: <a href="https://dondesang.efs.sante.fr" />,
-                    }}
-                />
-            </Slide>
+            />
         </PresentationDeck>
     </PresentationLayout>;
 }

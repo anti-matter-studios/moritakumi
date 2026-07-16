@@ -42,3 +42,26 @@ MORITAKUMI_CONTENT_PASSWORD="your password" bun run content:open
 If plaintext content was already pushed to a public repository, rotate the
 password before sealing and consider rewriting repository history if the old
 content must be removed from past commits too.
+
+## Responsive slide content
+
+Every page supports explicit breaks inside a translated `paragraphs` array:
+
+```yaml
+paragraphs:
+  - "First part"
+  - <slide-break screen-size="medium" />
+  - "Continued on another slide at medium and small sizes"
+```
+
+Individual paragraphs can also be shown or hidden for selected layouts:
+
+```yaml
+paragraphs:
+  - '<responsive-text hide-on="small">Desktop and tablet detail</responsive-text>'
+  - '<responsive-text show-on="small medium">Compact-screen summary</responsive-text>'
+```
+
+The available sizes are `large`, `medium`, and `small`. Multiple values may be
+separated by spaces or commas. `medium` applies at widths up to `64rem` or
+heights up to `56rem`; `small` applies at widths or heights up to `42rem`.
